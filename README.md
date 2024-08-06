@@ -1,41 +1,18 @@
 
 # ETROC2 cocotb
 
-## Repository and environment setup
-
-# Repository and Environment Setup
-
 ## Repository
 
-Clone the current repository as a one time operation:
-
 ```bash
-git clone --recursive ssh://git@gitlab.cern.ch:7999/gdigugli/etroc2-cocotb.git
+git clone https://github.com/huangx-git/ETROC2_cocotb.git
 ```
-
-**NOTE** The current repository includes the following submodules:
-
-- The ETROC2 code base (`ETROC2_cocotb/ETROC2`)
-- Some general notes on the ETROC2 manual (`ETROC2_cocotb/ETROC2_RefManualNotes`)
-
-**NOTE** Use the `master` branch.
-
-For the future, besides the usual git operations, remember to use `git pull --recurse-submodules` to update the submodules to the latest changes.
 
 ## Python Environment
 
-We use a Python virtual environment for the _ETROC2 cocotb_ verification setup. More details are provided [here](https://docs.python.org/3.10/tutorial/venv.html).
-
-**NOTE** If you are using the servers of the _ME Division_ cluster (e.g. `fasic-beast1.fnal.gov`), add the following line at the end of your `.bashrc` file:
+We use a Python virtual environment for the _ETROC2 cocotb_ verification setup. More details are provided [here](https://docs.python.org/3.10/tutorial/venv.html). To setup the Python environment for the first time:
 
 ```bash
-source /opt/rh/rh-python38/enable
-```
-
-To setup the Python environment for the first time:
-
-```bash
-python -m venv $HOME/venvs/cocotb-env
+python3.12 -m venv $HOME/venvs/cocotb-env
 source $HOME/venvs/cocotb-env/bin/activate
 pip install cocotb pytest
 ```
