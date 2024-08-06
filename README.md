@@ -77,7 +77,7 @@ Step 4. Run VNC Viewer to configure the connection to the server (`sphy7asic01.s
 git clone https://github.com/huangx-git/ETROC2_cocotb.git
 ```
 
-A [personal access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-personal-access-token-classic) is needed to access GitHub resources on your behalf. 
+A [personal access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-personal-access-token-classic) other than a password is needed to access GitHub resources on your behalf. 
 
 
 ## Python Environment
