@@ -1,0 +1,83 @@
+//`include "disciplines.vams"
+//`include "constants.vams"
+
+`timescale 10ps/1ps
+
+module QInj(CIS, ISEL, EN, QOUTSel, VREF, Qout1, Qout2, TV1, vss, vdd);
+input CIS;
+input [4:0] ISEL;
+input EN;
+input QOUTSel;
+input VREF;
+output Qout1;
+output TV1;
+output Qout2;
+inout vss, vdd;
+wreal VREF, Qout1, Qout2, TV1;
+
+parameter real fs = 10G;  // sampling frequency
+
+real timescale = 10p; // needs to match verilog timescale
+real ts;
+real out_0;
+reg qinj_done;
+integer tick;
+reg sclk;   // sample clock
+real charge;   // charge size
+   
+initial begin
+      out_0 = 0;
+      qinj_done = 1'b1;
+      tick = 0;
+      // sampling period
+      ts = 1.0 / (timescale * fs);
+
+      // define the sampling clock
+      sclk = 0;  
+      forever #(ts/2.0) sclk = ~sclk;
+end
+
+// Signal flow graph implementation
+
+always @(posedge sclk) begin
+	charge = (EN & QOUTSel)?VREF*(ISEL+1):0;
+end
+
+   always @(posedge sclk or posedge CIS) begin
+	if(CIS == 1'b1) begin			//////
+		if(qinj_done == 1'b1)
+			if(tick == 200) begin
+				out_0 = 0;
+				qinj_done = 1'b0;	
+			end
+			else if(tick<=50) begin
+				out_0 = out_0 + charge*0.5e-7;
+				tick = tick + 1;
+				//qinj_done = 1'b0;
+			end
+			else if(tick>50 && tick<=100) begin
+				out_0 = out_0 + charge*0.2e-7;
+				tick = tick + 1;
+				//qinj_done = 1'b0;
+			end
+			else if(tick>100 && tick<=150) begin
+				out_0 = out_0 - charge*0.1e-7;
+				tick = tick + 1;
+				//qinj_done = 1'b0;
+			end
+			else if(tick>150 && tick<200) begin
+				out_0 = out_0 - charge*0.4e-7;
+				tick = tick + 1;
+				//qinj_done = 1'b0;
+			end
+	end
+	else begin
+		tick = 0;
+		out_0 = 0;
+		qinj_done = 1'b1;
+	end
+   end
+
+   assign Qout1 = out_0;
+
+endmodule

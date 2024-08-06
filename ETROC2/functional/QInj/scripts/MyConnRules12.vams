@@ -1,0 +1,52 @@
+// custom connect rules for fixed Vdelta
+// -- modified version of ConnRules18.vams
+
+`include "disciplines.vams"
+
+`define Vsup  1.2
+`define Vthi  0.8
+`define Vtlo  0.4
+`define Vlow  0
+`define Tr    0.1n
+`define Rlo   200
+`define Rhi   200
+`define Rx    40
+`define Rz    10M
+
+// change Vdelta to fixed value
+//`define Vdelta      `Vsup/64
+`define Vdelta      0.0000001
+
+// set the tolerance a bit finer for wreal
+//`define Vdelta_tol  `Vdelta/4
+`define Vdelta_tol  `Vdelta/10
+
+`define Tr_delta    `Tr/20
+
+// give a new name to the rules
+connectrules My_ConnRules_12_full_fast;
+  connect L2E_2 #(
+      .vsup(`Vsup), .vlo(`Vlow),
+      .tr(`Tr), .tf(`Tr),
+      .rlo(`Rlo), .rhi(`Rhi), .rx(`Rx), .rz(`Rz) );
+  connect E2L_2 #(
+      .vsup(`Vsup), .vthi(`Vthi), .vtlo(`Vtlo), .tr(`Tr) );
+  connect Bidir_2 #(
+      .vsup(`Vsup), .vthi(`Vthi), .vtlo(`Vtlo), .vlo(`Vlow),
+      .tr(`Tr), .tf(`Tr),
+      .rlo(`Rlo), .rhi(`Rhi), .rx(`Rx), .rz(`Rz) );
+  connect E2R #(.vdelta(`Vdelta), .vtol(`Vdelta_tol), .ttol(`Tr_delta)); 
+  connect R2E_2 #(.vsup(`Vsup), .vdelta(`Vdelta), .tr(`Tr_delta), .tf(`Tr_delta), .rout(`Rlo)); 
+  connect ER_bidir #(.vdelta(`Vdelta), .vtol(`Vdelta_tol), .ttol(`Tr_delta),
+        .tr(`Tr_delta), .tf(`Tr_delta), .rout(`Rlo), .rz(`Rz)); 
+  // AMSCPF
+  connect L2E_2_CPF #(
+      .vsup(`Vsup), .vlo(`Vlow),
+      .tr(`Tr), .tf(`Tr),
+      .rlo(`Rlo), .rhi(`Rhi), .rx(`Rx), .rz(`Rz) );
+  connect Bidir_2_CPF #(
+      .vsup(`Vsup), .vthi(`Vthi), .vtlo(`Vtlo),
+      .tr(`Tr), .tf(`Tr),
+      .rlo(`Rlo), .rhi(`Rhi), .rx(`Rx), .rz(`Rz) );
+endconnectrules
+

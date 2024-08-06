@@ -1,0 +1,63 @@
+//Verilog-AMS HDL for "ETROC2_Core", "OutputDriver" "verilogams"
+
+//`include "constants.vams"
+//`include "disciplines.vams"
+
+`timescale 1ps/1ps
+module OutputDriver ( DOLn, DOLp, DORn, DORp, VDD_SL, VSS_SL, CLK40MTDC_Test,
+I2CCon_LTx_AmplSel, I2CCon_RTx_AmplSel, I2CCon_TDCClockTest, I2CCon_TDCStrobeTest,
+I2CCon_disLTx, I2CCon_disRTx, REFStrobeTest, soutLeft, soutRight );
+
+input I2CCon_TDCStrobeTest;
+output DOLp;
+input I2CCon_disLTx;
+input CLK40MTDC_Test;
+output DORp;
+input I2CCon_disRTx;
+input I2CCon_TDCClockTest;
+input  [2:0] I2CCon_LTx_AmplSel;
+input VSS_SL;
+input VDD_SL;
+input soutRight;
+input  [2:0] I2CCon_RTx_AmplSel;
+output DOLn;
+input soutLeft;
+output DORn;
+input REFStrobeTest;
+
+wreal DOLn, DOLp, DORn, DORp, VDD_SL, VSS_SL;
+
+parameter 	      real Td=10p;
+
+real timescale = 1p;    // match timescale
+real ts;
+real DOL_int, DOR_int;
+
+always #1 begin
+  if((VDD_SL-VSS_SL) > 1.0) begin
+    if(I2CCon_disLTx) begin
+      DOL_int = 0.0;
+    end
+    else begin
+      DOL_int = I2CCon_TDCClockTest?(CLK40MTDC_Test?0.3:-0.3):(soutLeft?0.3:-0.3);
+    end
+    if(I2CCon_disRTx) begin
+      DOR_int = 0.0;
+    end
+    else begin
+      DOR_int = I2CCon_TDCStrobeTest?(REFStrobeTest?0.3:-0.3):(soutRight?0.3:-0.3);
+    end
+  end
+  else begin
+    DOL_int = 0;
+    DOR_int = 0;
+  end
+end
+
+assign  DOLn = 0.9 - DOL_int;
+assign  DOLp = 0.9 + DOL_int;
+assign  DORn = 0.9 - DOR_int;
+assign  DORp = 0.9 + DOR_int;
+
+endmodule
+

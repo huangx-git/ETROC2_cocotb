@@ -1,0 +1,38 @@
+//////////////////////////////////////////////////////////////////////////////////
+// Org:        	FNAL
+// Author:      Quan Sun
+// 
+// Create Date:    April. 15th, 2022
+// Description: frequency divider model
+//
+// Revision: 
+//
+//
+//////////////////////////////////////////////////////////////////////////////////
+
+`include "constants.vams"
+`include "disciplines.vams"
+`timescale 1ps / 1ps
+
+module divider(CLKP, CLKN, CLKFB);
+
+input CLKP, CLKN;
+wreal CLKP, CLKN;
+
+output CLKFB;
+
+wire CLKIn;
+integer counter = 0;
+
+assign CLKIn = (CLKP-CLKN)>0?1:0;
+
+always@(posedge CLKIn) begin
+if(counter == 127)
+	counter <= 0;
+else counter <= counter + 1;
+end
+
+assign CLKFB = counter <64?1:0;
+
+
+endmodule

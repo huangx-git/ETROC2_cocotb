@@ -1,0 +1,28 @@
+`timescale 1ns/1ps
+`include "constants.vams"
+`include "disciplines.vams"
+module PixelAnalog_tb;
+
+initial begin
+#10000
+$finish();
+end
+
+PixelAnalog PixelAnalog( ErrFlagCal, ErrFlagTOA, ErrFlagTOT, PAOut, TDC_CAL, TDC_TOA,
+    TDC_TOT, TDC_hit, busAddrOutA, busAddrOutB, busAddrOutC, busClkOutA, busClkOutB,
+    busClkOutC, busDataMisoOutA, busDataMisoOutB, busDataMisoOutC, busDataMosiOutA,
+    busDataMosiOutB, busDataMosiOutC, busReOutA, busReOutB, busReOutC, busRstOutA,
+    busRstOutB, busRstOutC, busTmrErrorOutA, busTmrErrorOutB, busTmrErrorOutC, busWeOutA,
+    busWeOutB, busWeOutC, colAddrOutA, colAddrOutB, colAddrOutC, pixelAddrNextOutA,
+    pixelAddrNextOutB, pixelAddrNextOutC, pixelConfig, pixelID, vhigh, vlow, PAIn,
+    VDD_D, VDD_Dis, VDD_PA, VDD_QInj, VSS_D, VSS_Dis, VSS_PA, VSS_QInj, VSS_S, QInj,
+    RefStrobe, VRef, busAddrInA, busAddrInB, busAddrInC, busClkInA, busClkInB, busClkInC,
+    busDataMisoInA, busDataMisoInB, busDataMisoInC, busDataMosiInA, busDataMosiInB,
+    busDataMosiInC, busReInA, busReInB, busReInC, busRstInA, busRstInB, busRstInC,
+    busTmrErrorInA, busTmrErrorInB, busTmrErrorInC, busWeInA, busWeInB, busWeInC,
+    clk40, colAddrInA, colAddrInB, colAddrInC, pixelAddrInA, pixelAddrInB, pixelAddrInC,
+    CalCounterAMon, TOTCounterBMon, CalCounterBMon, TOACounterAMon, TOACounterBMon,
+    TOARawDataMon, TOTRawDataMon, TOTCounterAMon, CalRawDataMon
+);
+
+endmodule

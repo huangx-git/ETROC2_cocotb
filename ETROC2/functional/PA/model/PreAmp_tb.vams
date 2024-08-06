@@ -1,0 +1,19 @@
+// test the low pass filter
+`include "disciplines.vams"
+ 
+module top (  ); 
+
+electrical gnd;
+ground gnd;
+
+// wreal filter
+PreAmp  #(.fc(500M), .fs(100000M)) I1 (.out(out), .in(in));
+
+// input to filter
+//vsource #(.type("sine"), .ampl(1), .freq(500M)) V0 ( in, gnd  );
+vsource #(.type("pwl"), .wave("[1.0n 0 1.1n 2 1.5n 0.5 2.0n 3 5.0n 5]"), .pwlperiod(5.0n)) V0 ( in, gnd  );
+
+// load for filter output
+resistor #(.r(10K)) Rload ( out, gnd  );
+
+endmodule

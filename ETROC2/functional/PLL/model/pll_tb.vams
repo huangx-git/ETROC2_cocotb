@@ -1,0 +1,27 @@
+
+
+`include "constants.vams"
+`include "disciplines.vams"
+`timescale 1ns / 1ps
+
+module pll_tb();
+
+reg CLKRef;
+wire CLKFB, INSTLock;
+wreal CLKP, CLKN, VCtrl, Icp;
+
+initial begin
+CLKRef = 0;
+
+#100000 
+$finish;
+end
+
+always #12.5 CLKRef = ~CLKRef;
+
+pfdcp #(.fs(10G), .ICP(50u)) pfdcp_inst(.CLKRef(CLKRef), .CLKFB(CLKFB), .IOut(Icp), .INSTLock(INSTLock));
+lpf #(.fs(10G), .Rzero(8000), .RCenter(1G), .C1(8p), .C2(160p)) lpf_inst(.IIn(Icp), .VOut(VCtrl));
+vco #(.HighVoltage(1.2), .LowVoltage(0.6)) vco_inst(.capSel(9'b100010001), .vin(VCtrl), .clkp(CLKP), .clkn(CLKN));
+divider divider_inst(.CLKP(CLKP), .CLKN(CLKN), .CLKFB(CLKFB));
+
+endmodule

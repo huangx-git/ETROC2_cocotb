@@ -1,0 +1,8 @@
+// analog control file, amscf.scs
+
+//amsd block not required with custom connect rules
+//amsd {
+//  ie vsup=1.0
+//}
+
+tran tran stop=100n annotate=status

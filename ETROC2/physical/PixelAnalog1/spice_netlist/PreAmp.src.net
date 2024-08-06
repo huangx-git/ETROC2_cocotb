@@ -1,0 +1,254 @@
+************************************************************************
+* auCdl Netlist:
+* 
+* Library Name:  ETROC0A_Analog
+* Top Cell Name: PreAmp
+* View Name:     schematic
+* Netlisted on:  Apr 21 22:06:31 2022
+************************************************************************
+
+*.INCLUDE  /asic/cad/Library/tsmc/TSMC65_CERN_2017_DL20/V1.7A_1/1p9m6x1z1u/tsmcN65/../PVS_QRC/lvs/source.added
+*.EQUATION
+*.SCALE METER
+*.MEGA
+.PARAM
+
+
+
+************************************************************************
+* Library Name: ETROC0A_Analog
+* Cell Name:    PreAmpDBuf
+* View Name:    schematic
+************************************************************************
+
+.SUBCKT PreAmpDBuf in out vdd vss
+*.PININFO in:I out:O vdd:B vss:B
+MM2 out net10 vdd vdd pch l=60n w=800n m=2
+MM1 net10 in vdd vdd pch l=60n w=800n m=2
+MM3 out net10 vss vss nch l=60n w=400n m=2
+MM0 net10 in vss vss nch l=60n w=400n m=2
+.ENDS
+
+************************************************************************
+* Library Name: ETROC0A_Analog
+* Cell Name:    PreAmp_core
+* View Name:    schematic
+************************************************************************
+
+.SUBCKT PreAmp_core CLSel<1> CLSel<0> IB RfSel<1> RfSel<0> V1 _IBSel<2> 
++ _IBSel<1> _IBSel<0> in out ps1 vdd vss
+*.PININFO CLSel<1>:I CLSel<0>:I IB:I RfSel<1>:I RfSel<0>:I _IBSel<2>:I 
+*.PININFO _IBSel<1>:I _IBSel<0>:I in:I out:O V1:B ps1:B vdd:B vss:B
+XM1 ps1 V1 net8 vss vdd vss nmos_rf_lvt_6t lr=100n wr=2u nr=4 m=1
+XM0 net8 in vss vss vdd vss nmos_rf_lvt_6t lr=160.0n wr=2.4u nr=12 m=6
+XM12 V1 IB vdd vdd vss pmos_rf_lvt_5t lr=240.0n wr=3u nr=12 m=1
+XM11 vss ps1 out out vss pmos_rf_lvt_5t lr=65.0n wr=3u nr=8 m=2
+XM5 IB IB vdd vdd vss pmos_rf_lvt_5t lr=240.0n wr=3u nr=12 m=1
+XM3 net017 IB vdd vdd vss pmos_rf_lvt_5t lr=240.0n wr=3u nr=12 m=6
+XM7 ps1 vss net017 vdd vss pmos_rf_lvt_5t lr=120.0n wr=1u nr=2 m=1
+MM6 V1 V1 vss vss nch l=2.5u w=4u m=1
+MM2<1> net044<0> CLSel<1> vss vss nch l=60n w=1.8u m=8
+MM2<0> net044<1> CLSel<0> vss vss nch l=60n w=1.8u m=8
+DD1 vss vdd pwdnw area=6.1356e-11 pj=0.00122732 m=1
+MM4<2> net046<0> _IBSel<2> vdd vdd pch_lvt l=100n w=10u m=8
+MM4<1> net046<1> _IBSel<1> vdd vdd pch_lvt l=100n w=10u m=8
+MM4<0> net046<2> _IBSel<0> vdd vdd pch_lvt l=100n w=10u m=8
+XC1<1> ps1 net044<0> vss crtmom_rf nv=36 nh=36 w=120.0n s=120.0n stm=2 spm=4 
++ m=1
+XC1<0> ps1 net044<1> vss crtmom_rf nv=36 nh=36 w=120.0n s=120.0n stm=2 spm=4 
++ m=1
+XR0 vdd out rppolywo l=16.0u w=2.8u m=1
+XR4 in ps1 rppolywo l=80u w=2.8u m=1
+XR3 net038 ps1 rppolywo l=32.0u w=2.8u m=1
+XR1<2> net046<0> net8 rppolywo l=16.0u w=2.8u m=1
+XR1<1> net046<1> net8 rppolywo l=16.0u w=2.8u m=1
+XR1<0> net046<2> net8 rppolywo l=16.0u w=2.8u m=1
+XR6 vdd net8 rppolywo l=16.0u w=2.8u m=1
+XR2 net042 ps1 rppolywo l=80u w=2.8u m=1
+DD0 vss vdd dnwpsub area=8.98935e-11 pj=0.00179807 m=1
+MM10<3> net042 RfSel<0> in vss nch_lvt_dnw l=60n w=1u m=4
+MM10<2> net042 RfSel<0> in vss nch_lvt_dnw l=60n w=1u m=4
+MM10<1> net042 RfSel<0> in vss nch_lvt_dnw l=60n w=1u m=4
+MM10<0> net042 RfSel<0> in vss nch_lvt_dnw l=60n w=1u m=4
+MM9<3> net038 RfSel<1> in vss nch_lvt_dnw l=60n w=1u m=4
+MM9<2> net038 RfSel<1> in vss nch_lvt_dnw l=60n w=1u m=4
+MM9<1> net038 RfSel<1> in vss nch_lvt_dnw l=60n w=1u m=4
+MM9<0> net038 RfSel<1> in vss nch_lvt_dnw l=60n w=1u m=4
+.ENDS
+
+************************************************************************
+* Library Name: ETROC0A_Analog
+* Cell Name:    PreAmp_moscap1
+* View Name:    schematic
+************************************************************************
+
+.SUBCKT PreAmp_moscap1 netn netp
+*.PININFO netn:B netp:B
+MM14 netn netp netn netn nch l=500n w=3u m=4
+.ENDS
+
+************************************************************************
+* Library Name: ETROC0A_Analog
+* Cell Name:    PreAmp
+* View Name:    schematic
+************************************************************************
+
+.SUBCKT PreAmp CLSel<1> CLSel<0> IB RfSel<1> RfSel<0> _IBSel<2> _IBSel<1> 
++ _IBSel<0> in out ps1 vdd vss
+*.PININFO CLSel<1>:I CLSel<0>:I IB:I RfSel<1>:I RfSel<0>:I _IBSel<2>:I 
+*.PININFO _IBSel<1>:I _IBSel<0>:I in:I out:O ps1:B vdd:B vss:B
+XI7<2> _IBSel<2> _IBSel_int<2> vdd vss / PreAmpDBuf
+XI7<1> _IBSel<1> _IBSel_int<1> vdd vss / PreAmpDBuf
+XI7<0> _IBSel<0> _IBSel_int<0> vdd vss / PreAmpDBuf
+XI9<1> RfSel<1> RfSel_int<1> vdd vss / PreAmpDBuf
+XI9<0> RfSel<0> RfSel_int<0> vdd vss / PreAmpDBuf
+XI6<1> CLSel<1> CLSel_int<1> vdd vss / PreAmpDBuf
+XI6<0> CLSel<0> CLSel_int<0> vdd vss / PreAmpDBuf
+XI4 CLSel_int<1> CLSel_int<0> IB RfSel_int<1> RfSel_int<0> v1 _IBSel_int<2> 
++ _IBSel_int<1> _IBSel_int<0> in out ps1 vdd vss / PreAmp_core
+XI3<1> vss v1 / PreAmp_moscap1
+XI3<2> vss v1 / PreAmp_moscap1
+XI3<3> vss v1 / PreAmp_moscap1
+XI3<4> vss v1 / PreAmp_moscap1
+XI3<5> vss v1 / PreAmp_moscap1
+XI3<6> vss v1 / PreAmp_moscap1
+XI3<7> vss v1 / PreAmp_moscap1
+XI3<8> vss v1 / PreAmp_moscap1
+XI3<9> vss v1 / PreAmp_moscap1
+XI3<10> vss v1 / PreAmp_moscap1
+XI3<11> vss v1 / PreAmp_moscap1
+XI3<12> vss v1 / PreAmp_moscap1
+XI3<13> vss v1 / PreAmp_moscap1
+XI3<14> vss v1 / PreAmp_moscap1
+XI3<15> vss v1 / PreAmp_moscap1
+XI3<16> vss v1 / PreAmp_moscap1
+XI3<17> vss v1 / PreAmp_moscap1
+XI3<18> vss v1 / PreAmp_moscap1
+XI3<19> vss v1 / PreAmp_moscap1
+XI3<20> vss v1 / PreAmp_moscap1
+XI3<21> vss v1 / PreAmp_moscap1
+XI3<22> vss v1 / PreAmp_moscap1
+XI3<23> vss v1 / PreAmp_moscap1
+XI3<24> vss v1 / PreAmp_moscap1
+XI3<25> vss v1 / PreAmp_moscap1
+XI3<26> vss v1 / PreAmp_moscap1
+XI3<27> vss v1 / PreAmp_moscap1
+XI3<28> vss v1 / PreAmp_moscap1
+XI3<29> vss v1 / PreAmp_moscap1
+XI3<30> vss v1 / PreAmp_moscap1
+XI3<31> vss v1 / PreAmp_moscap1
+XI3<32> vss v1 / PreAmp_moscap1
+XI3<33> vss v1 / PreAmp_moscap1
+XI3<34> vss v1 / PreAmp_moscap1
+XI3<35> vss v1 / PreAmp_moscap1
+XI3<36> vss v1 / PreAmp_moscap1
+XI3<37> vss v1 / PreAmp_moscap1
+XI3<38> vss v1 / PreAmp_moscap1
+XI3<39> vss v1 / PreAmp_moscap1
+XI3<40> vss v1 / PreAmp_moscap1
+XI3<41> vss v1 / PreAmp_moscap1
+XI3<42> vss v1 / PreAmp_moscap1
+XI3<43> vss v1 / PreAmp_moscap1
+XI3<44> vss v1 / PreAmp_moscap1
+XI3<45> vss v1 / PreAmp_moscap1
+XI3<46> vss v1 / PreAmp_moscap1
+XI3<47> vss v1 / PreAmp_moscap1
+XI3<48> vss v1 / PreAmp_moscap1
+XI3<49> vss v1 / PreAmp_moscap1
+XI3<50> vss v1 / PreAmp_moscap1
+XI3<51> vss v1 / PreAmp_moscap1
+XI3<52> vss v1 / PreAmp_moscap1
+XI3<53> vss v1 / PreAmp_moscap1
+XI3<54> vss v1 / PreAmp_moscap1
+XI3<55> vss v1 / PreAmp_moscap1
+XI3<56> vss v1 / PreAmp_moscap1
+XI3<57> vss v1 / PreAmp_moscap1
+XI3<58> vss v1 / PreAmp_moscap1
+XI3<59> vss v1 / PreAmp_moscap1
+XI3<60> vss v1 / PreAmp_moscap1
+XI3<61> vss v1 / PreAmp_moscap1
+XI3<62> vss v1 / PreAmp_moscap1
+XI3<63> vss v1 / PreAmp_moscap1
+XI3<64> vss v1 / PreAmp_moscap1
+XI3<65> vss v1 / PreAmp_moscap1
+XI3<66> vss v1 / PreAmp_moscap1
+XI3<67> vss v1 / PreAmp_moscap1
+XI3<68> vss v1 / PreAmp_moscap1
+XI3<69> vss v1 / PreAmp_moscap1
+XI3<70> vss v1 / PreAmp_moscap1
+XI3<71> vss v1 / PreAmp_moscap1
+XI3<72> vss v1 / PreAmp_moscap1
+XI3<73> vss v1 / PreAmp_moscap1
+XI3<74> vss v1 / PreAmp_moscap1
+XI3<75> vss v1 / PreAmp_moscap1
+XI3<76> vss v1 / PreAmp_moscap1
+XI5<1> vss IB / PreAmp_moscap1
+XI5<2> vss IB / PreAmp_moscap1
+XI5<3> vss IB / PreAmp_moscap1
+XI5<4> vss IB / PreAmp_moscap1
+XI5<5> vss IB / PreAmp_moscap1
+XI5<6> vss IB / PreAmp_moscap1
+XI5<7> vss IB / PreAmp_moscap1
+XI5<8> vss IB / PreAmp_moscap1
+XI5<9> vss IB / PreAmp_moscap1
+XI5<10> vss IB / PreAmp_moscap1
+XI5<11> vss IB / PreAmp_moscap1
+XI5<12> vss IB / PreAmp_moscap1
+XI5<13> vss IB / PreAmp_moscap1
+XI5<14> vss IB / PreAmp_moscap1
+XI5<15> vss IB / PreAmp_moscap1
+XI5<16> vss IB / PreAmp_moscap1
+XI5<17> vss IB / PreAmp_moscap1
+XI5<18> vss IB / PreAmp_moscap1
+XI5<19> vss IB / PreAmp_moscap1
+XI5<20> vss IB / PreAmp_moscap1
+XI5<21> vss IB / PreAmp_moscap1
+XI5<22> vss IB / PreAmp_moscap1
+XI5<23> vss IB / PreAmp_moscap1
+XI5<24> vss IB / PreAmp_moscap1
+XI5<25> vss IB / PreAmp_moscap1
+XI5<26> vss IB / PreAmp_moscap1
+XI5<27> vss IB / PreAmp_moscap1
+XI5<28> vss IB / PreAmp_moscap1
+XI5<29> vss IB / PreAmp_moscap1
+XI5<30> vss IB / PreAmp_moscap1
+XI5<31> vss IB / PreAmp_moscap1
+XI5<32> vss IB / PreAmp_moscap1
+XI5<33> vss IB / PreAmp_moscap1
+XI5<34> vss IB / PreAmp_moscap1
+XI5<35> vss IB / PreAmp_moscap1
+XI5<36> vss IB / PreAmp_moscap1
+XI5<37> vss IB / PreAmp_moscap1
+XI5<38> vss IB / PreAmp_moscap1
+XI5<39> vss IB / PreAmp_moscap1
+XI5<40> vss IB / PreAmp_moscap1
+XI5<41> vss IB / PreAmp_moscap1
+XI5<42> vss IB / PreAmp_moscap1
+XI5<43> vss IB / PreAmp_moscap1
+XI5<44> vss IB / PreAmp_moscap1
+XI5<45> vss IB / PreAmp_moscap1
+XI5<46> vss IB / PreAmp_moscap1
+XI5<47> vss IB / PreAmp_moscap1
+XI5<48> vss IB / PreAmp_moscap1
+XI5<49> vss IB / PreAmp_moscap1
+XI5<50> vss IB / PreAmp_moscap1
+XI5<51> vss IB / PreAmp_moscap1
+XI5<52> vss IB / PreAmp_moscap1
+XI5<53> vss IB / PreAmp_moscap1
+XI5<54> vss IB / PreAmp_moscap1
+XI5<55> vss IB / PreAmp_moscap1
+XI5<56> vss IB / PreAmp_moscap1
+XI5<57> vss IB / PreAmp_moscap1
+XI5<58> vss IB / PreAmp_moscap1
+XI5<59> vss IB / PreAmp_moscap1
+XI5<60> vss IB / PreAmp_moscap1
+XI5<61> vss IB / PreAmp_moscap1
+XI5<62> vss IB / PreAmp_moscap1
+XI5<63> vss IB / PreAmp_moscap1
+XI5<64> vss IB / PreAmp_moscap1
+XI5<65> vss IB / PreAmp_moscap1
+XI5<66> vss IB / PreAmp_moscap1
+XI5<67> vss IB / PreAmp_moscap1
+XI5<68> vss IB / PreAmp_moscap1
+.ENDS
+

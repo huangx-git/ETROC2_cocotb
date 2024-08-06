@@ -1,0 +1,7 @@
+`include "./etroc2readout/globalController_tb.v"
+`include "./etroc2readout/globalController.v"
+`include "./etroc2readout/digitalPhaseshifter.v"
+`include "./etroc2readout/simplePLL.v"
+`include "./etroc2readout/chargeInjectionPulseGen.v"
+`include "./etroc2readout/lockDetector/ljCDRlockFilterDetector.v"
+`include "./etroc2readout/fastcommandDecoderTop_tb_include.v"

@@ -1,0 +1,110 @@
+************************************************************************
+* auCdl Netlist:
+* 
+* Library Name:  ETROC0A_Analog
+* Top Cell Name: Discri2
+* View Name:     schematic
+* Netlisted on:  Apr 21 22:10:00 2022
+************************************************************************
+
+*.INCLUDE  /asic/cad/Library/tsmc/TSMC65_CERN_2017_DL20/V1.7A_1/1p9m6x1z1u/tsmcN65/../PVS_QRC/lvs/source.added
+*.EQUATION
+*.SCALE METER
+*.MEGA
+.PARAM
+
+
+
+************************************************************************
+* Library Name: ETROC0A_Analog
+* Cell Name:    DisMOSCap
+* View Name:    schematic
+************************************************************************
+
+.SUBCKT DisMOSCap vHigh vLow
+*.PININFO vHigh:B vLow:B
+MM0 vLow vHigh vLow vLow nch_25 l=500n w=510.0n m=32
+MM1 vLow vHigh vLow vLow nch_25 l=280.0n w=510.0n m=16
+.ENDS
+
+************************************************************************
+* Library Name: ETROC0A_Analog
+* Cell Name:    Discri2
+* View Name:    schematic
+************************************************************************
+
+.SUBCKT Discri2 HysSelB<3> HysSelB<2> HysSelB<1> HysSelB<0> ib inn inp out pd 
++ vdd vss
+*.PININFO HysSelB<3>:I HysSelB<2>:I HysSelB<1>:I HysSelB<0>:I ib:I inn:I inp:I 
+*.PININFO pd:I out:O vdd:B vss:B
+XM15 inno2 inpo1 net022 net022 vdd vss nmos_rf_lvt_6t lr=60n wr=1u nr=4 m=2
+XM14 inpo2 inno1 net022 net022 vdd vss nmos_rf_lvt_6t lr=60n wr=1u nr=4 m=2
+XM10 inno0 inp net015 net015 vdd vss nmos_rf_lvt_6t lr=200n wr=1.5u nr=8 m=4
+XM8 inpo0 inn net015 net015 vdd vss nmos_rf_lvt_6t lr=200n wr=1.5u nr=8 m=4
+XM6 inno1 inpo0 net012 net012 vdd vss nmos_rf_lvt_6t lr=60n wr=1u nr=4 m=2
+XM4 inpo1 inno0 net012 net012 vdd vss nmos_rf_lvt_6t lr=60n wr=1u nr=4 m=2
+XM1 net14 inpo2 net28 net28 vdd vss nmos_rf_lvt_6t lr=60n wr=1.5u nr=4 m=2
+XM0 net043 inno2 net28 net28 vdd vss nmos_rf_lvt_6t lr=60n wr=1.5u nr=4 m=2
+MM33 net08 pd ib ib pch_lvt l=80n w=1u m=6
+MM28<3> net051<0> net043 vdd vdd pch_lvt l=80n w=2u m=4
+MM28<2> net051<1> net043 vdd vdd pch_lvt l=80n w=2u m=4
+MM28<1> net051<2> net043 vdd vdd pch_lvt l=80n w=2u m=4
+MM28<0> net051<3> net043 vdd vdd pch_lvt l=80n w=2u m=4
+MM31<3> net043 HysSelB<3> net052<0> vdd pch_lvt l=60n w=1u m=4
+MM31<2> net043 HysSelB<2> net052<1> vdd pch_lvt l=60n w=1u m=4
+MM31<1> net043 HysSelB<1> net052<2> vdd pch_lvt l=60n w=1u m=4
+MM31<0> net043 HysSelB<0> net052<3> vdd pch_lvt l=60n w=1u m=4
+MM30<3> net14 HysSelB<3> net051<0> vdd pch_lvt l=60n w=1u m=4
+MM30<2> net14 HysSelB<2> net051<1> vdd pch_lvt l=60n w=1u m=4
+MM30<1> net14 HysSelB<1> net051<2> vdd pch_lvt l=60n w=1u m=4
+MM30<0> net14 HysSelB<0> net051<3> vdd pch_lvt l=60n w=1u m=4
+MM29<3> net052<0> net14 vdd vdd pch_lvt l=80n w=2u m=4
+MM29<2> net052<1> net14 vdd vdd pch_lvt l=80n w=2u m=4
+MM29<1> net052<2> net14 vdd vdd pch_lvt l=80n w=2u m=4
+MM29<0> net052<3> net14 vdd vdd pch_lvt l=80n w=2u m=4
+MM18 out net032 vdd vdd pch_lvt l=60n w=4u m=8
+MM12 net032 outb vdd vdd pch_lvt l=60n w=2u m=4
+MM17 outb net14 vdd vdd pch_lvt l=80n w=2u m=16
+MM16 net7 net043 vdd vdd pch_lvt l=80n w=2u m=8
+MM7 net14 net14 vdd vdd pch_lvt l=80n w=2u m=8
+MM20 net14 net043 vdd vdd pch_lvt l=80n w=2u m=8
+MM5 net043 net043 vdd vdd pch_lvt l=80n w=2u m=8
+MM21 net043 net14 vdd vdd pch_lvt l=80n w=2u m=8
+MM27 net015 net08 vss vss nch_dnw l=300n w=3u m=12
+MM26 net012 net08 vss vss nch_dnw l=300n w=3u m=8
+MM19 out net032 vss vss nch_dnw l=60n w=2u m=8
+MM13 net032 outb vss vss nch_dnw l=60n w=4u m=4
+MM11 outb net7 vss vss nch_dnw l=80n w=1u m=4
+MM9 net7 net7 vss vss nch_dnw l=80n w=1u m=4
+MM32 net022 net08 vss vss nch_dnw l=300n w=3u m=8
+MM3 net08 net08 vss vss nch_dnw l=300n w=3u m=2
+MM2 net28 net08 vss vss nch_dnw l=300n w=3u m=16
+XR15 net053 vdd rppolywo l=12.8u w=2.8u m=1
+XR13 net054 vdd rppolywo l=12.8u w=2.8u m=1
+XR11 net059 vdd rppolywo l=12.8u w=2.8u m=1
+XR8 inpo1 net060 rppolywo l=12.8u w=2.8u m=1
+XR3 net057 vdd rppolywo l=11.2u w=2.8u m=1
+XR0 inpo0 net058 rppolywo l=11.2u w=2.8u m=1
+XR14 inno2 net053 rppolywo l=12.8u w=2.8u m=1
+XR12 inpo2 net054 rppolywo l=12.8u w=2.8u m=1
+XR2 inno0 net057 rppolywo l=11.2u w=2.8u m=1
+XR1 net058 vdd rppolywo l=11.2u w=2.8u m=1
+XR9 net060 vdd rppolywo l=12.8u w=2.8u m=1
+XR10 inno1 net059 rppolywo l=12.8u w=2.8u m=1
+XI3<10> vdd vss / DisMOSCap
+XI3<9> vdd vss / DisMOSCap
+XI3<8> vdd vss / DisMOSCap
+XI3<7> vdd vss / DisMOSCap
+XI3<6> vdd vss / DisMOSCap
+XI3<5> vdd vss / DisMOSCap
+XI3<4> vdd vss / DisMOSCap
+XI3<3> vdd vss / DisMOSCap
+XI3<2> vdd vss / DisMOSCap
+XI3<1> vdd vss / DisMOSCap
+XI3<0> vdd vss / DisMOSCap
+DD3 vss vdd pwdnw area=2.872e-10 pj=6.79e-05 m=1
+DD2 vss vdd dnwpsub area=3.9129e-10 pj=0.00014243 m=1
+MM34 outb pd vss vss nch_lvt l=80n w=1u m=6
+MM22 net08 pd vss vss nch_lvt l=80n w=1u m=6
+.ENDS
+

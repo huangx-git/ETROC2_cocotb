@@ -1,0 +1,74 @@
+# clean up
+rm -rf CDLDir 
+mkdir CDLDir
+
+# si.env generation for ETROC_PLL_Core
+rm .running
+rm -f si.env
+sed 's/UserLibName/ETROC_PLL_Core/g' scripts/si.env > ./si_0.env
+sed 's/UserCellName/ETROC_PLL_Core/g' ./si_0.env > ./si_1.env
+sed 's/UserNetlistName/ETROC_PLL_Core.src.cdl/g' ./si_1.env > ./si.env
+rm -rf si_*.env
+si -batch -command netlist
+
+# uniquify ETROC_PLL_Core
+# rm -f uniquify.lst
+# grep ".SUBCKT *" ETROC_PLL_Core.src.cdl | cut -d " " -f 2 > uniquify.lst
+# sed -i "/ETROC_PLL_Core/d" uniquify.lst
+# sed -i "s/.*/s\/&\/&_tile_ETROC_PLL_Core\/g/g" uniquify.lst
+# sed -f uniquify.lst ETROC_PLL_Core.src.cdl > ETROC_PLL_Core.unique.src.cdl
+
+# si.env generation for phase shifter
+rm .running
+rm -f si.env
+sed 's/UserLibName/ETROC1_PhaseShifter1/g' scripts/si.env > ./si_0.env
+sed 's/UserCellName/phaseShifter_Top/g' ./si_0.env > ./si_1.env
+sed 's/UserNetlistName/phaseShifter_Top.src.cdl/g' ./si_1.env > ./si.env
+rm -rf si_*.env
+si -batch -command netlist
+
+# uniquify phaseShifter_Top
+# rm -f uniquify.lst
+# grep ".SUBCKT *" phaseShifter_Top.src.cdl | cut -d " " -f 2 > uniquify.lst
+# sed -i "/phaseShifter_Top/d" uniquify.lst
+# sed -i "s/.*/s\/&\/&_tile_phaseShifter_Top\/g/g" uniquify.lst
+# sed -f uniquify.lst phaseShifter_Top.src.cdl > phaseShifter_Top.unique.src.cdl
+
+# si.env generation for TDC Reference Strobe Generator
+rm .running
+rm -f si.env
+sed 's/UserLibName/ETROC1_TDC1_CLKPLSGen/g' scripts/si.env > ./si_0.env
+sed 's/UserCellName/pulseGenerator/g' ./si_0.env > ./si_1.env
+sed 's/UserNetlistName/pulseGenerator.src.cdl/g' ./si_1.env > ./si.env
+rm -rf si_*.env
+si -batch -command netlist
+
+# uniquify pulseGenerator
+rm -f uniquify.lst
+grep ".SUBCKT *" pulseGenerator.src.cdl | cut -d " " -f 2 > uniquify.lst
+sed -i "/pulseGenerator/d" uniquify.lst
+sed -i "s/.*/s\/&\/&_tile_pulseGenerator\/g/g" uniquify.lst
+sed -f uniquify.lst pulseGenerator.src.cdl > pulseGenerator.unique.src.cdl
+
+
+# si.env generation for fc_CKB4_LVT_ELT_wDECAP
+rm .running
+rm -f si.env
+sed 's/UserLibName/ETROC_PLL_Top/g' scripts/si.env > ./si_0.env
+sed 's/UserCellName/fc_CKB4_LVT_ELT_wDECAP/g' ./si_0.env > ./si_1.env
+sed 's/UserNetlistName/fc_CKB4_LVT_ELT_wDECAP.src.cdl/g' ./si_1.env > ./si.env
+rm -rf si_*.env
+si -batch -command netlist
+
+
+# si.env generation for CLKGen_decouplingCaps
+rm .running
+rm -f si.env
+sed 's/UserLibName/ETROC2_Core/g' scripts/si.env > ./si_0.env
+sed 's/UserCellName/CLKGen_decouplingCaps/g' ./si_0.env > ./si_1.env
+sed 's/UserNetlistName/CLKGen_decouplingCaps.src.cdl/g' ./si_1.env > ./si.env
+rm -rf si_*.env
+si -batch -command netlist
+
+mv *.cdl ./CDLDir
+

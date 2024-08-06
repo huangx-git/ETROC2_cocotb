@@ -1,0 +1,176 @@
+//////////////////////////////////////////////////////////////////////////////////
+// Org:        	FNAL
+// Author:      Quan Sun
+// 
+// Create Date:    April. 15th, 2022
+// Description: wreal model of lpgbt_clkgen_wbias
+//
+// Revision: 
+//
+//
+//////////////////////////////////////////////////////////////////////////////////
+
+`include "constants.vams"
+`include "disciplines.vams"
+`timescale 100fs / 100fs
+module lpgbt_clkgen_wbias ( clk2g56A, clk2g56B, clk2g56C, clk2g56In, clk2g56Ip,
+clk2g56Qn, clk2g56Qp, clk2g56S, clk2g56SN, clk5g12EOMn, clk5g12EOMp, clk5g12S,
+clk5g12SN, AVDD, AVSS, VDD, VSS, clk5g12extn, clk5g12extp, clk5g12vcon, clk5g12vcop,
+clkTreeADisableA, clkTreeADisableB, clkTreeADisableC, clkTreeBDisableA, clkTreeBDisableB,
+clkTreeBDisableC, clkTreeCDisableA, clkTreeCDisableB, clkTreeCDisableC, disCLKA,
+disCLKB, disCLKC, disDESA, disDESB, disDESC, disEOMA, disEOMB, disEOMC, disEXTA,
+disEXTB, disEXTC, disSERA, disSERB, disSERC, disVCOA, disVCOB, disVCOC, ibiaspn60uCLK,
+ibiaspn60uDES, ibiaspn60uEOM, ibiaspn60uEXT, ibiaspn60uSER, ibiaspn60uVCO );
+
+  input ibiaspn60uCLK;
+  output clk2g56B;
+  input ibiaspn60uDES;
+  input disEOMB;
+  output clk2g56A;
+  input disEXTC;
+  output clk5g12S;
+  input disDESC;
+  inout AVDD;
+  input disSERB;
+  inout VDD;
+  input clk5g12vcon;
+  output clk2g56Ip;
+  output clk2g56SN;
+  input clkTreeADisableB;
+  input disVCOC;
+  input disSERC;
+  input clk5g12extp;
+  input ibiaspn60uVCO;
+  input disCLKC;
+  input disCLKB;
+  input clkTreeCDisableA;
+  input clkTreeBDisableB;
+  output clk2g56In;
+  input disEOMC;
+  output clk2g56Qp;
+  input clkTreeCDisableC;
+  output clk2g56C;
+  input disEXTB;
+  input clkTreeBDisableC;
+  input clkTreeBDisableA;
+  output clk5g12EOMn;
+  input clk5g12extn;
+  input disDESA;
+  input clkTreeADisableC;
+  input disSERA;
+  input ibiaspn60uEOM;
+  input ibiaspn60uSER;
+  input disEOMA;
+  output clk2g56S;
+  output clk5g12EOMp;
+  output clk5g12SN;
+  input disCLKA;
+  input clkTreeADisableA;
+  input ibiaspn60uEXT;
+  input disDESB;
+  input disVCOB;
+  inout AVSS;
+  inout VSS;
+  input disVCOA;
+  input disEXTA;
+  input clkTreeCDisableB;
+  output clk2g56Qn;
+  input clk5g12vcop;
+
+
+parameter real HighVoltage  = 1.2;      //voltage
+parameter real LowVoltage   = 0.6;        //voltage
+
+
+reg cntA = 0;
+wreal clk5g12vcop, clk5g12vcon;
+wreal clk2g56S, clk2g56SN;
+wreal clk5g12S, clk5g12SN;
+wreal clk2g56Ip, clk2g56In;
+wreal clk2g56Qp, clk2g56Qn;
+wreal clk5g12EOMp, clk5g12EOMn;
+
+real clk2g56S_real, clk2g56SN_real;
+real clk5g12S_real, clk5g12SN_real;
+real clk2g56Ip_real, clk2g56In_real;
+real clk2g56Qp_real, clk2g56Qn_real;
+real clk5g12EOMp_real, clk5g12EOMn_real;
+
+
+wire clkvco;
+assign clkvco = (clk5g12vcop-clk5g12vcon)>0?1:0;
+
+always@(posedge clkvco) begin
+	cntA <= cntA + 1;
+end
+
+assign clk2g56A = (clkTreeADisableA==1'b1 && clkTreeADisableB==1'b1 && clkTreeADisableC==1'b1)?1:cntA;
+assign clk2g56B = (clkTreeBDisableA==1'b1 && clkTreeBDisableB==1'b1 && clkTreeBDisableC==1'b1)?1:cntA;
+assign clk2g56C = (clkTreeCDisableA==1'b1 && clkTreeCDisableB==1'b1 && clkTreeCDisableC==1'b1)?1:cntA;
+
+assign clk2g56S = clk2g56S_real;
+assign clk2g56SN = clk2g56SN_real;
+assign clk5g12S = clk5g12S_real;
+assign clk5g12SN = clk5g12SN_real;
+assign clk2g56Ip = clk2g56Ip_real;
+assign clk2g56In = clk2g56In_real;
+assign clk2g56Qp = clk2g56Qp_real;
+assign clk2g56Qn = clk2g56Qn_real;
+assign clk5g12EOMp = clk5g12EOMp_real;
+assign clk5g12EOMn = clk5g12EOMn_real;
+
+
+
+always @(disVCOA, disVCOC, disVCOB, disCLKA, disCLKB, disCLKC, cntA, clk5g12vcop, clk5g12vcon) begin
+if(disVCOA == 1'b0 && disVCOB == 1'b0 && disVCOC == 1'b0 && disCLKA == 1'b0 && disCLKB == 1'b0 && disCLKC == 1'b0) begin
+	if(disSERA==1'b0 && disSERB==1'b0 && disSERC==1'b0) begin
+		clk2g56S_real = cntA?HighVoltage:LowVoltage;
+		clk2g56SN_real = ~cntA?HighVoltage:LowVoltage;
+		clk5g12S_real = clk5g12vcop;
+		clk5g12SN_real = clk5g12vcon;
+	end
+	else begin
+		clk2g56S_real = LowVoltage;
+		clk2g56SN_real = LowVoltage;
+		clk5g12S_real = HighVoltage;
+		clk5g12SN_real = HighVoltage;
+	end
+
+	if(disDESA==1'b0 && disDESB==1'b0 && disDESC==1'b0) begin
+		clk2g56Ip_real = cntA?HighVoltage:LowVoltage;
+		clk2g56In_real = ~cntA?HighVoltage:LowVoltage;
+		clk2g56Qp_real = cntA?HighVoltage:LowVoltage;
+		clk2g56Qn_real = ~cntA?HighVoltage:LowVoltage;
+	end
+	else begin
+		clk2g56Ip_real = HighVoltage;
+		clk2g56In_real = HighVoltage;
+		clk2g56Qp_real = HighVoltage;
+		clk2g56Qn_real = HighVoltage;
+	end
+
+	if(disEOMA==1'b0 && disEOMB==1'b0 && disEOMC==1'b0) begin
+		clk5g12EOMp_real = clk5g12vcop;
+		clk5g12EOMn_real = clk5g12vcon;
+	end
+	else begin
+		clk5g12EOMp_real = HighVoltage;
+		clk5g12EOMn_real = HighVoltage;
+	end
+end   //end if
+else begin
+		clk2g56S_real = LowVoltage;
+		clk2g56SN_real = LowVoltage;
+		clk5g12S_real = HighVoltage;
+		clk5g12SN_real = HighVoltage;
+		clk2g56Ip_real = HighVoltage;
+		clk2g56In_real = HighVoltage;
+		clk2g56Qp_real = HighVoltage;
+		clk2g56Qn_real = HighVoltage;
+		clk5g12EOMp_real = HighVoltage;
+		clk5g12EOMn_real = HighVoltage;
+end
+end		// end always
+
+
+endmodule

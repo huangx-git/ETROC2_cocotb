@@ -1,0 +1,1 @@
+v2lvs -l ../netlist/TH_CtrlTMR.v -s ../netlist/TH_CtrlTMR.src.net -v ../netlist/TH_CtrlTMR_Wrap.v -o TH_CtrlTMR_Wrap.src.spi -a "<"

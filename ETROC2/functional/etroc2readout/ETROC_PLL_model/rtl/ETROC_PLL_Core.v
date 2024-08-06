@@ -1,0 +1,218 @@
+//////////////////////////////////////////////////////////////////////////////////
+// Org:        	SMU & FNAL
+// Author:      Quan Sun
+// 
+// Create Date:    Jan 7 2022
+// Design Name:    ETROC2 
+// Module Name:    ETROC_PLL_Core
+// Project Name: 
+// Description: behavioral model of ETROC PLL
+//
+// Dependencies: 
+//
+//////////////////////////////////////////////////////////////////////////////////
+
+module ETROC_PLL_Core ( INSTLOCK_PLL, clk1G28A, clk1G28B, clk1G28C, clk2g56In,
+clk2g56Ip, clk2g56Qn, clk2g56Qp, clk2g56S, clk2g56SN, clk5g12EOMn, clk5g12EOMp,
+clk5g12S, clk5g12SN, clk40MA, clk40MB, clk40MC, clk320MA, clk320MB, clk320MC,
+toI2C_AFCbusy, toI2C_AFCcalCap, CLK40REFA, CLK40REFB, CLK40REFC, VDD, VDD_PLL,
+VP, VSS, VSS_PLL, EXT40MCLK, clkTreeADisableA, clkTreeADisableB, clkTreeADisableC,
+clkTreeBDisableA, clkTreeBDisableB, clkTreeBDisableC, clkTreeCDisableA, clkTreeCDisableB,
+clkTreeCDisableC, toAFC_ModeA, toAFC_ModeB, toAFC_ModeC, toAFC_OverrideCtrlA,
+toAFC_OverrideCtrlB, toAFC_OverrideCtrlC, toAFC_OverrideCtrl_val1, toAFC_RSTA,
+toAFC_RSTB, toAFC_RSTC, toAFC_StartA, toAFC_StartB, toAFC_StartC, toclkgen_disCLKA,
+toclkgen_disCLKB, toclkgen_disCLKC, toclkgen_disDESA, toclkgen_disDESB, toclkgen_disDESC,
+toclkgen_disEOMA, toclkgen_disEOMB, toclkgen_disEOMC, toclkgen_disSERA, toclkgen_disSERB,
+toclkgen_disSERC, toclkgen_disVCOA, toclkgen_disVCOB, toclkgen_disVCOC, tofbDiv_skipA,
+tofbDiv_skipB, tofbDiv_skipC, topll_BIASGEN_CONFIG, topll_CONFIG_I_PLL, topll_CONFIG_P_PLL,
+topll_ENABLEPLL, topll_PLL_R_CONFIG, topll_overrideVcA, topll_overrideVcB, topll_overrideVcC,
+topll_vcoDAC, topll_vcoRailMode );
+
+  input  [3:0] topll_CONFIG_P_PLL;
+  input toclkgen_disEOMA;
+  input toAFC_ModeA;
+  input topll_overrideVcC;
+  input topll_overrideVcA;
+  input toclkgen_disSERA;
+  input toAFC_RSTA;
+  output clk5g12S;
+  input toclkgen_disDESC;
+  input CLK40REFA;
+  input  [3:0] topll_CONFIG_I_PLL;
+  input  [3:0] topll_BIASGEN_CONFIG;
+  input toclkgen_disSERB;
+  input toclkgen_disCLKC;
+  input toAFC_OverrideCtrlA;
+  input EXT40MCLK;
+  input toAFC_OverrideCtrlB;
+  output clk320MC;
+  input CLK40REFB;
+  input tofbDiv_skipB;
+  input toclkgen_disVCOC;
+  input toAFC_OverrideCtrlC;
+  inout VP;
+  inout VDD;
+  output clk320MB;
+  input tofbDiv_skipC;
+  input toAFC_StartA;
+  input clkTreeADisableB;
+  inout VDD_PLL;
+  output clk2g56Ip;
+  output clk2g56SN;
+  input toAFC_ModeB;
+  inout VSS_PLL;
+  output clk1G28C;
+  input toAFC_StartC;
+  input toclkgen_disEOMB;
+  input toclkgen_disDESA;
+  input clkTreeCDisableA;
+  input clkTreeBDisableB;
+  output clk2g56In;
+  input CLK40REFC;
+  output clk1G28A;
+  output clk2g56Qp;
+  input clkTreeCDisableC;
+  input clkTreeBDisableC;
+  output clk1G28B;
+  output clk40MC;
+  input toclkgen_disSERC;
+  input clkTreeBDisableA;
+  output clk40MA;
+  output clk320MA;
+  input toAFC_StartB;
+  output clk5g12EOMn;
+  input toAFC_RSTB;
+  input clkTreeADisableC;
+  input toclkgen_disEOMC;
+  input  [5:0] toAFC_OverrideCtrl_val1;
+  output  [5:0] toI2C_AFCcalCap;
+  input  [3:0] topll_vcoDAC;
+  input topll_overrideVcB;
+  input toclkgen_disVCOA;
+  input toAFC_RSTC;
+  output clk2g56S;
+  output clk5g12EOMp;
+  output clk5g12SN;
+  output clk40MB;
+  output toI2C_AFCbusy;
+  input  [3:0] topll_PLL_R_CONFIG;
+  input clkTreeADisableA;
+  input topll_ENABLEPLL;
+  input tofbDiv_skipA;
+  input toclkgen_disVCOB;
+  input toAFC_ModeC;
+  input topll_vcoRailMode;
+  input toclkgen_disCLKA;
+  inout VSS;
+  input toclkgen_disDESB;
+  input toclkgen_disCLKB;
+  input clkTreeCDisableB;
+  output INSTLOCK_PLL;
+  output clk2g56Qn;
+
+wire AFCModeAnd1, AFCModeAnd2, AFCModeAnd3, toAFC_Mode;
+assign AFCModeAnd1 = toAFC_ModeA & toAFC_ModeB;
+assign AFCModeAnd2 = toAFC_ModeA & toAFC_ModeC;
+assign AFCModeAnd3 = toAFC_ModeB & toAFC_ModeC;
+assign toAFC_Mode = AFCModeAnd1 | AFCModeAnd2 | AFCModeAnd3;
+
+wire ENABLEPLL, toI2C_AFCbusy;
+assign ENABLEPLL = toAFC_Mode?topll_ENABLEPLL:(~toI2C_AFCbusy);
+
+wire OverrideCtrlA, OverrideCtrlB, OverrideCtrlC;
+assign OverrideCtrlA = toAFC_ModeA?toAFC_OverrideCtrlA:0;
+assign OverrideCtrlB = toAFC_ModeB?toAFC_OverrideCtrlB:0;
+assign OverrideCtrlC = toAFC_ModeC?toAFC_OverrideCtrlC:0;
+
+wire overrideVcA, overrideVcB, overrideVcC;
+assign overrideVcA = toAFC_ModeA?topll_overrideVcA:toI2C_AFCbusy;
+assign overrideVcB = toAFC_ModeB?topll_overrideVcB:toI2C_AFCbusy;
+assign overrideVcC = toAFC_ModeC?topll_overrideVcC:toI2C_AFCbusy;
+
+wire [8:0] control, control2, control3, control4;
+wire AFC_fbCKA, AFC_fbCKB, AFC_fbCKC;
+
+AFC4ChV2 AFC4ChV2_Inst( 
+	.resetA(toAFC_RSTA), 
+	.resetB(toAFC_RSTB), 
+	.resetC(toAFC_RSTC), 
+	.AFCstartA(toAFC_StartA), 
+	.AFCstartB(toAFC_StartB), 
+	.AFCstartC(toAFC_StartC), 
+	.extCLK40(EXT40MCLK),
+	.calSourceA(1'b0), 
+	.calSourceB(1'b0), 
+	.calSourceC(1'b0), 
+	.calChSelA(2'b00), 
+	.calChSelB(2'b00), 
+	.calChSelC(2'b00), 
+	.clkref1A(1'b0), .clkref1B(1'b0), .clkref1C(1'b0), .clkref2A(1'b0), .clkref2B(1'b0), .clkref2C(1'b0), 
+		.clkref3A(1'b0), .clkref3B(1'b0), .clkref3C(1'b0), .clkref4A(1'b0), .clkref4B(1'b0), .clkref4C(1'b0), 
+	.ckfb1A(AFC_fbCKA), 
+	.ckfb1B(AFC_fbCKB), 
+	.ckfb1C(AFC_fbCKC), 
+	.ckfb2A(1'b0), .ckfb2B(1'b0), .ckfb2C(1'b0), .ckfb3A(1'b0), .ckfb3B(1'b0), .ckfb3C(1'b0), 
+		.ckfb4A(1'b0), .ckfb4B(1'b0), .ckfb4C(1'b0), 
+	.overridecontrolA(OverrideCtrlA), 
+	.overridecontrolB(OverrideCtrlB),
+	.overridecontrolC(OverrideCtrlC), 
+	.overridecontrol_val1(toAFC_OverrideCtrl_val1), 
+	.overridecontrol_val2(6'b000000), .overridecontrol_val3(6'b000000), .overridecontrol_val4(6'b000000), 
+	.control1(control), .control2(control2), .control3(control3), .control4(control4), 
+	.calControlCode(toI2C_AFCcalCap),		// what's this?
+	//disDataDiv1A, disDataDiv1B, disDataDiv1C, disDataDiv2A, disDataDiv2B, disDataDiv2C,
+	//disDataDiv3A, disDataDiv3B, disDataDiv3C, disDataDiv4A, disDataDiv4B, disDataDiv4C,
+	//disClkDiv1A, disClkDiv1B, disClkDiv1C, disClkDiv2A, disClkDiv2B, disClkDiv2C,
+	//disClkDiv3A, disClkDiv3B, disClkDiv3C, disClkDiv4A, disClkDiv4B, disClkDiv4C,
+	.AFCbusy(toI2C_AFCbusy), 
+	.VDD(VDD), .VSS(VSS) );
+
+
+wire [8:0] topll_vcoCapSelect;
+ETROC_PLL_Core_noAFC ETROC_PLL_Core_noAFC_INST( 
+	.AFC_fbCKA(AFC_fbCKA), .AFC_fbCKB(AFC_fbCKB), .AFC_fbCKC(AFC_fbCKC), 
+	.clk1G28A(clk1G28A), .clk1G28B(clk1G28B), .clk1G28C(clk1G28C), 
+	.clk2g56In(clk2g56In), .clk2g56Ip(clk2g56Ip), 
+	.clk2g56Qn(clk2g56Qn), .clk2g56Qp(clk2g56Qp), 
+	.clk2g56S(clk2g56S), .clk2g56SN(clk2g56SN), 
+	.clk5g12EOMn(clk5g12EOMn), .clk5g12EOMp(clk5g12EOMp), 
+	.clk5g12S(clk5g12S), .clk5g12SN(clk5g12SN), 
+	.clk40MA(clk40MA), .clk40MB(clk40MB), .clk40MC(clk40MC), 
+	.clk320MA(clk320MA), .clk320MB(clk320MB), .clk320MC(clk320MC), 
+	//CKFBA, CKFBB, CKFBC, 
+	.CLK40REFA(CLK40REFA), .CLK40REFB(CLK40REFB), .CLK40REFC(CLK40REFC), 
+	.INSTLOCK_PLL(INSTLOCK_PLL),
+	.VDD(VDD), .VDD_PLL(VDD_PLL), 
+	//VP, 
+	.VSS(VSS), .VSS_PLL(VSS_PLL), 
+	//clk2g56A, clk2g56B, clk2g56C, 
+	//vco5g12n, vco5g12p,
+	.clkTreeADisableA(clkTreeADisableA), .clkTreeADisableB(clkTreeADisableB), .clkTreeADisableC(clkTreeADisableC), 
+	.clkTreeBDisableA(clkTreeBDisableA), .clkTreeBDisableB(clkTreeBDisableB), .clkTreeBDisableC(clkTreeBDisableC),
+	.clkTreeCDisableA(clkTreeCDisableA), .clkTreeCDisableB(clkTreeCDisableB), .clkTreeCDisableC(clkTreeCDisableC), 
+	.toclkgen_disCLKA(toclkgen_disCLKA), .toclkgen_disCLKB(toclkgen_disCLKB), .toclkgen_disCLKC(toclkgen_disCLKC),
+	.toclkgen_disDESA(toclkgen_disDESA), .toclkgen_disDESB(toclkgen_disDESB), .toclkgen_disDESC(toclkgen_disDESC),
+	.toclkgen_disEOMA(toclkgen_disEOMA), .toclkgen_disEOMB(toclkgen_disEOMB), .toclkgen_disEOMC(toclkgen_disEOMC),
+	.toclkgen_disSERA(toclkgen_disSERA), .toclkgen_disSERB(toclkgen_disSERB), .toclkgen_disSERC(toclkgen_disSERA),
+	.toclkgen_disVCOA(toclkgen_disVCOA), .toclkgen_disVCOB(toclkgen_disVCOA), .toclkgen_disVCOC(toclkgen_disVCOA), 
+	.tofbDiv_skipA(tofbDiv_skipA), .tofbDiv_skipB(tofbDiv_skipB), .tofbDiv_skipC(tofbDiv_skipC),
+	.topll_BIASGEN_CONFIG(topll_BIASGEN_CONFIG),
+	.topll_CONFIG_I_PLL(topll_CONFIG_I_PLL), .topll_CONFIG_P_PLL(topll_CONFIG_P_PLL),
+	.topll_ENABLEPLL(ENABLEPLL), 
+	.topll_PLL_R_CONFIG(topll_PLL_R_CONFIG), 
+	.topll_overrideVcA(overrideVcA), .topll_overrideVcB(overrideVcA), .topll_overrideVcC(overrideVcA),
+	.topll_vcoCapSelect(topll_vcoCapSelect), 
+	.topll_vcoDAC(topll_vcoDAC), 
+	.topll_vcoRailMode(topll_vcoRailMode) 
+	);
+
+bit_protector bit_protector_INST(
+	.DI(control),
+	.AFCBusy(toI2C_AFCbusy),
+	.AFC_Mode(toAFC_Mode),
+	.DO(topll_vcoCapSelect)
+);
+
+
+endmodule
+

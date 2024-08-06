@@ -1,0 +1,930 @@
+************************************************************************
+* auCdl Netlist:
+* 
+* Library Name:  ETROC1_Analog
+* Top Cell Name: DAC10bit
+* View Name:     schematic
+* Netlisted on:  Apr 21 16:44:46 2022
+************************************************************************
+
+*.INCLUDE  /asic/cad/Library/tsmc/TSMC65_CERN_2017_DL20/V1.7A_1/1p9m6x1z1u/tsmcN65/../PVS_QRC/lvs/source.added
+*.EQUATION
+*.SCALE METER
+*.MEGA
+.PARAM
+
+
+
+************************************************************************
+* Library Name: ETROC1_Analog
+* Cell Name:    10bitDAC2_momMOSCap
+* View Name:    schematic
+************************************************************************
+
+.SUBCKT 10bitDAC2_momMOSCap vHigh vLow
+*.PININFO vHigh:B vLow:B
+MM0 vLow vHigh vLow vLow nch_25 l=500n w=510.0n m=32
+MM1 vLow vHigh vLow vLow nch_25 l=280.0n w=510.0n m=16
+.ENDS
+
+************************************************************************
+* Library Name: ETROC1_Analog
+* Cell Name:    10bitDAC2_cap_5p
+* View Name:    schematic
+************************************************************************
+
+.SUBCKT 10bitDAC2_cap_5p Vhigh Vlow
+*.PININFO Vhigh:B Vlow:B
+XI4<1> Vhigh Vlow / 10bitDAC2_momMOSCap
+XI4<2> Vhigh Vlow / 10bitDAC2_momMOSCap
+XI4<3> Vhigh Vlow / 10bitDAC2_momMOSCap
+XI4<4> Vhigh Vlow / 10bitDAC2_momMOSCap
+XI4<5> Vhigh Vlow / 10bitDAC2_momMOSCap
+XI4<6> Vhigh Vlow / 10bitDAC2_momMOSCap
+XI4<7> Vhigh Vlow / 10bitDAC2_momMOSCap
+XI4<8> Vhigh Vlow / 10bitDAC2_momMOSCap
+XI4<9> Vhigh Vlow / 10bitDAC2_momMOSCap
+XI4<10> Vhigh Vlow / 10bitDAC2_momMOSCap
+XI4<11> Vhigh Vlow / 10bitDAC2_momMOSCap
+XI4<12> Vhigh Vlow / 10bitDAC2_momMOSCap
+XI4<13> Vhigh Vlow / 10bitDAC2_momMOSCap
+XI4<14> Vhigh Vlow / 10bitDAC2_momMOSCap
+XI4<15> Vhigh Vlow / 10bitDAC2_momMOSCap
+XI4<16> Vhigh Vlow / 10bitDAC2_momMOSCap
+XI4<17> Vhigh Vlow / 10bitDAC2_momMOSCap
+XI4<18> Vhigh Vlow / 10bitDAC2_momMOSCap
+XI4<19> Vhigh Vlow / 10bitDAC2_momMOSCap
+XI4<20> Vhigh Vlow / 10bitDAC2_momMOSCap
+XI4<21> Vhigh Vlow / 10bitDAC2_momMOSCap
+XI4<22> Vhigh Vlow / 10bitDAC2_momMOSCap
+XI4<23> Vhigh Vlow / 10bitDAC2_momMOSCap
+XI4<24> Vhigh Vlow / 10bitDAC2_momMOSCap
+XI4<25> Vhigh Vlow / 10bitDAC2_momMOSCap
+XI4<26> Vhigh Vlow / 10bitDAC2_momMOSCap
+XI4<27> Vhigh Vlow / 10bitDAC2_momMOSCap
+XI4<28> Vhigh Vlow / 10bitDAC2_momMOSCap
+XI4<29> Vhigh Vlow / 10bitDAC2_momMOSCap
+XI4<30> Vhigh Vlow / 10bitDAC2_momMOSCap
+XI4<31> Vhigh Vlow / 10bitDAC2_momMOSCap
+XI4<32> Vhigh Vlow / 10bitDAC2_momMOSCap
+XI4<33> Vhigh Vlow / 10bitDAC2_momMOSCap
+XI4<34> Vhigh Vlow / 10bitDAC2_momMOSCap
+XI4<35> Vhigh Vlow / 10bitDAC2_momMOSCap
+XI4<36> Vhigh Vlow / 10bitDAC2_momMOSCap
+XI4<37> Vhigh Vlow / 10bitDAC2_momMOSCap
+XI4<38> Vhigh Vlow / 10bitDAC2_momMOSCap
+XI4<39> Vhigh Vlow / 10bitDAC2_momMOSCap
+XI4<40> Vhigh Vlow / 10bitDAC2_momMOSCap
+XI4<41> Vhigh Vlow / 10bitDAC2_momMOSCap
+XI4<42> Vhigh Vlow / 10bitDAC2_momMOSCap
+XI4<43> Vhigh Vlow / 10bitDAC2_momMOSCap
+XI4<44> Vhigh Vlow / 10bitDAC2_momMOSCap
+XI4<45> Vhigh Vlow / 10bitDAC2_momMOSCap
+XI4<46> Vhigh Vlow / 10bitDAC2_momMOSCap
+XI4<47> Vhigh Vlow / 10bitDAC2_momMOSCap
+XI4<48> Vhigh Vlow / 10bitDAC2_momMOSCap
+XI4<49> Vhigh Vlow / 10bitDAC2_momMOSCap
+XI4<50> Vhigh Vlow / 10bitDAC2_momMOSCap
+XI4<51> Vhigh Vlow / 10bitDAC2_momMOSCap
+XI4<52> Vhigh Vlow / 10bitDAC2_momMOSCap
+XI4<53> Vhigh Vlow / 10bitDAC2_momMOSCap
+XI4<54> Vhigh Vlow / 10bitDAC2_momMOSCap
+XI4<55> Vhigh Vlow / 10bitDAC2_momMOSCap
+XI4<56> Vhigh Vlow / 10bitDAC2_momMOSCap
+XI4<57> Vhigh Vlow / 10bitDAC2_momMOSCap
+XI4<58> Vhigh Vlow / 10bitDAC2_momMOSCap
+XI4<59> Vhigh Vlow / 10bitDAC2_momMOSCap
+XI4<60> Vhigh Vlow / 10bitDAC2_momMOSCap
+XI4<61> Vhigh Vlow / 10bitDAC2_momMOSCap
+XI4<62> Vhigh Vlow / 10bitDAC2_momMOSCap
+XI4<63> Vhigh Vlow / 10bitDAC2_momMOSCap
+XI4<64> Vhigh Vlow / 10bitDAC2_momMOSCap
+XI4<65> Vhigh Vlow / 10bitDAC2_momMOSCap
+XI4<66> Vhigh Vlow / 10bitDAC2_momMOSCap
+XI4<67> Vhigh Vlow / 10bitDAC2_momMOSCap
+XI4<68> Vhigh Vlow / 10bitDAC2_momMOSCap
+XI4<69> Vhigh Vlow / 10bitDAC2_momMOSCap
+XI4<70> Vhigh Vlow / 10bitDAC2_momMOSCap
+XI4<71> Vhigh Vlow / 10bitDAC2_momMOSCap
+XI4<72> Vhigh Vlow / 10bitDAC2_momMOSCap
+XI4<73> Vhigh Vlow / 10bitDAC2_momMOSCap
+XI4<74> Vhigh Vlow / 10bitDAC2_momMOSCap
+XI4<75> Vhigh Vlow / 10bitDAC2_momMOSCap
+XI4<76> Vhigh Vlow / 10bitDAC2_momMOSCap
+XI4<77> Vhigh Vlow / 10bitDAC2_momMOSCap
+XI4<78> Vhigh Vlow / 10bitDAC2_momMOSCap
+XI4<79> Vhigh Vlow / 10bitDAC2_momMOSCap
+XI4<80> Vhigh Vlow / 10bitDAC2_momMOSCap
+.ENDS
+
+************************************************************************
+* Library Name: ETROC1_Analog
+* Cell Name:    10bitDAC2_sw2
+* View Name:    schematic
+************************************************************************
+
+.SUBCKT 10bitDAC2_sw2 ctrl n1 n2 vdd
+*.PININFO ctrl:I n1:B n2:B vdd:B
+MM0 n2 ctrl n1 vdd pch_lvt l=60n w=4u m=1
+.ENDS
+
+************************************************************************
+* Library Name: tcbn65lp
+* Cell Name:    INVD1
+* View Name:    schematic
+************************************************************************
+
+.SUBCKT INVD1 I VDD VSS ZN
+*.PININFO I:I ZN:O VDD:B VSS:B
+MMU1-M_u2 ZN I VSS VSS nch l=60n w=390.0n m=1
+MMU1-M_u3 ZN I VDD VDD pch l=60n w=520.0n m=1
+.ENDS
+
+************************************************************************
+* Library Name: tcbn65lp
+* Cell Name:    OR2D1
+* View Name:    schematic
+************************************************************************
+
+.SUBCKT OR2D1 A1 A2 VDD VSS Z
+*.PININFO A1:I A2:I Z:O VDD:B VSS:B
+MMU1-M_u2 Z net5 VSS VSS nch l=60n w=390.0n m=1
+MM_u7-M_u4 net5 A1 VSS VSS nch l=60n w=195.00n m=1
+MM_u7-M_u3 net5 A2 VSS VSS nch l=60n w=195.00n m=1
+MMU1-M_u3 Z net5 VDD VDD pch l=60n w=520.0n m=1
+MM_u7-M_u1 net17 A2 VDD VDD pch l=60n w=520.0n m=1
+MM_u7-M_u2 net5 A1 net17 VDD pch l=60n w=520.0n m=1
+.ENDS
+
+************************************************************************
+* Library Name: tcbn65lp
+* Cell Name:    INVD0
+* View Name:    schematic
+************************************************************************
+
+.SUBCKT INVD0 I VDD VSS ZN
+*.PININFO I:I ZN:O VDD:B VSS:B
+MMU1-M_u2 ZN I VSS VSS nch l=60n w=195.00n m=1
+MMU1-M_u3 ZN I VDD VDD pch l=60n w=260.0n m=1
+.ENDS
+
+************************************************************************
+* Library Name: tcbn65lp
+* Cell Name:    AN3D4
+* View Name:    schematic
+************************************************************************
+
+.SUBCKT AN3D4 A1 A2 A3 VDD VSS Z
+*.PININFO A1:I A2:I A3:I Z:O VDD:B VSS:B
+MM_u3_2-M_u3 Z net5 VDD VDD pch l=60n w=520.0n m=1
+MM_u4_0-M_u3 net5 A3 VDD VDD pch l=60n w=520.0n m=1
+MM_u3_1-M_u3 Z net5 VDD VDD pch l=60n w=520.0n m=1
+MM_u3_0-M_u3 Z net5 VDD VDD pch l=60n w=520.0n m=1
+MM_u4_0-M_u1 net5 A1 VDD VDD pch l=60n w=520.0n m=1
+MM_u3_3-M_u3 Z net5 VDD VDD pch l=60n w=520.0n m=1
+MM_u4_1-M_u1 net5 A1 VDD VDD pch l=60n w=520.0n m=1
+MM_u4_0-M_u2 net5 A2 VDD VDD pch l=60n w=520.0n m=1
+MM_u4_1-M_u2 net5 A2 VDD VDD pch l=60n w=520.0n m=1
+MM_u4_1-M_u3 net5 A3 VDD VDD pch l=60n w=520.0n m=1
+MM_u3_1-M_u2 Z net5 VSS VSS nch l=60n w=390.0n m=1
+MM_u4_0-M_u6 net68 A3 VSS VSS nch l=60n w=390.0n m=1
+MM_u3_2-M_u2 Z net5 VSS VSS nch l=60n w=390.0n m=1
+MM_u4_0-M_u5 net56 A2 net68 VSS nch l=60n w=390.0n m=1
+MM_u3_3-M_u2 Z net5 VSS VSS nch l=60n w=390.0n m=1
+MM_u4_1-M_u5 net57 A2 net49 VSS nch l=60n w=390.0n m=1
+MM_u4_0-M_u4 net5 A1 net56 VSS nch l=60n w=390.0n m=1
+MM_u4_1-M_u6 net49 A3 VSS VSS nch l=60n w=390.0n m=1
+MM_u4_1-M_u4 net5 A1 net57 VSS nch l=60n w=390.0n m=1
+MM_u3_0-M_u2 Z net5 VSS VSS nch l=60n w=390.0n m=1
+.ENDS
+
+************************************************************************
+* Library Name: tcbn65lp
+* Cell Name:    AN2D1
+* View Name:    schematic
+************************************************************************
+
+.SUBCKT AN2D1 A1 A2 VDD VSS Z
+*.PININFO A1:I A2:I Z:O VDD:B VSS:B
+MM_u3-M_u3 Z net5 VDD VDD pch l=60n w=520.0n m=1
+MM_u2-M_u1 net5 A1 VDD VDD pch l=60n w=260.0n m=1
+MM_u2-M_u2 net5 A2 VDD VDD pch l=60n w=260.0n m=1
+MM_u3-M_u2 Z net5 VSS VSS nch l=60n w=390.0n m=1
+MM_u2-M_u4 net17 A2 VSS VSS nch l=60n w=195.00n m=1
+MM_u2-M_u3 net5 A1 net17 VSS nch l=60n w=195.00n m=1
+.ENDS
+
+************************************************************************
+* Library Name: ETROC1_Analog
+* Cell Name:    10bitDAC2_and6in
+* View Name:    schematic
+************************************************************************
+
+.SUBCKT 10bitDAC2_and6in A1 A2 A3 A4 A5 A6 Z vdd vss
+*.PININFO A1:I A2:I A3:I A4:I A5:I A6:I Z:O vdd:B vss:B
+XI1 A6 A5 A4 vdd vss net19 / AN3D4
+XI0 A3 A2 A1 vdd vss net20 / AN3D4
+XI2 net19 net20 vdd vss Z / AN2D1
+.ENDS
+
+************************************************************************
+* Library Name: ETROC1_Analog
+* Cell Name:    10bitDAC2_decode6t33
+* View Name:    schematic
+************************************************************************
+
+.SUBCKT 10bitDAC2_decode6t33 a0 a1 a2 a3 a4 a5 vdd vss w0 w1 w2 w3 w4 w5 w6 w7 
++ w8 w9 w10 w11 w12 w13 w14 w15 w16 w17 w18 w19 w20 w21 w22 w23 w24 w25 w26 
++ w27 w28 w29 w30 w31 w32
+*.PININFO a0:I a1:I a2:I a3:I a4:I a5:I w0:O w1:O w2:O w3:O w4:O w5:O w6:O 
+*.PININFO w7:O w8:O w9:O w10:O w11:O w12:O w13:O w14:O w15:O w16:O w17:O w18:O 
+*.PININFO w19:O w20:O w21:O w22:O w23:O w24:O w25:O w26:O w27:O w28:O w29:O 
+*.PININFO w30:O w31:O w32:O vdd:B vss:B
+XI104 net066 net315 vdd vss w30 / OR2D1
+XI99 net314 net078 vdd vss w31 / OR2D1
+XI93 net081 net063 vdd vss w29 / OR2D1
+XI90 net304 net303 vdd vss w26 / OR2D1
+XI89 net308 net070 vdd vss w28 / OR2D1
+XI87 net312 net065 vdd vss w27 / OR2D1
+XI85 net0101 net305 vdd vss w25 / OR2D1
+XI74 net296 net0102 vdd vss w20 / OR2D1
+XI72 net302 net301 vdd vss w22 / OR2D1
+XI70 net072 net297 vdd vss w23 / OR2D1
+XI69 net0109 net293 vdd vss w21 / OR2D1
+XI66 net300 net068 vdd vss w24 / OR2D1
+XI63 net089 net090 vdd vss w19 / OR2D1
+XI60 net0111 net290 vdd vss w16 / OR2D1
+XI59 net092 net286 vdd vss w18 / OR2D1
+XI57 net291 net0112 vdd vss w17 / OR2D1
+XI22 net055 net251 vdd vss w1 / OR2D1
+XI16 net252 net255 vdd vss w3 / OR2D1
+XI14 net258 net263 vdd vss w4 / OR2D1
+XI25 net254 net257 vdd vss w2 / OR2D1
+XI29 net256 net261 vdd vss w5 / OR2D1
+XI27 net262 net080 vdd vss w7 / OR2D1
+XI24 net270 net267 vdd vss w8 / OR2D1
+XI23 net264 net095 vdd vss w6 / OR2D1
+XI125 net0117 net0116 vdd vss w15 / OR2D1
+XI44 net265 net271 vdd vss w10 / OR2D1
+XI42 net272 net275 vdd vss w12 / OR2D1
+XI40 net076 net277 vdd vss w13 / OR2D1
+XI39 net0127 net0126 vdd vss w11 / OR2D1
+XI36 net276 net284 vdd vss w14 / OR2D1
+XI33 net268 net064 vdd vss w9 / OR2D1
+XI8 a0 vdd vss ab0 / INVD0
+XI0 a5 vdd vss ab5 / INVD0
+XI1 a4 vdd vss ab4 / INVD0
+XI2 a3 vdd vss ab3 / INVD0
+XI3 a2 vdd vss ab2 / INVD0
+XI4 a1 vdd vss ab1 / INVD0
+XI108 ab5 a4 a3 a2 a1 ab0 net314 vdd vss / 10bitDAC2_and6in
+XI107 a5 ab4 ab3 ab2 ab1 ab0 net078 vdd vss / 10bitDAC2_and6in
+XI106 ab5 a4 a3 a2 ab1 a0 net066 vdd vss / 10bitDAC2_and6in
+XI105 ab5 a4 a3 a2 a1 a0 w32 vdd vss / 10bitDAC2_and6in
+XI103 a5 ab4 ab3 ab2 ab1 a0 net315 vdd vss / 10bitDAC2_and6in
+XI94 ab5 a4 a3 a2 ab1 ab0 net081 vdd vss / 10bitDAC2_and6in
+XI92 a5 ab4 ab3 ab2 a1 ab0 net063 vdd vss / 10bitDAC2_and6in
+XI91 ab5 a4 a3 ab2 a1 a0 net308 vdd vss / 10bitDAC2_and6in
+XI88 a5 ab4 ab3 a2 ab1 ab0 net065 vdd vss / 10bitDAC2_and6in
+XI86 a5 ab4 ab3 a2 a1 ab0 net305 vdd vss / 10bitDAC2_and6in
+XI84 ab5 a4 a3 ab2 a1 ab0 net312 vdd vss / 10bitDAC2_and6in
+XI83 ab5 a4 a3 ab2 ab1 ab0 net0101 vdd vss / 10bitDAC2_and6in
+XI82 a5 ab4 ab3 a2 ab1 a0 net303 vdd vss / 10bitDAC2_and6in
+XI81 ab5 a4 a3 ab2 ab1 a0 net304 vdd vss / 10bitDAC2_and6in
+XI80 a5 ab4 ab3 ab2 a1 a0 net070 vdd vss / 10bitDAC2_and6in
+XI79 a5 ab4 a3 ab2 ab1 ab0 net297 vdd vss / 10bitDAC2_and6in
+XI78 ab5 a4 ab3 a2 ab1 ab0 net0109 vdd vss / 10bitDAC2_and6in
+XI77 a5 ab4 a3 ab2 a1 ab0 net293 vdd vss / 10bitDAC2_and6in
+XI76 ab5 a4 ab3 ab2 a1 a0 net296 vdd vss / 10bitDAC2_and6in
+XI75 ab5 a4 ab3 a2 ab1 a0 net302 vdd vss / 10bitDAC2_and6in
+XI73 a5 ab4 a3 ab2 a1 a0 net0102 vdd vss / 10bitDAC2_and6in
+XI71 a5 ab4 a3 ab2 ab1 a0 net301 vdd vss / 10bitDAC2_and6in
+XI68 ab5 a4 ab3 a2 a1 ab0 net072 vdd vss / 10bitDAC2_and6in
+XI67 a5 ab4 ab3 a2 a1 a0 net068 vdd vss / 10bitDAC2_and6in
+XI65 ab5 a4 ab3 a2 a1 a0 net300 vdd vss / 10bitDAC2_and6in
+XI64 ab5 a4 ab3 ab2 a1 ab0 net089 vdd vss / 10bitDAC2_and6in
+XI62 a5 ab4 a3 a2 ab1 ab0 net090 vdd vss / 10bitDAC2_and6in
+XI61 ab5 a4 ab3 ab2 ab1 a0 net092 vdd vss / 10bitDAC2_and6in
+XI58 a5 ab4 a3 a2 a1 a0 net290 vdd vss / 10bitDAC2_and6in
+XI56 a5 a4 ab3 ab2 ab1 a0 net284 vdd vss / 10bitDAC2_and6in
+XI6 ab5 ab4 ab3 ab2 ab1 ab0 net055 vdd vss / 10bitDAC2_and6in
+XI20 ab5 ab4 a3 ab2 ab1 a0 net265 vdd vss / 10bitDAC2_and6in
+XI19 ab5 ab4 ab3 a2 a1 ab0 net262 vdd vss / 10bitDAC2_and6in
+XI18 a5 a4 a3 ab2 a1 ab0 net261 vdd vss / 10bitDAC2_and6in
+XI7 ab5 ab4 ab3 ab2 ab1 a0 net254 vdd vss / 10bitDAC2_and6in
+XI17 ab5 ab4 ab3 ab2 a1 a0 net258 vdd vss / 10bitDAC2_and6in
+XI9 a5 a4 a3 a2 a1 a0 w0 vdd vss / 10bitDAC2_and6in
+XI15 a5 a4 a3 a2 ab1 a0 net257 vdd vss / 10bitDAC2_and6in
+XI31 ab5 ab4 ab3 a2 ab1 a0 net264 vdd vss / 10bitDAC2_and6in
+XI30 ab5 ab4 ab3 a2 a1 a0 net270 vdd vss / 10bitDAC2_and6in
+XI13 ab5 ab4 ab3 a2 ab1 ab0 net256 vdd vss / 10bitDAC2_and6in
+XI12 a5 a4 a3 a2 ab1 ab0 net255 vdd vss / 10bitDAC2_and6in
+XI28 a5 a4 a3 ab2 a1 a0 net263 vdd vss / 10bitDAC2_and6in
+XI26 a5 a4 a3 ab2 ab1 a0 net095 vdd vss / 10bitDAC2_and6in
+XI11 ab5 ab4 ab3 ab2 a1 ab0 net252 vdd vss / 10bitDAC2_and6in
+XI21 a5 a4 a3 ab2 ab1 ab0 net080 vdd vss / 10bitDAC2_and6in
+XI54 ab5 a4 ab3 ab2 ab1 ab0 net291 vdd vss / 10bitDAC2_and6in
+XI53 ab5 ab4 a3 a2 a1 a0 net0111 vdd vss / 10bitDAC2_and6in
+XI52 a5 ab4 a3 a2 a1 ab0 net0112 vdd vss / 10bitDAC2_and6in
+XI51 a5 a4 ab3 ab2 ab1 ab0 net0116 vdd vss / 10bitDAC2_and6in
+XI50 a5 ab4 a3 a2 ab1 a0 net286 vdd vss / 10bitDAC2_and6in
+XI49 a5 a4 ab3 ab2 a1 a0 net275 vdd vss / 10bitDAC2_and6in
+XI48 ab5 ab4 a3 ab2 a1 a0 net272 vdd vss / 10bitDAC2_and6in
+XI47 a5 a4 ab3 a2 ab1 a0 net271 vdd vss / 10bitDAC2_and6in
+XI46 ab5 ab4 a3 ab2 a1 ab0 net0127 vdd vss / 10bitDAC2_and6in
+XI10 a5 a4 a3 a2 a1 ab0 net251 vdd vss / 10bitDAC2_and6in
+XI45 ab5 ab4 a3 a2 ab1 ab0 net076 vdd vss / 10bitDAC2_and6in
+XI43 a5 a4 ab3 a2 a1 ab0 net064 vdd vss / 10bitDAC2_and6in
+XI41 a5 a4 ab3 a2 ab1 ab0 net0126 vdd vss / 10bitDAC2_and6in
+XI38 ab5 ab4 a3 a2 ab1 a0 net276 vdd vss / 10bitDAC2_and6in
+XI37 a5 a4 ab3 ab2 a1 ab0 net277 vdd vss / 10bitDAC2_and6in
+XI35 ab5 ab4 a3 a2 a1 ab0 net0117 vdd vss / 10bitDAC2_and6in
+XI34 a5 a4 ab3 a2 a1 a0 net267 vdd vss / 10bitDAC2_and6in
+XI32 ab5 ab4 a3 ab2 ab1 ab0 net268 vdd vss / 10bitDAC2_and6in
+.ENDS
+
+************************************************************************
+* Library Name: ETROC1_Analog
+* Cell Name:    10bitDAC2_dac2_top
+* View Name:    schematic
+************************************************************************
+
+.SUBCKT 10bitDAC2_dac2_top a0 a1 a2 a3 a4 a5 out vdd vinh vinl vss
+*.PININFO a0:I a1:I a2:I a3:I a4:I a5:I vinh:I vinl:I out:O vdd:B vss:B
+XR2 net062 net111 rppolywo l=2u w=2.8u m=1
+XR39 vinh net064 rppolywo l=2u w=2.8u m=1
+XR3 net111 net110 rppolywo l=2u w=2.8u m=1
+XR35 net078 out rppolywo l=230.00000u w=1.8u m=1
+XR4 net110 net109 rppolywo l=2u w=2.8u m=1
+XR5 net109 net108 rppolywo l=2u w=2.8u m=1
+XR6 net108 net107 rppolywo l=2u w=2.8u m=1
+XR7 net107 net106 rppolywo l=2u w=2.8u m=1
+XR8 net106 net105 rppolywo l=2u w=2.8u m=1
+XR9 net105 net104 rppolywo l=2u w=2.8u m=1
+XR10 net104 net103 rppolywo l=2u w=2.8u m=1
+XR11 net103 net102 rppolywo l=2u w=2.8u m=1
+XR12 net102 net101 rppolywo l=2u w=2.8u m=1
+XR13 net101 net100 rppolywo l=2u w=2.8u m=1
+XR14 net100 net99 rppolywo l=2u w=2.8u m=1
+XR15 net99 net98 rppolywo l=2u w=2.8u m=1
+XR16 net98 net97 rppolywo l=2u w=2.8u m=1
+XR17 net97 net96 rppolywo l=2u w=2.8u m=1
+XR18 net96 net95 rppolywo l=2u w=2.8u m=1
+XR19 net95 net94 rppolywo l=2u w=2.8u m=1
+XR20 net94 net93 rppolywo l=2u w=2.8u m=1
+XR21 net93 net92 rppolywo l=2u w=2.8u m=1
+XR22 net92 net91 rppolywo l=2u w=2.8u m=1
+XR23 net91 net90 rppolywo l=2u w=2.8u m=1
+XR24 net90 net89 rppolywo l=2u w=2.8u m=1
+XR25 net89 net88 rppolywo l=2u w=2.8u m=1
+XR26 net88 net87 rppolywo l=2u w=2.8u m=1
+XR27 net87 net86 rppolywo l=2u w=2.8u m=1
+XR28 net86 net85 rppolywo l=2u w=2.8u m=1
+XR29 net85 net84 rppolywo l=2u w=2.8u m=1
+XR30 net84 net83 rppolywo l=2u w=2.8u m=1
+XR31 net83 net82 rppolywo l=2u w=2.8u m=1
+XR34 vinh net062 rppolywo l=2u w=2.8u m=1
+XR32 net82 vinl rppolywo l=2u w=2.8u m=1
+XR38 vinl net065 rppolywo l=2u w=2.8u m=1
+XI1 z<31> net062 net078 vdd / 10bitDAC2_sw2
+XI2 z<30> net111 net078 vdd / 10bitDAC2_sw2
+XI3 z<29> net110 net078 vdd / 10bitDAC2_sw2
+XI4 z<28> net109 net078 vdd / 10bitDAC2_sw2
+XI5 z<27> net108 net078 vdd / 10bitDAC2_sw2
+XI6 z<26> net107 net078 vdd / 10bitDAC2_sw2
+XI7 z<25> net106 net078 vdd / 10bitDAC2_sw2
+XI8 z<24> net105 net078 vdd / 10bitDAC2_sw2
+XI9 z<23> net104 net078 vdd / 10bitDAC2_sw2
+XI10 z<22> net103 net078 vdd / 10bitDAC2_sw2
+XI11 z<21> net102 net078 vdd / 10bitDAC2_sw2
+XI12 z<20> net101 net078 vdd / 10bitDAC2_sw2
+XI13 z<19> net100 net078 vdd / 10bitDAC2_sw2
+XI14 z<18> net99 net078 vdd / 10bitDAC2_sw2
+XI15 z<17> net98 net078 vdd / 10bitDAC2_sw2
+XI16 z<16> net97 net078 vdd / 10bitDAC2_sw2
+XI17 z<15> net96 net078 vdd / 10bitDAC2_sw2
+XI18 z<14> net95 net078 vdd / 10bitDAC2_sw2
+XI19 z<13> net94 net078 vdd / 10bitDAC2_sw2
+XI20 z<12> net93 net078 vdd / 10bitDAC2_sw2
+XI21 z<11> net92 net078 vdd / 10bitDAC2_sw2
+XI22 z<10> net91 net078 vdd / 10bitDAC2_sw2
+XI23 z<9> net90 net078 vdd / 10bitDAC2_sw2
+XI24 z<8> net89 net078 vdd / 10bitDAC2_sw2
+XI25 z<7> net88 net078 vdd / 10bitDAC2_sw2
+XI26 z<6> net87 net078 vdd / 10bitDAC2_sw2
+XI27 z<5> net86 net078 vdd / 10bitDAC2_sw2
+XI28 z<4> net85 net078 vdd / 10bitDAC2_sw2
+XI29 z<3> net84 net078 vdd / 10bitDAC2_sw2
+XI30 z<2> net83 net078 vdd / 10bitDAC2_sw2
+XI31 z<1> net82 net078 vdd / 10bitDAC2_sw2
+XI32 z<0> vinl net078 vdd / 10bitDAC2_sw2
+XI35 z<32> vinh net078 vdd / 10bitDAC2_sw2
+XI34<0> _z<32> vdd vss z<32> / INVD1
+XI34<1> _z<31> vdd vss z<31> / INVD1
+XI34<2> _z<30> vdd vss z<30> / INVD1
+XI34<3> _z<29> vdd vss z<29> / INVD1
+XI34<4> _z<28> vdd vss z<28> / INVD1
+XI34<5> _z<27> vdd vss z<27> / INVD1
+XI34<6> _z<26> vdd vss z<26> / INVD1
+XI34<7> _z<25> vdd vss z<25> / INVD1
+XI34<8> _z<24> vdd vss z<24> / INVD1
+XI34<9> _z<23> vdd vss z<23> / INVD1
+XI34<10> _z<22> vdd vss z<22> / INVD1
+XI34<11> _z<21> vdd vss z<21> / INVD1
+XI34<12> _z<20> vdd vss z<20> / INVD1
+XI34<13> _z<19> vdd vss z<19> / INVD1
+XI34<14> _z<18> vdd vss z<18> / INVD1
+XI34<15> _z<17> vdd vss z<17> / INVD1
+XI34<16> _z<16> vdd vss z<16> / INVD1
+XI34<17> _z<15> vdd vss z<15> / INVD1
+XI34<18> _z<14> vdd vss z<14> / INVD1
+XI34<19> _z<13> vdd vss z<13> / INVD1
+XI34<20> _z<12> vdd vss z<12> / INVD1
+XI34<21> _z<11> vdd vss z<11> / INVD1
+XI34<22> _z<10> vdd vss z<10> / INVD1
+XI34<23> _z<9> vdd vss z<9> / INVD1
+XI34<24> _z<8> vdd vss z<8> / INVD1
+XI34<25> _z<7> vdd vss z<7> / INVD1
+XI34<26> _z<6> vdd vss z<6> / INVD1
+XI34<27> _z<5> vdd vss z<5> / INVD1
+XI34<28> _z<4> vdd vss z<4> / INVD1
+XI34<29> _z<3> vdd vss z<3> / INVD1
+XI34<30> _z<2> vdd vss z<2> / INVD1
+XI34<31> _z<1> vdd vss z<1> / INVD1
+XI34<32> _z<0> vdd vss z<0> / INVD1
+XI0 a0 a1 a2 a3 a4 a5 vdd vss _z<0> _z<1> _z<2> _z<3> _z<4> _z<5> _z<6> _z<7> 
++ _z<8> _z<9> _z<10> _z<11> _z<12> _z<13> _z<14> _z<15> _z<16> _z<17> _z<18> 
++ _z<19> _z<20> _z<21> _z<22> _z<23> _z<24> _z<25> _z<26> _z<27> _z<28> _z<29> 
++ _z<30> _z<31> _z<32> / 10bitDAC2_decode6t33
+.ENDS
+
+************************************************************************
+* Library Name: ETROC1_Analog
+* Cell Name:    10bitDAC2_opamp2
+* View Name:    schematic
+************************************************************************
+
+.SUBCKT 10bitDAC2_opamp2 inn inp out pd vdd vss
+*.PININFO inn:I inp:I pd:I out:O vdd:B vss:B
+MM3 net082 inn bulk1 bulk1 nch_lvt_dnw l=600n w=8u m=32
+MM0 net24 inp bulk1 bulk1 nch_lvt_dnw l=600n w=8u m=32
+MM43 vdd b1 vdd vdd pch l=300n w=2u m=1
+MM42 vdd b1 vdd vdd pch l=300n w=2u m=1
+MM39 net0142 b1 vdd vdd pch l=300n w=2u m=4
+MM31 a1 b1 vdd vdd pch l=300n w=2u m=4
+MM25 b1 b1 vdd vdd pch l=300n w=2u m=4
+MM44 net0105 net0105 vdd vdd pch l=6u w=2u m=1
+MM33 pdb _pd vdd vdd pch l=60n w=1u m=2
+MM30 _pd pd vdd vdd pch l=60n w=1u m=2
+MM28 net046 pdb net0142 vdd pch l=60n w=200n m=1
+MM24 net65 net65 vdd vdd pch l=1.5u w=8u m=4
+MM22 out net0109 vdd vdd pch l=1u w=12.0u m=8
+MM20 net31 net31 vdd vdd pch l=1u w=12.0u m=1
+MM19 net60 net31 vdd vdd pch l=1u w=12.0u m=1
+MM18 net30 net0109 net60 vdd pch l=1u w=12.0u m=1
+MM40 net0109 net15 net24 vdd pch l=1u w=12.0u m=4
+MM41 net0115 net15 net24 vdd pch l=1u w=12.0u m=4
+MM36 net24 net65 vdd vdd pch l=1.5u w=8u m=8
+MM37 net082 net65 vdd vdd pch l=1.5u w=8u m=8
+MM6 net62 net15 net082 vdd pch l=1u w=12.0u m=8
+MM5 net15 net15 vdd vdd pch l=1u w=2u m=1
+MM38 net12 net65 vdd vdd pch l=1.5u w=8u m=4
+XR2 net093 out rppolywo l=7.11u w=2u m=1
+XR1 bulk2 vss rppolywo l=67.5u w=1.1u m=1
+MM13 b1 net0105 a1 vss nch_dnw l=120.0n w=2u m=8
+MM12 a1 a1 vss vss nch_dnw l=300n w=2u m=4
+MM11 b1 a1 bulk2 bulk2 nch_dnw l=300n w=2u m=8
+MM10 net0105 a1 vss vss nch_dnw l=300n w=2u m=4
+MM9 vss a1 vss vss nch_dnw l=300n w=2u m=1
+MM1 vss a1 vss vss nch_dnw l=300n w=2u m=1
+MM2 bulk1 net046 vss vss nch l=1.5u w=8u m=4
+MM32 pdb _pd vss vss nch l=60n w=1u m=1
+MM29 _pd pd vss vss nch l=60n w=1u m=1
+MM27 net0142 _pd net046 vss nch l=60n w=1u m=4
+MM26 net046 net046 vss vss nch l=1.5u w=8u m=2
+MM34 net65 net046 vss vss nch l=1.5u w=8u m=2
+MM23 out net0115 vss vss nch l=1u w=4u m=8
+MM21 net31 net0115 vss vss nch l=1u w=4u m=1
+MM17 net30 net30 vss vss nch l=12.0u w=2u m=1
+MM16 net21 net62 vss vss nch l=1.5u w=8u m=4
+MM15 net0115 net30 net21 vss nch l=1u w=8u m=2
+MM14 net0109 net12 net21 vss nch l=1u w=8u m=2
+MM35 net15 net046 vss vss nch l=1.5u w=8u m=2
+MM8 net40 net62 vss vss nch l=1.5u w=8u m=4
+MM7 net62 net12 net40 vss nch l=1u w=8u m=4
+MM4 net12 net12 vss vss nch l=12.0u w=2u m=2
+DD0 vss vdd dnwpsub area=1.01902e-09 pj=0.00204004 m=1
+DD4 bulk2 vdd pwdnw area=3.995e-11 pj=2.799e-05 m=1
+DD3 vss vdd pwdnw area=5.70151e-11 pj=0.011403 m=1
+DD2 bulk1 vdd pwdnw area=7.8198e-10 pj=0.00156596 m=1
+XC0 net0109 net093 vdd crtmom_rf nv=34 nh=36 w=105.00n s=105.00n stm=1 spm=4 
++ m=7
+XC2 net093 net0115 vdd crtmom_rf nv=34 nh=36 w=105.00n s=105.00n stm=1 spm=4 
++ m=7
+.ENDS
+
+************************************************************************
+* Library Name: ETROC1_Analog
+* Cell Name:    10bitDAC2_dac1_1
+* View Name:    schematic
+************************************************************************
+
+.SUBCKT 10bitDAC2_dac1_1 IN _s<15> _s<14> _s<13> _s<12> _s<11> _s<10> _s<9> 
++ _s<8> _s<7> _s<6> _s<5> _s<4> _s<3> _s<2> _s<1> _s<0> _z<16> _z<15> _z<14> 
++ _z<13> _z<12> _z<11> _z<10> _z<9> _z<8> _z<7> _z<6> _z<5> _z<4> _z<3> _z<2> 
++ _z<1> _z<0> outh outl pd vdd vss
+*.PININFO _s<15>:I _s<14>:I _s<13>:I _s<12>:I _s<11>:I _s<10>:I _s<9>:I 
+*.PININFO _s<8>:I _s<7>:I _s<6>:I _s<5>:I _s<4>:I _s<3>:I _s<2>:I _s<1>:I 
+*.PININFO _s<0>:I _z<16>:I _z<15>:I _z<14>:I _z<13>:I _z<12>:I _z<11>:I 
+*.PININFO _z<10>:I _z<9>:I _z<8>:I _z<7>:I _z<6>:I _z<5>:I _z<4>:I _z<3>:I 
+*.PININFO _z<2>:I _z<1>:I _z<0>:I pd:I outh:O outl:O IN:B vdd:B vss:B
+XR2 IN net092 rppolywo l=2u w=2.8u m=1
+XR3 net092 net091 rppolywo l=2u w=2.8u m=1
+XR4 net091 net090 rppolywo l=2u w=2.8u m=1
+XR5 net090 net089 rppolywo l=2u w=2.8u m=1
+XR6 net089 net088 rppolywo l=2u w=2.8u m=1
+XR7 net088 net087 rppolywo l=2u w=2.8u m=1
+XR8 net087 net086 rppolywo l=2u w=2.8u m=1
+XR40 net0137 net095 rppolywo l=2u w=2.8u m=1
+XR79 net0105 vss rppolywo l=2u w=2.8u m=1
+XR41 net0131 net095 rppolywo l=2u w=2.8u m=1
+XR68 net0113 net098 rppolywo l=2u w=2.8u m=1
+XR1 net0118 net098 rppolywo l=2u w=2.8u m=1
+XR42 net0135 net0131 rppolywo l=2u w=2.8u m=1
+XR67 net0117 net0113 rppolywo l=2u w=2.8u m=1
+XR70 net0108 net0105 rppolywo l=2u w=2.8u m=1
+XR69 net0137 net0136 rppolywo l=2u w=2.8u m=1
+XR0 net0126 net0118 rppolywo l=2u w=2.8u m=1
+XR39 net0136 net0138 rppolywo l=2u w=2.8u m=1
+XR43 net0135 net0132 rppolywo l=2u w=2.8u m=1
+XR66 net0117 net0109 rppolywo l=2u w=2.8u m=1
+XR71 net0108 net0104 rppolywo l=2u w=2.8u m=1
+XR38 net0138 net0141 rppolywo l=2u w=2.8u m=1
+XR61 net0126 net0123 rppolywo l=2u w=2.8u m=1
+XR44 net0132 net0130 rppolywo l=2u w=2.8u m=1
+XR22 net073 net072 rppolywo l=2u w=2.8u m=1
+XR24 net071 net070 rppolywo l=2u w=2.8u m=1
+XR60 net0123 net0122 rppolywo l=2u w=2.8u m=1
+XR64 net0112 net0115 rppolywo l=2u w=2.8u m=1
+XR35 net0142 net0140 rppolywo l=2u w=2.8u m=1
+XR74 net0101 net0106 rppolywo l=2u w=2.8u m=1
+XR75 net0107 net0101 rppolywo l=2u w=2.8u m=1
+XR34 net061 net0142 rppolywo l=2u w=2.8u m=1
+XR53 net0116 net0114 rppolywo l=2u w=2.8u m=1
+XR56 net0124 net0120 rppolywo l=2u w=2.8u m=1
+XR49 net0128 net0127 rppolywo l=2u w=2.8u m=1
+XR32 net063 net062 rppolywo l=2u w=2.8u m=1
+XR78 net0103 net099 rppolywo l=2u w=2.8u m=1
+XR31 net064 net063 rppolywo l=2u w=2.8u m=1
+XR28 net067 net094 rppolywo l=2u w=2.8u m=1
+XR25 net070 net069 rppolywo l=2u w=2.8u m=1
+XR23 net072 net071 rppolywo l=2u w=2.8u m=1
+XR17 net078 net077 rppolywo l=2u w=2.8u m=1
+XR13 net082 net081 rppolywo l=2u w=2.8u m=1
+XR10 net085 net084 rppolywo l=2u w=2.8u m=1
+XR20 net075 net074 rppolywo l=2u w=2.8u m=1
+XR45 net0130 net0134 rppolywo l=2u w=2.8u m=1
+XR59 net0122 net0125 rppolywo l=2u w=2.8u m=1
+XR63 net0111 net0115 rppolywo l=2u w=2.8u m=1
+XR47 net0133 net0129 rppolywo l=2u w=2.8u m=1
+XR57 net0124 net0121 rppolywo l=2u w=2.8u m=1
+XR33 net062 net061 rppolywo l=2u w=2.8u m=1
+XR76 net0107 net0102 rppolywo l=2u w=2.8u m=1
+XR52 net0114 net0110 rppolywo l=2u w=2.8u m=1
+XR55 net0120 net0119 rppolywo l=2u w=2.8u m=1
+XR50 net0127 net097 rppolywo l=2u w=2.8u m=1
+XR30 net065 net064 rppolywo l=2u w=2.8u m=1
+XR27 net068 net067 rppolywo l=2u w=2.8u m=1
+XR21 net074 net073 rppolywo l=2u w=2.8u m=1
+XR19 net076 net075 rppolywo l=2u w=2.8u m=1
+XR16 net079 net078 rppolywo l=2u w=2.8u m=1
+XR15 net080 net079 rppolywo l=2u w=2.8u m=1
+XR81 vss net052 rppolywo l=2u w=2.8u m=1
+XR80 net053 IN rppolywo l=2u w=2.8u m=1
+XR12 net083 net082 rppolywo l=2u w=2.8u m=1
+XR11 net084 net083 rppolywo l=2u w=2.8u m=1
+XR9 net086 net085 rppolywo l=2u w=2.8u m=1
+XR65 net0109 net0112 rppolywo l=2u w=2.8u m=1
+XR72 net0104 net0100 rppolywo l=2u w=2.8u m=1
+XR37 net0141 net0139 rppolywo l=2u w=2.8u m=1
+XR36 net0140 net0139 rppolywo l=2u w=2.8u m=1
+XR73 net0100 net0106 rppolywo l=2u w=2.8u m=1
+XR46 net0129 net0134 rppolywo l=2u w=2.8u m=1
+XR58 net0121 net0125 rppolywo l=2u w=2.8u m=1
+XR62 net0116 net0111 rppolywo l=2u w=2.8u m=1
+XR48 net0133 net0128 rppolywo l=2u w=2.8u m=1
+XR77 net0102 net0103 rppolywo l=2u w=2.8u m=1
+XR51 net0110 net099 rppolywo l=2u w=2.8u m=1
+XR54 net0119 net097 rppolywo l=2u w=2.8u m=1
+XR29 net094 net065 rppolywo l=2u w=2.8u m=1
+XR26 net069 net068 rppolywo l=2u w=2.8u m=1
+XR18 net077 net076 rppolywo l=2u w=2.8u m=1
+XR14 net081 net080 rppolywo l=2u w=2.8u m=1
+XI167 outh net093 outh pd vdd vss / 10bitDAC2_opamp2
+XI166 outl net060 outl pd vdd vss / 10bitDAC2_opamp2
+XI34<0> _z<0> vdd vss z<0> / INVD1
+XI34<1> _z<1> vdd vss z<1> / INVD1
+XI34<2> _z<2> vdd vss z<2> / INVD1
+XI34<3> _z<3> vdd vss z<3> / INVD1
+XI34<4> _z<4> vdd vss z<4> / INVD1
+XI34<5> _z<5> vdd vss z<5> / INVD1
+XI34<6> _z<6> vdd vss z<6> / INVD1
+XI34<7> _z<7> vdd vss z<7> / INVD1
+XI34<8> _z<8> vdd vss z<8> / INVD1
+XI34<9> _z<9> vdd vss z<9> / INVD1
+XI34<10> _z<10> vdd vss z<10> / INVD1
+XI34<11> _z<11> vdd vss z<11> / INVD1
+XI34<12> _z<12> vdd vss z<12> / INVD1
+XI34<13> _z<13> vdd vss z<13> / INVD1
+XI34<14> _z<14> vdd vss z<14> / INVD1
+XI34<15> _z<15> vdd vss z<15> / INVD1
+XI34<16> _z<16> vdd vss z<16> / INVD1
+XI4<0> _s<0> vdd vss s<0> / INVD1
+XI4<1> _s<1> vdd vss s<1> / INVD1
+XI4<2> _s<2> vdd vss s<2> / INVD1
+XI4<3> _s<3> vdd vss s<3> / INVD1
+XI4<4> _s<4> vdd vss s<4> / INVD1
+XI4<5> _s<5> vdd vss s<5> / INVD1
+XI4<6> _s<6> vdd vss s<6> / INVD1
+XI4<7> _s<7> vdd vss s<7> / INVD1
+XI4<8> _s<8> vdd vss s<8> / INVD1
+XI4<9> _s<9> vdd vss s<9> / INVD1
+XI4<10> _s<10> vdd vss s<10> / INVD1
+XI4<11> _s<11> vdd vss s<11> / INVD1
+XI4<12> _s<12> vdd vss s<12> / INVD1
+XI4<13> _s<13> vdd vss s<13> / INVD1
+XI4<14> _s<14> vdd vss s<14> / INVD1
+XI4<15> _s<15> vdd vss s<15> / INVD1
+XI65 z<16> IN net093 vdd / 10bitDAC2_sw2
+XI160 s<15> net092 net060 vdd / 10bitDAC2_sw2
+XI3 z<15> net091 net093 vdd / 10bitDAC2_sw2
+XI158 s<14> net090 net060 vdd / 10bitDAC2_sw2
+XI5 z<14> net089 net093 vdd / 10bitDAC2_sw2
+XI156 s<13> net088 net060 vdd / 10bitDAC2_sw2
+XI7 z<13> net087 net093 vdd / 10bitDAC2_sw2
+XI29 z<2> net065 net093 vdd / 10bitDAC2_sw2
+XI136 s<3> net068 net060 vdd / 10bitDAC2_sw2
+XI142 s<6> net074 net060 vdd / 10bitDAC2_sw2
+XI144 s<7> net076 net060 vdd / 10bitDAC2_sw2
+XI148 s<9> net080 net060 vdd / 10bitDAC2_sw2
+XI21 z<6> net073 net093 vdd / 10bitDAC2_sw2
+XI31 z<1> net063 net093 vdd / 10bitDAC2_sw2
+XI134 s<2> net094 net060 vdd / 10bitDAC2_sw2
+XI25 z<4> net069 net093 vdd / 10bitDAC2_sw2
+XI23 z<5> net071 net093 vdd / 10bitDAC2_sw2
+XI17 z<8> net077 net093 vdd / 10bitDAC2_sw2
+XI146 s<8> net078 net060 vdd / 10bitDAC2_sw2
+XI11 z<11> net083 net093 vdd / 10bitDAC2_sw2
+XI150 s<10> net082 net060 vdd / 10bitDAC2_sw2
+XI152 s<11> net084 net060 vdd / 10bitDAC2_sw2
+XI32 z<0> net061 net093 vdd / 10bitDAC2_sw2
+XI130 s<0> net062 net060 vdd / 10bitDAC2_sw2
+XI132 s<1> net064 net060 vdd / 10bitDAC2_sw2
+XI27 z<3> net067 net093 vdd / 10bitDAC2_sw2
+XI138 s<4> net070 net060 vdd / 10bitDAC2_sw2
+XI140 s<5> net072 net060 vdd / 10bitDAC2_sw2
+XI19 z<7> net075 net093 vdd / 10bitDAC2_sw2
+XI15 z<9> net079 net093 vdd / 10bitDAC2_sw2
+XI13 z<10> net081 net093 vdd / 10bitDAC2_sw2
+XI9 z<12> net085 net093 vdd / 10bitDAC2_sw2
+XI154 s<12> net086 net060 vdd / 10bitDAC2_sw2
+.ENDS
+
+************************************************************************
+* Library Name: ETROC1_Analog
+* Cell Name:    10bitDAC2_and5in
+* View Name:    schematic
+************************************************************************
+
+.SUBCKT 10bitDAC2_and5in A1 A2 A3 A4 A5 Z vdd vss
+*.PININFO A1:I A2:I A3:I A4:I A5:I Z:O vdd:B vss:B
+XI1 A5 A4 net10 vdd vss Z / AN3D4
+XI0 A3 A2 A1 vdd vss net10 / AN3D4
+.ENDS
+
+************************************************************************
+* Library Name: ETROC1_Analog
+* Cell Name:    10bitDAC2_decode5t16
+* View Name:    schematic
+************************************************************************
+
+.SUBCKT 10bitDAC2_decode5t16 a5 a6 a7 a8 a9 s0 s1 s2 s3 s4 s5 s6 s7 s8 s9 s10 
++ s11 s12 s13 s14 s15 vdd vss
+*.PININFO a5:I a6:I a7:I a8:I a9:I s0:O s1:O s2:O s3:O s4:O s5:O s6:O s7:O 
+*.PININFO s8:O s9:O s10:O s11:O s12:O s13:O s14:O s15:O vdd:B vss:B
+XI0 a9 vdd vss ab9 / INVD0
+XI1 a8 vdd vss ab8 / INVD0
+XI2 a7 vdd vss ab7 / INVD0
+XI3 a6 vdd vss ab6 / INVD0
+XI4 a5 vdd vss ab5 / INVD0
+XI27 ab9 ab8 a7 ab6 a5 net0114 vdd vss / 10bitDAC2_and5in
+XI6 ab9 ab8 ab7 ab6 ab5 net056 vdd vss / 10bitDAC2_and5in
+XI5 ab9 ab8 ab7 a6 ab5 net025 vdd vss / 10bitDAC2_and5in
+XI29 ab9 ab8 a7 a6 ab5 net0111 vdd vss / 10bitDAC2_and5in
+XI66 a9 a8 a7 a6 a5 net050 vdd vss / 10bitDAC2_and5in
+XI30 ab9 a8 ab7 a6 ab5 net0117 vdd vss / 10bitDAC2_and5in
+XI7 ab9 ab8 ab7 ab6 a5 net026 vdd vss / 10bitDAC2_and5in
+XI65 a9 a8 a7 a6 ab5 net0135 vdd vss / 10bitDAC2_and5in
+XI31 ab9 a8 a7 a6 ab5 net0119 vdd vss / 10bitDAC2_and5in
+XI63 a9 a8 a7 ab6 a5 net0137 vdd vss / 10bitDAC2_and5in
+XI62 a9 a8 a7 ab6 ab5 net0136 vdd vss / 10bitDAC2_and5in
+XI41 a9 ab8 ab7 ab6 ab5 net0121 vdd vss / 10bitDAC2_and5in
+XI60 a9 a8 ab7 a6 a5 net0138 vdd vss / 10bitDAC2_and5in
+XI33 ab9 a8 a7 ab6 a5 net0122 vdd vss / 10bitDAC2_and5in
+XI42 ab9 a8 ab7 ab6 ab5 net0113 vdd vss / 10bitDAC2_and5in
+XI59 a9 a8 ab7 a6 ab5 net0133 vdd vss / 10bitDAC2_and5in
+XI34 ab9 a8 ab7 a6 a5 net0123 vdd vss / 10bitDAC2_and5in
+XI57 a9 a8 ab7 ab6 a5 net0134 vdd vss / 10bitDAC2_and5in
+XI56 a9 ab8 ab7 ab6 a5 net0126 vdd vss / 10bitDAC2_and5in
+XI44 ab9 ab8 a7 a6 a5 net0116 vdd vss / 10bitDAC2_and5in
+XI54 a9 ab8 ab7 a6 ab5 net0125 vdd vss / 10bitDAC2_and5in
+XI36 ab9 a8 a7 ab6 ab5 net0120 vdd vss / 10bitDAC2_and5in
+XI45 a9 a8 ab7 ab6 ab5 net0129 vdd vss / 10bitDAC2_and5in
+XI53 a9 ab8 ab7 a6 a5 net0131 vdd vss / 10bitDAC2_and5in
+XI51 a9 ab8 a7 ab6 ab5 net0128 vdd vss / 10bitDAC2_and5in
+XI50 a9 ab8 a7 ab6 a5 net0130 vdd vss / 10bitDAC2_and5in
+XI38 ab9 a8 ab7 ab6 a5 net0118 vdd vss / 10bitDAC2_and5in
+XI47 a9 ab8 a7 a6 a5 net0132 vdd vss / 10bitDAC2_and5in
+XI26 ab9 ab8 ab7 a6 a5 net0115 vdd vss / 10bitDAC2_and5in
+XI39 ab9 a8 a7 a6 a5 net0124 vdd vss / 10bitDAC2_and5in
+XI48 a9 ab8 a7 a6 ab5 net0127 vdd vss / 10bitDAC2_and5in
+XI24 ab9 ab8 a7 ab6 ab5 net0112 vdd vss / 10bitDAC2_and5in
+XI69 net025 net0115 vdd vss s1 / OR2D1
+XI22 net056 net026 vdd vss s0 / OR2D1
+XI28 net0111 net0116 vdd vss s3 / OR2D1
+XI64 net0135 net050 vdd vss s15 / OR2D1
+XI32 net0119 net0124 vdd vss s7 / OR2D1
+XI61 net0136 net0137 vdd vss s14 / OR2D1
+XI58 net0133 net0138 vdd vss s13 / OR2D1
+XI35 net0120 net0122 vdd vss s6 / OR2D1
+XI43 net0113 net0118 vdd vss s4 / OR2D1
+XI55 net0125 net0131 vdd vss s9 / OR2D1
+XI52 net0128 net0130 vdd vss s10 / OR2D1
+XI37 net0117 net0123 vdd vss s5 / OR2D1
+XI46 net0129 net0134 vdd vss s12 / OR2D1
+XI49 net0127 net0132 vdd vss s11 / OR2D1
+XI25 net0112 net0114 vdd vss s2 / OR2D1
+XI40 net0121 net0126 vdd vss s8 / OR2D1
+.ENDS
+
+************************************************************************
+* Library Name: ETROC1_Analog
+* Cell Name:    10bitDAC2_decode5t16_1
+* View Name:    schematic
+************************************************************************
+
+.SUBCKT 10bitDAC2_decode5t16_1 a5 a6 a7 a8 a9 s0 s1 s2 s3 s4 s5 s6 s7 s8 s9 
++ s10 s11 s12 s13 s14 s15 vdd vss
+*.PININFO a5:I a6:I a7:I a8:I a9:I s0:O s1:O s2:O s3:O s4:O s5:O s6:O s7:O 
+*.PININFO s8:O s9:O s10:O s11:O s12:O s13:O s14:O s15:O vdd:B vss:B
+XI71 a5 a6 a7 a8 a9 s0 s1 s2 s3 s4 s5 s6 s7 s8 s9 s10 s11 s12 s13 s14 s15 vdd 
++ vss / 10bitDAC2_decode5t16
+.ENDS
+
+************************************************************************
+* Library Name: ETROC1_Analog
+* Cell Name:    10bitDAC2_decode5t17
+* View Name:    schematic
+************************************************************************
+
+.SUBCKT 10bitDAC2_decode5t17 a5 a6 a7 a8 a9 vdd vss z0 z1 z2 z3 z4 z5 z6 z7 z8 
++ z9 z10 z11 z12 z13 z14 z15 z16
+*.PININFO a5:I a6:I a7:I a8:I a9:I z0:O z1:O z2:O z3:O z4:O z5:O z6:O z7:O 
+*.PININFO z8:O z9:O z10:O z11:O z12:O z13:O z14:O z15:O z16:O vdd:B vss:B
+XI27 ab9 ab8 a7 ab6 a5 net075 vdd vss / 10bitDAC2_and5in
+XI6 ab9 ab8 ab7 ab6 ab5 z0 vdd vss / 10bitDAC2_and5in
+XI5 ab9 ab8 ab7 a6 ab5 net025 vdd vss / 10bitDAC2_and5in
+XI29 ab9 ab8 a7 a6 ab5 net076 vdd vss / 10bitDAC2_and5in
+XI66 a9 a8 a7 a6 a5 z16 vdd vss / 10bitDAC2_and5in
+XI30 ab9 a8 ab7 a6 ab5 net0117 vdd vss / 10bitDAC2_and5in
+XI7 ab9 ab8 ab7 ab6 a5 net026 vdd vss / 10bitDAC2_and5in
+XI65 a9 a8 a7 a6 ab5 net0135 vdd vss / 10bitDAC2_and5in
+XI31 ab9 a8 a7 a6 ab5 net0119 vdd vss / 10bitDAC2_and5in
+XI63 a9 a8 a7 ab6 a5 net0137 vdd vss / 10bitDAC2_and5in
+XI62 a9 a8 a7 ab6 ab5 net0136 vdd vss / 10bitDAC2_and5in
+XI41 a9 ab8 ab7 ab6 ab5 net034 vdd vss / 10bitDAC2_and5in
+XI60 a9 a8 ab7 a6 a5 net0138 vdd vss / 10bitDAC2_and5in
+XI33 ab9 a8 a7 ab6 a5 net037 vdd vss / 10bitDAC2_and5in
+XI42 ab9 a8 ab7 ab6 ab5 net062 vdd vss / 10bitDAC2_and5in
+XI59 a9 a8 ab7 a6 ab5 net0133 vdd vss / 10bitDAC2_and5in
+XI34 ab9 a8 ab7 a6 a5 net039 vdd vss / 10bitDAC2_and5in
+XI57 a9 a8 ab7 ab6 a5 net0134 vdd vss / 10bitDAC2_and5in
+XI56 a9 ab8 ab7 ab6 a5 net0126 vdd vss / 10bitDAC2_and5in
+XI44 ab9 ab8 a7 a6 a5 net0116 vdd vss / 10bitDAC2_and5in
+XI54 a9 ab8 ab7 a6 ab5 net064 vdd vss / 10bitDAC2_and5in
+XI36 ab9 a8 a7 ab6 ab5 net038 vdd vss / 10bitDAC2_and5in
+XI45 a9 a8 ab7 ab6 ab5 net070 vdd vss / 10bitDAC2_and5in
+XI53 a9 ab8 ab7 a6 a5 net0131 vdd vss / 10bitDAC2_and5in
+XI51 a9 ab8 a7 ab6 ab5 net068 vdd vss / 10bitDAC2_and5in
+XI50 a9 ab8 a7 ab6 a5 net0130 vdd vss / 10bitDAC2_and5in
+XI38 ab9 a8 ab7 ab6 a5 net0118 vdd vss / 10bitDAC2_and5in
+XI47 a9 ab8 a7 a6 a5 net069 vdd vss / 10bitDAC2_and5in
+XI26 ab9 ab8 ab7 a6 a5 net073 vdd vss / 10bitDAC2_and5in
+XI39 ab9 a8 a7 a6 a5 net035 vdd vss / 10bitDAC2_and5in
+XI48 a9 ab8 a7 a6 ab5 net0127 vdd vss / 10bitDAC2_and5in
+XI24 ab9 ab8 a7 ab6 ab5 net0112 vdd vss / 10bitDAC2_and5in
+XI0 a9 vdd vss ab9 / INVD0
+XI1 a8 vdd vss ab8 / INVD0
+XI2 a7 vdd vss ab7 / INVD0
+XI3 a6 vdd vss ab6 / INVD0
+XI4 a5 vdd vss ab5 / INVD0
+XI22 net025 net026 vdd vss z1 / OR2D1
+XI28 net076 net075 vdd vss z3 / OR2D1
+XI64 net0135 net0137 vdd vss z15 / OR2D1
+XI32 net0119 net037 vdd vss z7 / OR2D1
+XI61 net0136 net0138 vdd vss z14 / OR2D1
+XI58 net0133 net0134 vdd vss z13 / OR2D1
+XI35 net038 net039 vdd vss z6 / OR2D1
+XI43 net062 net0116 vdd vss z4 / OR2D1
+XI55 net064 net0126 vdd vss z9 / OR2D1
+XI52 net068 net0131 vdd vss z10 / OR2D1
+XI37 net0117 net0118 vdd vss z5 / OR2D1
+XI46 net070 net069 vdd vss z12 / OR2D1
+XI49 net0127 net0130 vdd vss z11 / OR2D1
+XI25 net0112 net073 vdd vss z2 / OR2D1
+XI40 net034 net035 vdd vss z8 / OR2D1
+.ENDS
+
+************************************************************************
+* Library Name: ETROC1_Analog
+* Cell Name:    10bitDAC2_decode5t17_1
+* View Name:    schematic
+************************************************************************
+
+.SUBCKT 10bitDAC2_decode5t17_1 a5 a6 a7 a8 a9 vdd vss z<0> z<1> z<2> z<3> z<4> 
++ z<5> z<6> z<7> z<8> z<9> z<10> z<11> z<12> z<13> z<14> z<15> z<16>
+*.PININFO a5:I a6:I a7:I a8:I a9:I z<0>:O z<1>:O z<2>:O z<3>:O z<4>:O z<5>:O 
+*.PININFO z<6>:O z<7>:O z<8>:O z<9>:O z<10>:O z<11>:O z<12>:O z<13>:O z<14>:O 
+*.PININFO z<15>:O z<16>:O vdd:B vss:B
+XI69 a5 a6 a7 a8 a9 vdd vss z<0> z<1> z<2> z<3> z<4> z<5> z<6> z<7> z<8> z<9> 
++ z<10> z<11> z<12> z<13> z<14> z<15> z<16> / 10bitDAC2_decode5t17
+.ENDS
+
+************************************************************************
+* Library Name: ETROC1_Analog
+* Cell Name:    10bitDAC2_decode5_top1
+* View Name:    schematic
+************************************************************************
+
+.SUBCKT 10bitDAC2_decode5_top1 _s<15> _s<14> _s<13> _s<12> _s<11> _s<10> _s<9> 
++ _s<8> _s<7> _s<6> _s<5> _s<4> _s<3> _s<2> _s<1> _s<0> _z<16> _z<15> _z<14> 
++ _z<13> _z<12> _z<11> _z<10> _z<9> _z<8> _z<7> _z<6> _z<5> _z<4> _z<3> _z<2> 
++ _z<1> _z<0> a5 a6 a7 a8 a9 vdd vss
+*.PININFO a5:I a6:I a7:I a8:I a9:I _s<15>:O _s<14>:O _s<13>:O _s<12>:O 
+*.PININFO _s<11>:O _s<10>:O _s<9>:O _s<8>:O _s<7>:O _s<6>:O _s<5>:O _s<4>:O 
+*.PININFO _s<3>:O _s<2>:O _s<1>:O _s<0>:O _z<16>:O _z<15>:O _z<14>:O _z<13>:O 
+*.PININFO _z<12>:O _z<11>:O _z<10>:O _z<9>:O _z<8>:O _z<7>:O _z<6>:O _z<5>:O 
+*.PININFO _z<4>:O _z<3>:O _z<2>:O _z<1>:O _z<0>:O vdd:B vss:B
+XI2 a5 a6 a7 a8 a9 _s<0> _s<1> _s<2> _s<3> _s<4> _s<5> _s<6> _s<7> _s<8> _s<9> 
++ _s<10> _s<11> _s<12> _s<13> _s<14> _s<15> vdd vss / 10bitDAC2_decode5t16_1
+XI0 a5 a6 a7 a8 a9 vdd vss _z<0> _z<1> _z<2> _z<3> _z<4> _z<5> _z<6> _z<7> 
++ _z<8> _z<9> _z<10> _z<11> _z<12> _z<13> _z<14> _z<15> _z<16> / 
++ 10bitDAC2_decode5t17_1
+.ENDS
+
+************************************************************************
+* Library Name: ETROC1_Analog
+* Cell Name:    10bitDAC2_dac1_top
+* View Name:    schematic
+************************************************************************
+
+.SUBCKT 10bitDAC2_dac1_top IN a5 a6 a7 a8 a9 outh outl pd vdd vss
+*.PININFO IN:I a5:I a6:I a7:I a8:I a9:I pd:I outh:O outl:O vdd:B vss:B
+XI1 IN net18<0> net18<1> net18<2> net18<3> net18<4> net18<5> net18<6> net18<7> 
++ net18<8> net18<9> net18<10> net18<11> net18<12> net18<13> net18<14> 
++ net18<15> net17<0> net17<1> net17<2> net17<3> net17<4> net17<5> net17<6> 
++ net17<7> net17<8> net17<9> net17<10> net17<11> net17<12> net17<13> net17<14> 
++ net17<15> net17<16> outh outl pd vdd vss / 10bitDAC2_dac1_1
+XI0 net18<0> net18<1> net18<2> net18<3> net18<4> net18<5> net18<6> net18<7> 
++ net18<8> net18<9> net18<10> net18<11> net18<12> net18<13> net18<14> 
++ net18<15> net17<0> net17<1> net17<2> net17<3> net17<4> net17<5> net17<6> 
++ net17<7> net17<8> net17<9> net17<10> net17<11> net17<12> net17<13> net17<14> 
++ net17<15> net17<16> a5 a6 a7 a8 a9 vdd vss / 10bitDAC2_decode5_top1
+.ENDS
+
+************************************************************************
+* Library Name: ETROC1_Analog
+* Cell Name:    10bitDAC2
+* View Name:    schematic
+************************************************************************
+
+.SUBCKT 10bitDAC2 IN a0 a1 a2 a3 a4 a5 a6 a7 a8 a9 out pd vdd vss
+*.PININFO IN:I a0:I a1:I a2:I a3:I a4:I a5:I a6:I a7:I a8:I a9:I pd:I out:O 
+*.PININFO vdd:B vss:B
+XI6 a0 a1 a2 a3 a4 a5 out vdd net2 net3 vss / 10bitDAC2_dac2_top
+XI5 IN a5 a6 a7 a8 a9 net3 net2 pd vdd vss / 10bitDAC2_dac1_top
+.ENDS
+
+************************************************************************
+* Library Name: ETROC1_Analog
+* Cell Name:    DAC10bit
+* View Name:    schematic
+************************************************************************
+
+.SUBCKT DAC10bit IN a0 a1 a2 a3 a4 a5 a6 a7 a8 a9 out pd vdd vss
+*.PININFO IN:I a0:I a1:I a2:I a3:I a4:I a5:I a6:I a7:I a8:I a9:I pd:I out:O 
+*.PININFO vdd:B vss:B
+XI4 out vss / 10bitDAC2_cap_5p
+XI7 IN a0 a1 a2 a3 a4 a5 a6 a7 a8 a9 out pd vdd vss / 10bitDAC2
+.ENDS
+

@@ -1,0 +1,1 @@
+v2lvs -l $TSMC_DIG_LIBS/Front_End/verilog/tcbn65lp_200a/tcbn65lp_pwr.v -l ../netlist/ETROC2_TDC.v -s ../netlist/ETROC2_TDC.src.net -s $TSMC_DIG_LIBS/Back_End/spice/tcbn65lp_200a/tcbn65lp_200a.spi -v ../netlist/ETROC2_TDC_Wrap.vams  -o ETROC2_TDC_Wrap.src.spi -a "<"

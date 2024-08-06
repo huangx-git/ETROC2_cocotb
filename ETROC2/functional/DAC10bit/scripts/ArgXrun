@@ -1,0 +1,6 @@
+// xrunArgs
+model/DAC10bit_tb.vams
+model/DAC10bit.vams
+-gui
+-clean
+-access +rwc

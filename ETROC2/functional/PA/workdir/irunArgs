@@ -1,0 +1,15 @@
+// irunArgs
+./model/PreAmp_tb.vams
+./model/PreAmp.vams
+amscf.scs
+-input probe.tcl
+-iereport
+-clean
+-timescale 1ns/1ps
+-access +rwc
+MyConnRules18.vams
+-amsconnrules My_ConnRules_18_full_fast
+-discipline logic
+// -linedebug
+-amsvivalog
+

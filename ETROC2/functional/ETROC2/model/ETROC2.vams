@@ -1,0 +1,677 @@
+//Verilog-AMS HDL for "ETROC2_Top", "ETROC2" "verilogams"
+
+`include "constants.vams"
+`include "disciplines.vams"
+
+module ETROC2 ( en_clk_WS, CLK_WS, DOLn, DOLp, DORn, DORp, PAOut, VTemp,
+wsStart, wsStop, SDA, VDD_CLK, VDD_D, VDD_Dis, VDD_EFUSE, VDD_IO2, VDD_PA, VDD_QInj,
+VDD_SL, VP, VREF, VSS_CLK, VSS_D, VSS_Dis, VSS_IO1, VSS_IO2, VSS_IO3, VSS_PA,
+VSS_QInj, VSS_S, VSS_SL, CLK40n, CLK40p, CLK1280n, CLK1280p, FCn, FCp, I2CAddr,
+PAIn, RSTN, SCL, GRO_Out);
+
+input en_clk_WS;
+input VSS_PA;
+input CLK40p;
+input VSS_QInj;
+input VDD_SL;
+output DOLn;
+input VSS_D;
+input VSS_IO1;
+output [255:0] PAOut;
+input SCL;
+input CLK40n;
+input VDD_Dis;
+input VDD_EFUSE;
+input VSS_CLK;
+input  [4:0] I2CAddr;
+output CLK_WS;
+input VDD_QInj;
+input VSS_SL;
+input VDD_IO2;
+input VDD_D;
+input VP;
+input CLK1280p;
+output DORn;
+input VSS_IO2;
+input FCp;
+output DORp;
+input VDD_CLK;
+input VSS_S;
+input VREF;
+output DOLp;
+output VTemp;
+input VDD_PA;
+input FCn;
+input VSS_IO3;
+output wsStop;
+input RSTN;
+input  [255:0] PAIn ;
+output wsStart;
+input CLK1280n;
+input VSS_Dis;
+input SDA;
+output GRO_Out;
+
+// wreal PAIn [255:0];
+// wreal PAOut [255:0];
+// wreal [255:0] PAOut;
+// wire [255:0] PAOut;
+// wreal PAOut224;
+wreal VSS_S, VSS_QInj, VSS_PA, VSS_Dis, VDD_QInj, VDD_PA, VDD_Dis;
+wreal VREF, VBG, VTemp;
+wreal CLK40p, CLK40n, CLK1280p, CLK1280n, FCp, FCn;
+wreal CLK_WSN, CLK_WSP;
+wire VDD_D, VSS_D;
+wire [7:0] busDataMisoA, busDataMisoB, busDataMisoC;
+wire busTmrErrorA, busTmrErrorB, busTmrErrorC;
+wire [735:0] colDataChain;
+wire [15:0] colHitChain;
+wire [63:0] trigHitsColumn;
+wire [255:0] CLK40MRO_HTreeOut, CLK40MTDC_HTreeOut, QInj_HTreeOut, REFStrobe_HTreeOut;
+wire [15:0] busAddrA, busAddrB, busAddrC;
+wire busClkA, busClkB, busClkC;
+wire [7:0] busDataMosiA, busDataMosiB, busDataMosiC;
+wire busReA, busReB, busReC;
+wire busRstA, busRstB, busRstC;
+wire busWeA, busWeB, busWeC;
+wire [431:0] colBCSTChain;
+wire [15:0] colReadChain;
+
+
+
+
+
+
+wire SCL_int, SCLen, SCLout, SCLds, SCLpe, SCLud;
+wire SDA_int, SDAout, SDAen, SDAds, SDApe, SDAud;
+wire RSTN_int, RSTNout, RSTNen, RSTNds, RSTNpe, RSTNud;
+wire [4:0] I2CAddr_int;
+wire [49:0] vHigh_I2C, vLow_I2C;
+wire I2CCon_FBDiv_skipA, I2CCon_FBDiv_skipB, I2CCon_FBDiv_skipC;
+wire I2CCon_FBDiv_clkTreeDisableA, I2CCon_FBDiv_clkTreeDisableB, I2CCon_FBDiv_clkTreeDisableC;
+wire I2CCon_CLKSel;
+wire I2CCon_CLKGen_disVCOA, I2CCon_CLKGen_disVCOB, I2CCon_CLKGen_disVCOC;
+wire I2CCon_CLKGen_disSERA, I2CCon_CLKGen_disSERB, I2CCon_CLKGen_disSERC;
+wire I2CCon_CLKGen_disEOMA, I2CCon_CLKGen_disEOMB, I2CCon_CLKGen_disEOMC;
+wire I2CCon_CLKGen_disDESA, I2CCon_CLKGen_disDESB, I2CCon_CLKGen_disDESC;
+wire I2CCon_CLKGen_disCLKA, I2CCon_CLKGen_disCLKB, I2CCon_CLKGen_disCLKC;
+wire PeriCfg0B_5, PeriCfg0C_5;
+wire [3:0] I2CCon_PLL_CONFIG_I_PLL, I2CCon_PLL_BiasGen_CONFIG;
+wire [7:0] PeriCfg1B, PeriCfg1C;
+wire [3:0] I2CCon_PLL_R_CONFIG, I2CCon_PLL_CONFIG_P_PLL;
+wire [7:0] PeriCfg2B, PeriCfg2C;
+wire I2CCon_VRefGenPD,I2CCon_PLL_OverrideVcA,I2CCon_PLL_ENABLEPLL,I2CCon_PLL_vcoRailMode, I2CCon_PLL_OverrideVcB, I2CCon_PLL_OverrideVcC;
+wire [3:0] I2CCon_PLL_vcoDAC;
+wire PeriCfg3B_7, PeriCfg3C_7;
+wire [5:0] PeriCfg3B_5t0, PeriCfg3C_5t0;
+wire I2CCon_TSPD,I2CCon_PS_ForceDown,I2CCon_PS_EnableA,I2CCon_PS_EnableB, I2CCon_PS_EnableC, I2CCon_PS_CapRstA, I2CCon_PS_CapRstB, I2CCon_PS_CapRstC;
+wire [3:0] I2CCon_PS_CPCurrent;
+wire [1:0] PeriCfg4B_7t6, PeriCfg4C_7t6;
+wire [3:0] PeriCfg4B_3t0, PeriCfg4C_3t0;
+wire [7:0] I2CCon_PS_PhaseAdj, PeriCfg5B, PeriCfg5C;
+wire [7:0] I2CCon_RefStrSel, PeriCfg6B, PeriCfg6C;
+wire I2CCon_GRO_TOARST_N,I2CCon_GRO_Start,I2CCon_GRO_TOA_Latch,I2CCon_GRO_TOA_CK, I2CCon_GRO_TOT_CK,I2CCon_GRO_TOTRST_N;
+wire CLK40_SetCM,CLK40_InvData,CLK40_EnTer,CLK40_EnRx;
+wire [1:0] CLK40_Equ;
+wire CLK1280_SetCM,CLK1280_InvData,CLK1280_EnTer,CLK1280_EnRx;
+wire [1:0] CLK1280_Equ;
+wire FC_SetCM,FC_InvData,FC_EnTer,FC_EnRx;
+wire [1:0] FC_Equ;
+wire [7:0] PeriCfg7B, PeriCfg7C, PeriCfg8B, PeriCfg8C, PeriCfg9B, PeriCfg9C;
+wire [11:0] I2CCon_BCIDoffsetA, I2CCon_BCIDoffsetB, I2CCon_BCIDoffsetC;
+wire [11:0] I2CCon_emptySlotBCIDA, I2CCon_emptySlotBCIDB, I2CCon_emptySlotBCIDC;
+wire I2CCon_asyPLLResetA,I2CCon_asyLinkResetA,I2CCon_asyAlignFastcommandA,I2CCon_asyResetGlobalReadoutA,I2CCon_asyResetFastcommandA,
+    I2CCon_asyResetChargeInjA,I2CCon_asyStartCalibrationA,I2CCon_asyResetLockDetectA;
+wire I2CCon_asyPLLResetB,I2CCon_asyLinkResetB,I2CCon_asyAlignFastcommandB,I2CCon_asyResetGlobalReadoutB,I2CCon_asyResetFastcommandB,
+    I2CCon_asyResetChargeInjB,I2CCon_asyStartCalibrationB,I2CCon_asyResetLockDetectB;
+wire I2CCon_asyPLLResetC,I2CCon_asyLinkResetC,I2CCon_asyAlignFastcommandC,I2CCon_asyResetGlobalReadoutC,I2CCon_asyResetFastcommandC,
+    I2CCon_asyResetChargeInjC,I2CCon_asyStartCalibrationC,I2CCon_asyResetLockDetectC;
+wire [4:0] I2CCon_readoutClockDelayPixelA, I2CCon_readoutClockWidthPixelA, I2CCon_readoutClockDelayGlobalA, I2CCon_readoutClockWidthGlobalA;
+wire [4:0] I2CCon_readoutClockDelayPixelB, I2CCon_readoutClockWidthPixelB, I2CCon_readoutClockDelayGlobalB, I2CCon_readoutClockWidthGlobalB;
+wire [4:0] I2CCon_readoutClockDelayPixelC, I2CCon_readoutClockWidthPixelC, I2CCon_readoutClockDelayGlobalC, I2CCon_readoutClockWidthGlobalC;
+wire PeriCfg15A_7, PeriCfg15B_7, PeriCfg15C_7;
+wire [2:0] I2CCon_RTx_AmplSel, I2CCon_LTx_AmplSel;
+wire [2:0] PeriCfg17B_7t5, PeriCfg17C_7t5, PeriCfg16B_7t5, PeriCfg16C_7t5;
+wire I2CCon_disLTx, I2CCon_disRTx;
+wire [4:0] I2CCon_chargeInjectionDelayA, I2CCon_chargeInjectionDelayB, I2CCon_chargeInjectionDelayC;
+wire I2CCon_fcDataDelayEnA,I2CCon_fcClkDelayEnA,I2CCon_fcSelfAlignA,I2CCon_softBootA,I2CCon_disPowerSequenceA, 
+    I2CCon_singlePortA,I2CCon_linkResetTestPatternA,I2CCon_disScramblerA,I2CCon_mergeTriggerDataA;
+wire I2CCon_fcDataDelayEnB,I2CCon_fcClkDelayEnB,I2CCon_fcSelfAlignB,I2CCon_softBootB,I2CCon_disPowerSequenceB, 
+    I2CCon_singlePortB,I2CCon_linkResetTestPatternB,I2CCon_disScramblerB,I2CCon_mergeTriggerDataB;
+wire I2CCon_fcDataDelayEnC,I2CCon_fcClkDelayEnC,I2CCon_fcSelfAlignC,I2CCon_softBootC,I2CCon_disPowerSequenceC, 
+    I2CCon_singlePortc,I2CCon_linkResetTestPatternc,I2CCon_disScramblerc,I2CCon_mergeTriggerDatac;
+wire [1:0] I2CCon_onChipL1AConfA, I2CCon_serRateRightA, I2CCon_serRateLeftA;
+wire [1:0] I2CCon_onChipL1AConfB, I2CCon_serRateRightB, I2CCon_serRateLeftB;
+wire [1:0] I2CCon_onChipL1AConfC, I2CCon_serRateRightC, I2CCon_serRateLeftC;
+wire [2:0] I2CCon_triggerGranularityA, I2CCon_triggerGranularityB, I2CCon_triggerGranularityC;
+wire PeriCfg18B_7, PeriCfg18C_7, PeriCfg19B_7, PeriCfg19C_7;
+wire [3:0] PeriCfg20B_7t4, PeriCfg20C_7t4;
+wire [3:0] I2CCon_EFuse_TCKHP;
+wire I2CCon_EFuse_Start,I2CCon_EFuse_Rst, I2CCon_EFuse_EnClk;
+wire [1:0] I2CCon_EFuse_Mode;
+wire [1:0] PeriCfg21A_7t6;
+wire [7:0] PeriCfg21B, PeriCfg21C;
+wire [31:0] I2CCon_EFuse_Prog;
+wire [7:0] PeriCfg22B, PeriCfg22C, PeriCfg23B, PeriCfg23C, PeriCfg24B, PeriCfg24C, PeriCfg25B, PeriCfg25C;
+wire [31:0] I2CCon_linkResetFixedPatternA, I2CCon_linkResetFixedPatternB, I2CCon_linkResetFixedPatternC;
+wire [3:0] I2CCon_lfReLockThrCounterA,I2CCon_lfLockThrCounterA;
+wire [3:0] I2CCon_lfReLockThrCounterB,I2CCon_lfLockThrCounterB;
+wire [3:0] I2CCon_lfReLockThrCounterC,I2CCon_lfLockThrCounterC;
+wire I2CCon_TDCStrobeTest,I2CCon_TDCClockTest;
+wire [3:0] I2CCon_lfUnLockThrCounterA, I2CCon_lfUnLockThrCounterB, I2CCon_lfUnLockThrCounterC;
+wire [1:0] PeriCfg31A_7t6;
+wire [3:0] PeriCfg31B_7t4, PeriCfg31C_7t4;
+
+wire I2CSTAT_PS_LateA, I2CSTAT_PS_LateB, I2CSTAT_PS_LateC;
+wire [5:0] I2CSTAT_AFCcalCap;
+wire I2CSTAT_AFCBusy;
+wire [3:0] I2CSTAT_fcAlignFinalStateA, I2CSTAT_fcAlignFinalStateB, I2CSTAT_fcAlignFinalStateC;
+wire [3:0] I2CSTAT_controllerStateBufA, I2CSTAT_controllerStateBufB, I2CSTAT_controllerStateBufC;
+wire [3:0] I2CSTAT_fcAlignStatusBufA, I2CSTAT_fcAlignStatusBufB, I2CSTAT_fcAlignStatusBufC;
+wire I2CSTAT_fcBitAlignErrorA, I2CSTAT_fcBitAlignErrorB, I2CSTAT_fcBitAlignErrorC;
+wire [11:0] I2CSTAT_invalidFCCountA, I2CSTAT_invalidFCCountB, I2CSTAT_invalidFCCountC;
+wire [11:0] I2CSTAT_pllUnlockCountA, I2CSTAT_pllUnlockCountB, I2CSTAT_pllUnlockCountC;
+wire [31:0] EFuseQ;
+
+wire PORA, PORB, PORC;
+wire [3:0] I2CSTAT_controllerStateA, I2CSTAT_controllerStateB, I2CSTAT_controllerStateC;
+wire CLK40MRO_HTreeIn;
+wire [3:0] I2CSTAT_fcBitAlignStatusA, I2CSTAT_fcBitAlignStatusB, I2CSTAT_fcBitAlignStatusC;
+wire [3:0] I2CSTAT_fcBitAlignStatusBufA, I2CSTAT_fcBitAlignStatusBufB, I2CSTAT_fcBitAlignStatusBufC;
+wire FC_int;
+wire QInj_HTreeIn;
+wire soutRight, soutLeft;
+
+// wire [7:0] I2CPeriDefaultByte [31:0];
+// wire [127:0] I2CPeriDefault;
+
+wire [7:0] I2CPeriDefaultByte_0, I2CPeriDefaultByte_1, I2CPeriDefaultByte_2, I2CPeriDefaultByte_3, I2CPeriDefaultByte_4, 
+I2CPeriDefaultByte_5, I2CPeriDefaultByte_6, I2CPeriDefaultByte_7, I2CPeriDefaultByte_8, I2CPeriDefaultByte_9,
+I2CPeriDefaultByte_10, I2CPeriDefaultByte_11, I2CPeriDefaultByte_12, I2CPeriDefaultByte_13, I2CPeriDefaultByte_14,
+I2CPeriDefaultByte_15, I2CPeriDefaultByte_16, I2CPeriDefaultByte_17, I2CPeriDefaultByte_18, I2CPeriDefaultByte_19,
+I2CPeriDefaultByte_20, I2CPeriDefaultByte_21, I2CPeriDefaultByte_22, I2CPeriDefaultByte_23, I2CPeriDefaultByte_24,
+I2CPeriDefaultByte_25, I2CPeriDefaultByte_26, I2CPeriDefaultByte_27, I2CPeriDefaultByte_28, I2CPeriDefaultByte_29,
+I2CPeriDefaultByte_30, I2CPeriDefaultByte_31;
+
+
+// assign PAOut224 = PAOut[224];
+
+// wire vlowDef;
+// wire vhighDef;
+// TIEL_LVT_ELT TIEL_A_inst(.ZN(vlowDef), .VDD(VDD_D), .VSS(VSS_D));
+
+// TIEH_LVT_ELT TIEH_A_inst(.ZN(vhighDef), .VDD(VDD_D), .VSS(VDD_D));
+
+assign I2CPeriDefaultByte_0 = {{2{vLow_I2C[0]}},vHigh_I2C[0],vLow_I2C[0],{2{vHigh_I2C[0]}},{2{vLow_I2C[0]}}};
+assign I2CPeriDefaultByte_1 = {vHigh_I2C[1],{2{vLow_I2C[1]}},{2{vHigh_I2C[1]}},{3{vLow_I2C[1]}}};
+assign I2CPeriDefaultByte_2 = {{2{vLow_I2C[2]}},vHigh_I2C[2],vLow_I2C[2],vHigh_I2C[2],{2{vLow_I2C[2]}},vHigh_I2C[2]};
+assign I2CPeriDefaultByte_3 = {{3{vLow_I2C[3]}},{2{vHigh_I2C[3]}},{3{vLow_I2C[3]}}};
+assign I2CPeriDefaultByte_4 = {{2{vLow_I2C[4]}},vHigh_I2C[4],{4{vLow_I2C[4]}},vHigh_I2C[4]};
+assign I2CPeriDefaultByte_5 = {8{vLow_I2C[5]}};
+assign I2CPeriDefaultByte_6 = {{6{vLow_I2C[6]}},{2{vHigh_I2C[6]}}};
+assign I2CPeriDefaultByte_7 = {vHigh_I2C[7],vLow_I2C[7],vHigh_I2C[7],{3{vLow_I2C[7]}},{2{vHigh_I2C[7]}}};
+assign I2CPeriDefaultByte_8 = {{3{vHigh_I2C[8]}},{3{vLow_I2C[8]}},{2{vHigh_I2C[8]}}};
+assign I2CPeriDefaultByte_9 = {{3{vHigh_I2C[9]}},{3{vLow_I2C[9]}},{2{vHigh_I2C[9]}}};
+assign I2CPeriDefaultByte_10 ={{2{vHigh_I2C[10]}},vLow_I2C[10],vHigh_I2C[10],{4{vLow_I2C[10]}}};
+assign I2CPeriDefaultByte_11 ={{3{vLow_I2C[11]}},vHigh_I2C[11],{4{vLow_I2C[11]}}};
+assign I2CPeriDefaultByte_12 ={8{vLow_I2C[12]}};
+assign I2CPeriDefaultByte_13 ={vHigh_I2C[13],{7{vLow_I2C[13]}}};
+assign I2CPeriDefaultByte_14 ={{4{vHigh_I2C[14]}},{4{vLow_I2C[14]}}};
+assign I2CPeriDefaultByte_15 ={vLow_I2C[15],{2{vHigh_I2C[15]}},{5{vLow_I2C[15]}}};
+assign I2CPeriDefaultByte_16 ={vHigh_I2C[16],{2{vLow_I2C[16]}},vHigh_I2C[16],{4{vLow_I2C[16]}}};
+assign I2CPeriDefaultByte_17 ={vHigh_I2C[17],{2{vLow_I2C[17]}},{2{vHigh_I2C[17]}},{3{vLow_I2C[17]}}};
+assign I2CPeriDefaultByte_18 ={8{vLow_I2C[18]}};
+assign I2CPeriDefaultByte_19 ={vLow_I2C[19],vHigh_I2C[19],vLow_I2C[19],vHigh_I2C[19],vLow_I2C[19],{2{vHigh_I2C[19]}},vLow_I2C[19]};
+assign I2CPeriDefaultByte_20 ={vLow_I2C[20],vHigh_I2C[20],{6{vLow_I2C[20]}}};
+assign I2CPeriDefaultByte_21 ={{2{vLow_I2C[21]}},vHigh_I2C[21],vLow_I2C[21],{2{vHigh_I2C[21]}},{2{vLow_I2C[21]}}};
+assign I2CPeriDefaultByte_22 ={8{vLow_I2C[22]}};
+assign I2CPeriDefaultByte_23 ={8{vLow_I2C[23]}};
+assign I2CPeriDefaultByte_24 ={8{vLow_I2C[24]}};
+assign I2CPeriDefaultByte_25 ={8{vLow_I2C[25]}};
+assign I2CPeriDefaultByte_26 ={{2{vHigh_I2C[26]}},{3{vLow_I2C[26]}},vHigh_I2C[26],vLow_I2C[26],vHigh_I2C[26]};
+assign I2CPeriDefaultByte_27 ={vHigh_I2C[27],{3{vLow_I2C[27]}},{2{vHigh_I2C[27]}},{2{vLow_I2C[27]}}};
+assign I2CPeriDefaultByte_28 ={{2{vHigh_I2C[28]}},{3{vLow_I2C[28]}},{3{vHigh_I2C[28]}}};
+assign I2CPeriDefaultByte_29 ={vHigh_I2C[29],vLow_I2C[29],vHigh_I2C[29],vLow_I2C[29],{2{vHigh_I2C[29]}},{2{vLow_I2C[29]}}};
+assign I2CPeriDefaultByte_30 ={vHigh_I2C[30],vLow_I2C[30], vHigh_I2C[30],vHigh_I2C[30], vHigh_I2C[30],vLow_I2C[30], vHigh_I2C[30],vHigh_I2C[30]};
+assign I2CPeriDefaultByte_31 ={{4{vLow_I2C[31]}},vHigh_I2C[31],vLow_I2C[31], vHigh_I2C[31],vHigh_I2C[31]};
+
+
+I2Caddr_PulldownRes I2Caddr_PulldownRes_inst(
+    .VSS_D(VSS_D), .I2CAddr_int(I2CAddr_int));
+
+peripheryTMR peripheryTMR_inst(
+  .SCLin(SCL_int), .SCLen(SCLen), .SCLout(SCLout), .SCLds(SCLds), .SCLpe(SCLpe), .SCLud(SCLud),
+  .SDAin(SDA_int), .SDAout(SDAout), .SDAen(SDAen), .SDAds(SDAds), .SDApe(SDApe), .SDAud(SDAud),
+  .A0in(I2CAddr_int[0]), .A0out(), .A0en(), .A0ds(), .A0pe(), .A0ud(),
+  .A1in(I2CAddr_int[1]), .A1out(), .A1en(), .A1ds(), .A1pe(), .A1ud(),
+  .RSTNin(RSTN_int), .RSTNout(RSTNout), .RSTNen(RSTNen), .RSTNds(RSTNds), .RSTNpe(RSTNpe), .RSTNud(RSTNud),
+  .TOin(vLow_I2C[36]), .TOen(), .TOout(), .TOds(), .TOpe(), .TOud(),
+  .chipID({vLow_I2C[36], vHigh_I2C[36],vLow_I2C[36], vHigh_I2C[36]}), .chipREV({vLow_I2C[36], vHigh_I2C[36],vHigh_I2C[36],vLow_I2C[36]}),
+  .Ain({vHigh_I2C[36],vHigh_I2C[36],I2CAddr_int[4:2]}),
+  .HIGH(vHigh_I2C), .LOW(vLow_I2C),
+  .regOut00A({I2CCon_FBDiv_skipA,I2CCon_FBDiv_clkTreeDisableA,I2CCon_CLKSel,I2CCon_CLKGen_disVCOA,
+    I2CCon_CLKGen_disSERA,I2CCon_CLKGen_disEOMA,I2CCon_CLKGen_disDESA,I2CCon_CLKGen_disCLKA}),
+  .regOut00B({I2CCon_FBDiv_skipB,I2CCon_FBDiv_clkTreeDisableB,PeriCfg0B_5,I2CCon_CLKGen_disVCOB,
+    I2CCon_CLKGen_disSERB,I2CCon_CLKGen_disEOMB,I2CCon_CLKGen_disDESB,I2CCon_CLKGen_disCLKB}),
+  .regOut00C({I2CCon_FBDiv_skipC,I2CCon_FBDiv_clkTreeDisableC,PeriCfg0C_5,I2CCon_CLKGen_disVCOC,
+    I2CCon_CLKGen_disSERC,I2CCon_CLKGen_disEOMC,I2CCon_CLKGen_disDESC,I2CCon_CLKGen_disCLKC}),
+  .defVal00(I2CPeriDefaultByte_0),
+  .regOut01A({I2CCon_PLL_CONFIG_I_PLL, I2CCon_PLL_BiasGen_CONFIG}), .regOut01B(PeriCfg1B), .regOut01C(PeriCfg1C),
+  .defVal01(I2CPeriDefaultByte_1),
+  .regOut02A({I2CCon_PLL_R_CONFIG, I2CCon_PLL_CONFIG_P_PLL}), .regOut02B(PeriCfg2B), .regOut02C(PeriCfg2C),
+  .defVal02(I2CPeriDefaultByte_2),
+  .regOut03A({I2CCon_VRefGenPD,I2CCon_PLL_OverrideVcA,I2CCon_PLL_ENABLEPLL,I2CCon_PLL_vcoRailMode,I2CCon_PLL_vcoDAC}),
+  .regOut03B({PeriCfg3B_7,I2CCon_PLL_OverrideVcB,PeriCfg3B_5t0}), .regOut03C({PeriCfg3C_7,I2CCon_PLL_OverrideVcC,PeriCfg3C_5t0}),
+  .defVal03(I2CPeriDefaultByte_3),
+  .regOut04A({I2CCon_TSPD,I2CCon_PS_ForceDown,I2CCon_PS_EnableA,I2CCon_PS_CapRstA,I2CCon_PS_CPCurrent}),
+  .regOut04B({PeriCfg4B_7t6, I2CCon_PS_EnableB, I2CCon_PS_CapRstB, PeriCfg4B_3t0}),
+  .regOut04C({PeriCfg4C_7t6, I2CCon_PS_EnableC, I2CCon_PS_CapRstC, PeriCfg4C_3t0}),
+  .defVal04(I2CPeriDefaultByte_4),
+  .regOut05A(I2CCon_PS_PhaseAdj), .regOut05B(PeriCfg5B), .regOut05C(PeriCfg5C), .defVal05(I2CPeriDefaultByte_5),
+  .regOut06A(I2CCon_RefStrSel), .regOut06B(PeriCfg6B), .regOut06C(PeriCfg6C), .defVal06(I2CPeriDefaultByte_6),
+  .regOut07A({I2CCon_GRO_TOARST_N,I2CCon_GRO_Start, CLK40_SetCM,CLK40_InvData, CLK40_Equ, CLK40_EnTer,CLK40_EnRx}),
+  .regOut07B(PeriCfg7B), .regOut07C(PeriCfg7C), .defVal07(I2CPeriDefaultByte_7),
+  .regOut08A({I2CCon_GRO_TOA_Latch,I2CCon_GRO_TOA_CK, CLK1280_SetCM,CLK1280_InvData, CLK1280_Equ, CLK1280_EnTer,CLK1280_EnRx}),
+  .regOut08B(PeriCfg8B), .regOut08C(PeriCfg8C), .defVal08(I2CPeriDefaultByte_8),
+  .regOut09A({I2CCon_GRO_TOT_CK,I2CCon_GRO_TOTRST_N, FC_SetCM,FC_InvData, FC_Equ, FC_EnTer, FC_EnRx}),
+  .regOut09B(PeriCfg9B), .regOut09C(PeriCfg9C), .defVal09(I2CPeriDefaultByte_9),
+  .regOut0AA(I2CCon_BCIDoffsetA[7:0]), .regOut0AB(I2CCon_BCIDoffsetB[7:0]), .regOut0AC(I2CCon_BCIDoffsetC[7:0]), .defVal0A(I2CPeriDefaultByte_10),
+  .regOut0BA({I2CCon_emptySlotBCIDA[3:0],I2CCon_BCIDoffsetA[11:8]}),
+  .regOut0BB({I2CCon_emptySlotBCIDB[3:0],I2CCon_BCIDoffsetB[11:8]}),
+  .regOut0BC({I2CCon_emptySlotBCIDC[3:0],I2CCon_BCIDoffsetC[11:8]}),
+  .defVal0B(I2CPeriDefaultByte_11),
+  .regOut0CA(I2CCon_emptySlotBCIDA[11:4]), .regOut0CB(I2CCon_emptySlotBCIDB[11:4]), .regOut0CC(I2CCon_emptySlotBCIDC[11:4]),
+  .defVal0C(I2CPeriDefaultByte_12),
+  .regOut0DA({I2CCon_asyPLLResetA,I2CCon_asyLinkResetA,I2CCon_asyAlignFastcommandA,I2CCon_readoutClockDelayPixelA}),
+  .regOut0DB({I2CCon_asyPLLResetB,I2CCon_asyLinkResetB,I2CCon_asyAlignFastcommandB,I2CCon_readoutClockDelayPixelB}),
+  .regOut0DC({I2CCon_asyPLLResetC,I2CCon_asyLinkResetC,I2CCon_asyAlignFastcommandC,I2CCon_readoutClockDelayPixelC}),
+  .defVal0D(I2CPeriDefaultByte_13),
+  .regOut0EA({I2CCon_asyResetGlobalReadoutA,I2CCon_asyResetFastcommandA,I2CCon_asyResetChargeInjA,I2CCon_readoutClockWidthPixelA}),
+  .regOut0EB({I2CCon_asyResetGlobalReadoutB,I2CCon_asyResetFastcommandB,I2CCon_asyResetChargeInjB,I2CCon_readoutClockWidthPixelB}),
+  .regOut0EC({I2CCon_asyResetGlobalReadoutC,I2CCon_asyResetFastcommandC,I2CCon_asyResetChargeInjC,I2CCon_readoutClockWidthPixelC}),
+  .defVal0E(I2CPeriDefaultByte_14),
+  .regOut0FA({PeriCfg15A_7,I2CCon_asyStartCalibrationA,I2CCon_asyResetLockDetectA,I2CCon_readoutClockDelayGlobalA}),
+  .regOut0FB({PeriCfg15B_7,I2CCon_asyStartCalibrationB,I2CCon_asyResetLockDetectB,I2CCon_readoutClockDelayGlobalB}),
+  .regOut0FC({PeriCfg15C_7,I2CCon_asyStartCalibrationC,I2CCon_asyResetLockDetectC,I2CCon_readoutClockDelayGlobalC}),
+  .defVal0F(I2CPeriDefaultByte_15),
+  .regOut10A({I2CCon_LTx_AmplSel, I2CCon_readoutClockWidthGlobalA}),
+  .regOut10B({PeriCfg16B_7t5, I2CCon_readoutClockWidthGlobalB}),
+  .regOut10C({PeriCfg16C_7t5, I2CCon_readoutClockWidthGlobalC}),
+  .defVal10(I2CPeriDefaultByte_16),
+  .regOut11A({I2CCon_RTx_AmplSel, I2CCon_chargeInjectionDelayA}),
+  .regOut11B({PeriCfg17B_7t5, I2CCon_chargeInjectionDelayB}),
+  .regOut11C({PeriCfg17C_7t5, I2CCon_chargeInjectionDelayC}),
+  .defVal11(I2CPeriDefaultByte_17),
+  .regOut12A({I2CCon_disLTx,I2CCon_onChipL1AConfA,I2CCon_fcDataDelayEnA,I2CCon_fcClkDelayEnA,I2CCon_fcSelfAlignA,I2CCon_softBootA,I2CCon_disPowerSequenceA}),
+  .regOut12B({PeriCfg18B_7,I2CCon_onChipL1AConfB,I2CCon_fcDataDelayEnB,I2CCon_fcClkDelayEnB,I2CCon_fcSelfAlignB,I2CCon_softBootB,I2CCon_disPowerSequenceB}),
+  .regOut12C({PeriCfg18C_7,I2CCon_onChipL1AConfC,I2CCon_fcDataDelayEnC,I2CCon_fcClkDelayEnC,I2CCon_fcSelfAlignC,I2CCon_softBootC,I2CCon_disPowerSequenceC}),
+  .defVal12(I2CPeriDefaultByte_18),
+  .regOut13A({I2CCon_disRTx,I2CCon_singlePortA,I2CCon_serRateRightA,I2CCon_serRateLeftA,I2CCon_linkResetTestPatternA,I2CCon_disScramblerA}),
+  .regOut13B({PeriCfg19B_7,I2CCon_singlePortB,I2CCon_serRateRightB,I2CCon_serRateLeftB,I2CCon_linkResetTestPatternB,I2CCon_disScramblerB}),
+  .regOut13C({PeriCfg19C_7,I2CCon_singlePortC,I2CCon_serRateRightC,I2CCon_serRateLeftC,I2CCon_linkResetTestPatternC,I2CCon_disScramblerC}),
+  .defVal13(I2CPeriDefaultByte_19),
+  .regOut14A({I2CCon_EFuse_TCKHP,I2CCon_triggerGranularityA,I2CCon_mergeTriggerDataA}),
+  .regOut14B({PeriCfg20B_7t4,I2CCon_triggerGranularityB,I2CCon_mergeTriggerDataB}),
+  .regOut14C({PeriCfg20C_7t4,I2CCon_triggerGranularityC,I2CCon_mergeTriggerDataC}),
+  .defVal14(I2CPeriDefaultByte_20),
+  .regOut15A({PeriCfg21A_7t6,I2CCon_EFuse_Bypass, I2CCon_EFuse_Start,I2CCon_EFuse_Rst,I2CCon_EFuse_Mode,I2CCon_EFuse_EnClk}), .regOut15B(PeriCfg21B), .regOut15C(PeriCfg21C),
+  .defVal15(I2CPeriDefaultByte_21),
+  .regOut16A(I2CCon_EFuse_Prog[7:0]), .regOut16B(PeriCfg22B), .regOut16C(PeriCfg22C), .defVal16(I2CPeriDefaultByte_22),
+  .regOut17A(I2CCon_EFuse_Prog[15:8]), .regOut17B(PeriCfg23B), .regOut17C(PeriCfg23C), .defVal17(I2CPeriDefaultByte_23),
+  .regOut18A(I2CCon_EFuse_Prog[23:16]), .regOut18B(PeriCfg24B), .regOut18C(PeriCfg24C), .defVal18(I2CPeriDefaultByte_24),
+  .regOut19A(I2CCon_EFuse_Prog[31:24]), .regOut19B(PeriCfg25B), .regOut19C(PeriCfg25C), .defVal19(I2CPeriDefaultByte_25),
+  .regOut1AA(I2CCon_linkResetFixedPatternA[7:0]), .regOut1AB(I2CCon_linkResetFixedPatternB[7:0]), .regOut1AC(I2CCon_linkResetFixedPatternC[7:0]),
+  .defVal1A(I2CPeriDefaultByte_26),
+  .regOut1BA(I2CCon_linkResetFixedPatternA[15:8]), .regOut1BB(I2CCon_linkResetFixedPatternB[15:8]), .regOut1BC(I2CCon_linkResetFixedPatternC[15:8]),
+  .defVal1B(I2CPeriDefaultByte_27),
+  .regOut1CA(I2CCon_linkResetFixedPatternA[23:16]), .regOut1CB(I2CCon_linkResetFixedPatternB[23:16]), .regOut1CC(I2CCon_linkResetFixedPatternC[23:16]),
+  .defVal1C(I2CPeriDefaultByte_28),
+  .regOut1DA(I2CCon_linkResetFixedPatternA[31:24]), .regOut1DB(I2CCon_linkResetFixedPatternB[31:24]), .regOut1DC(I2CCon_linkResetFixedPatternC[31:24]),
+  .defVal1D(I2CPeriDefaultByte_29),
+  .regOut1EA({I2CCon_lfReLockThrCounterA,I2CCon_lfLockThrCounterA}),
+  .regOut1EB({I2CCon_lfReLockThrCounterB,I2CCon_lfLockThrCounterB}),
+  .regOut1EC({I2CCon_lfReLockThrCounterC,I2CCon_lfLockThrCounterC}),
+  .defVal1E(I2CPeriDefaultByte_30),
+  .regOut1FA({PeriCfg31A_7t6,I2CCon_TDCStrobeTest,I2CCon_TDCClockTest,I2CCon_lfUnLockThrCounterA}),
+  .regOut1FB({PeriCfg31B_7t4,I2CCon_lfUnLockThrCounterB}),
+  .regOut1FC({PeriCfg31C_7t4,I2CCon_lfUnLockThrCounterC}),
+  .defVal1F(I2CPeriDefaultByte_31),
+  .regIn100A({I2CSTAT_PS_LateA,I2CSTAT_AFCcalCap,I2CSTAT_AFCBusy}),
+  .regIn100B({I2CSTAT_PS_LateB,I2CSTAT_AFCcalCap,I2CSTAT_AFCBusy}),
+  .regIn100C({I2CSTAT_PS_LateC,I2CSTAT_AFCcalCap,I2CSTAT_AFCBusy}),
+  .regIn101A({I2CSTAT_fcAlignFinalStateA, I2CSTAT_controllerStateBufA}),
+  .regIn101B({I2CSTAT_fcAlignFinalStateB, I2CSTAT_controllerStateBufB}),
+  .regIn101C({I2CSTAT_fcAlignFinalStateC, I2CSTAT_controllerStateBufC}),
+  .regIn102A({I2CSTAT_fcBitAlignStatusBufA,{3{vLow_I2C[34]}},I2CSTAT_fcBitAlignErrorA}),
+  .regIn102B({I2CSTAT_fcBitAlignStatusBufB,{3{vLow_I2C[34]}},I2CSTAT_fcBitAlignErrorB}),
+  .regIn102C({I2CSTAT_fcBitAlignStatusBufC,{3{vLow_I2C[34]}},I2CSTAT_fcBitAlignErrorC}),
+  .regIn103A(I2CSTAT_invalidFCCountA[7:0]),
+  .regIn103B(I2CSTAT_invalidFCCountB[7:0]),
+  .regIn103C(I2CSTAT_invalidFCCountC[7:0]),
+  .regIn104A({I2CSTAT_pllUnlockCountA[3:0],I2CSTAT_invalidFCCountA[11:8]}),
+  .regIn104B({I2CSTAT_pllUnlockCountB[3:0],I2CSTAT_invalidFCCountB[11:8]}),
+  .regIn104C({I2CSTAT_pllUnlockCountC[3:0],I2CSTAT_invalidFCCountC[11:8]}),
+  .regIn105A(I2CSTAT_pllUnlockCountA[11:4]),
+  .regIn105B(I2CSTAT_pllUnlockCountB[11:4]),
+  .regIn105C(I2CSTAT_pllUnlockCountC[11:4]),
+  .regIn106A(EFuseQ[7:0]),
+  .regIn106B(EFuseQ[7:0]),
+  .regIn106C(EFuseQ[7:0]),
+  .regIn107A(EFuseQ[15:8]),
+  .regIn107B(EFuseQ[15:8]),
+  .regIn107C(EFuseQ[15:8]),
+  .regIn108A(EFuseQ[23:16]),
+  .regIn108B(EFuseQ[23:16]),
+  .regIn108C(EFuseQ[23:16]),
+  .regIn109A(EFuseQ[31:24]),
+  .regIn109B(EFuseQ[31:24]),
+  .regIn109C(EFuseQ[31:24]),
+  .regIn10AA({8{vLow_I2C[42]}}),
+  .regIn10AB({8{vLow_I2C[42]}}),
+  .regIn10AC({8{vLow_I2C[42]}}),
+  .regIn10BA({8{vLow_I2C[43]}}),
+  .regIn10BB({8{vLow_I2C[43]}}),
+  .regIn10BC({8{vLow_I2C[43]}}),
+  .regIn10CA({8{vLow_I2C[44]}}),
+  .regIn10CB({8{vLow_I2C[44]}}),
+  .regIn10CC({8{vLow_I2C[44]}}),
+  .regIn10DA({8{vLow_I2C[45]}}),
+  .regIn10DB({8{vLow_I2C[45]}}),
+  .regIn10DC({8{vLow_I2C[45]}}),
+  .regIn10EA({8{vLow_I2C[46]}}),
+  .regIn10EB({8{vLow_I2C[46]}}),
+  .regIn10EC({8{vLow_I2C[46]}}),
+  .regIn10FA({8{vLow_I2C[47]}}),
+  .regIn10FB({8{vLow_I2C[47]}}),
+  .regIn10FC({8{vLow_I2C[47]}}),
+  .matrixBusRstA(busRstA),
+  .matrixBusRstB(busRstB),
+  .matrixBusRstC(busRstC),
+  .matrixBusWeA(busWeA),
+  .matrixBusWeB(busWeB),
+  .matrixBusWeC(busWeC),
+  .matrixBusReA(busReA),
+  .matrixBusReB(busReB),
+  .matrixBusReC(busReC),
+  .matrixBusClkA(busClkA),
+  .matrixBusClkB(busClkB),
+  .matrixBusClkC(busClkC),
+  .matrixBusAddrA(busAddrA),
+  .matrixBusAddrB(busAddrB),
+  .matrixBusAddrC(busAddrC),
+  .matrixBusDataMosiA(busDataMosiA),
+  .matrixBusDataMosiB(busDataMosiB),
+  .matrixBusDataMosiC(busDataMosiC),
+  .matrixBusDataMisoA(busDataMisoA),
+  .matrixBusDataMisoB(busDataMisoB),
+  .matrixBusDataMisoC(busDataMisoC),
+  .matrixBusTmrErrorA(busTmrErrorA),
+  .matrixBusTmrErrorB(busTmrErrorB),
+  .matrixBusTmrErrorC(busTmrErrorC),
+  .VDD(VDD_D),
+  .VSS(VSS_D)
+  );
+
+
+
+
+wreal CLK2G56N, CLK2G56P;
+wreal VDD_CLK, VSS_CLK, VP;
+// wire CLK2G56N, CLK2G56P;
+wire INSTLOCK_PLL;
+wire CLK40MTDC_HTreeIn, CLK40MTDC_Test, REFStrobe_HTreeIn, REFStrobeTest;
+wire pllCalDone;
+wire CLK1280_toGlobalDigA, CLK1280_toGlobalDigB, CLK1280_toGlobalDigC, CLK40_toGlobalDigA, CLK40_toGlobalDigB, CLK40_toGlobalDigC;
+wire AFC_RstA, AFC_RstB, AFC_RstC, AFC_StartA, AFC_StartB, AFC_StartC;
+wire CLK1280_int, CLK40REF_int;
+
+
+CLKGen CLKGen_inst( 
+  .CLK2G56N(CLK2G56N), .CLK2G56P(CLK2G56P), .CLK40MTDC(CLK40MTDC_HTreeIn), .CLK40MTest(CLK40MTDC_Test), .I2CSTAT_AFCBusy(I2CSTAT_AFCBusy),
+  .I2CSTAT_AFCcalCap(I2CSTAT_AFCcalCap), .I2CSTAT_PS_LateA(I2CSTAT_PS_LateA), .I2CSTAT_PS_LateB(I2CSTAT_PS_LateB), .I2CSTAT_PS_LateC(I2CSTAT_PS_LateC), 
+  .INSTLOCK_PLL(INSTLOCK_PLL), .NCalBusy(pllCalDone), .REFStrobe(REFStrobe_HTreeIn), .REFStrobeTest(REFStrobeTest), 
+  .clk1G28OutA(CLK1280_toGlobalDigA), .clk1G28OutB(CLK1280_toGlobalDigB), .clk1G28OutC(CLK1280_toGlobalDigC), 
+  .clk40MOutA(CLK40_toGlobalDigA), .clk40MOutB(CLK40_toGlobalDigB), .clk40MOutC(CLK40_toGlobalDigC), 
+  .VDD_CLK(VDD_CLK), .VDD_Dig(VDD_D), .VP(VP), .VSS_CLK(VSS_CLK), .VSS_Dig(VSS_D), 
+  .AFC_RstA(AFC_RstA), .AFC_RstB(AFC_RstB), .AFC_RstC(AFC_RstC), .AFC_StartA(AFC_StartA), .AFC_StartB(AFC_StartB), .AFC_StartC(AFC_StartC), 
+  .CLK1G28OC(CLK1280_int), .CLK40REF(CLK40REF_int), 
+  .I2CCon_CLKGen_disCLKA(I2CCon_CLKGen_disCLKA), .I2CCon_CLKGen_disCLKB(I2CCon_CLKGen_disCLKB), .I2CCon_CLKGen_disCLKC(I2CCon_CLKGen_disCLKC), 
+  .I2CCon_CLKGen_disDESA(I2CCon_CLKGen_disDESA), .I2CCon_CLKGen_disDESB(I2CCon_CLKGen_disDESB), .I2CCon_CLKGen_disDESC(I2CCon_CLKGen_disDESC), 
+  .I2CCon_CLKGen_disEOMA(I2CCon_CLKGen_disEOMA), .I2CCon_CLKGen_disEOMB(I2CCon_CLKGen_disEOMB), .I2CCon_CLKGen_disEOMC(I2CCon_CLKGen_disEOMC),
+  .I2CCon_CLKGen_disSERA(I2CCon_CLKGen_disSERA), .I2CCon_CLKGen_disSERB(I2CCon_CLKGen_disSERB), .I2CCon_CLKGen_disSERC(I2CCon_CLKGen_disSERC), 
+  .I2CCon_CLKGen_disVCOA(I2CCon_CLKGen_disVCOA), .I2CCon_CLKGen_disVCOB(I2CCon_CLKGen_disVCOB), .I2CCon_CLKGen_disVCOC(I2CCon_CLKGen_disVCOC), 
+  .I2CCon_CLKSel(I2CCon_CLKSel), 
+  .I2CCon_FBDiv_clkTreeDisableA(I2CCon_FBDiv_clkTreeDisableA), .I2CCon_FBDiv_clkTreeDisableB(I2CCon_FBDiv_clkTreeDisableB), 
+  .I2CCon_FBDiv_clkTreeDisableC(I2CCon_FBDiv_clkTreeDisableC), 
+  .I2CCon_FBDiv_skipA(I2CCon_FBDiv_skipA), .I2CCon_FBDiv_skipB(I2CCon_FBDiv_skipB), .I2CCon_FBDiv_skipC(I2CCon_FBDiv_skipC), 
+  .I2CCon_PLL_BiasGen_CONFIG(I2CCon_PLL_BiasGen_CONFIG), .I2CCon_PLL_CONFIG_I_PLL(I2CCon_PLL_CONFIG_I_PLL),
+  .I2CCon_PLL_CONFIG_P_PLL(I2CCon_PLL_CONFIG_P_PLL), .I2CCon_PLL_ENABLEPLL(I2CCon_PLL_ENABLEPLL), 
+  .I2CCon_PLL_OverrideVcA(I2CCon_PLL_OverrideVcA), .I2CCon_PLL_OverrideVcB(I2CCon_PLL_OverrideVcB), .I2CCon_PLL_OverrideVcC(I2CCon_PLL_OverrideVcC), 
+  .I2CCon_PLL_R_CONFIG(I2CCon_PLL_R_CONFIG), .I2CCon_PLL_vcoDAC(I2CCon_PLL_vcoDAC), .I2CCon_PLL_vcoRailMode(I2CCon_PLL_vcoRailMode),
+  .I2CCon_PS_CPCurrent(I2CCon_PS_CPCurrent), .I2CCon_PS_CapRstA(I2CCon_PS_CapRstA), .I2CCon_PS_CapRstB(I2CCon_PS_CapRstB), .I2CCon_PS_CapRstC(I2CCon_PS_CapRstC),
+  .I2CCon_PS_EnableA(I2CCon_PS_EnableA), .I2CCon_PS_EnableB(I2CCon_PS_EnableB), .I2CCon_PS_EnableC(I2CCon_PS_EnableC), 
+  .I2CCon_PS_ForceDown(I2CCon_PS_ForceDown), .I2CCon_PS_PhaseAdj(I2CCon_PS_PhaseAdj), .I2CCon_RefStrobGenSel(I2CCon_RefStrSel) 
+);
+
+
+
+
+
+
+PixelMatrix_HTree PixelMatrix_HTree_inst( 
+  .PAOut(PAOut), .busDataMisoOutA(busDataMisoA), .busDataMisoOutB(busDataMisoB), .busDataMisoOutC(busDataMisoC),
+  .busTmrErrorOutA(busTmrErrorA), .busTmrErrorOutB(busTmrErrorB), .busTmrErrorOutC(busTmrErrorC), 
+  .colDataChain(colDataChain), .colHitChain(colHitChain), .trigHitsColumn(trigHitsColumn), 
+  .VDD_D(VDD_D), .VDD_Dis(VDD_Dis), .VDD_PA(VDD_PA), .VDD_QInj(VDD_QInj), .VSS_D(VSS_D), .VSS_Dis(VSS_Dis), .VSS_PA(VSS_PA), .VSS_QInj(VSS_QInj), .VSS_S(VSS_S), 
+  .ClkRO(CLK40MRO_HTreeOut), .ClkTDC(CLK40MTDC_HTreeOut), .PAIn(PAIn), .QInj(QInj_HTreeOut), .RefStrobe(REFStrobe_HTreeOut), .VRef(VREF), 
+  .busAddrInA(busAddrA), .busAddrInB(busAddrB), .busAddrInC(busAddrC),
+  .busClkInA(busClkA), .busClkInB(busClkB), .busClkInC(busClkC), 
+  .busDataMosiInA(busDataMosiA), .busDataMosiInB(busDataMosiB), .busDataMosiInC(busDataMosiC),
+  .busReInA(busReA), .busReInB(busReB), .busReInC(busReC), 
+  .busRstInA(busRstA), .busRstInB(busRstB), .busRstInC(busRstC), 
+  .busWeInA(busWeA), .busWeInB(busWeB), .busWeInC(busWeC), .colBCSTChain(colBCSTChain), .colReadChain(colReadChain),
+  .CLK40MRO_HTreeIn(CLK40MRO_HTreeIn), .CLK40MTDC_HTreeIn(CLK40MTDC_HTreeIn),
+  .REFStrobe_HTreeIn(REFStrobe_HTreeIn), .QInj_HTreeIn(QInj_HTreeIn)
+);
+
+
+CKBD1_LVT_ELT controllerStateBufA0_inst(.Z(I2CSTAT_controllerStateBufA[0]), .I(I2CSTAT_controllerStateA[0]), .VDD(VDD_D), .VSS(VSS_D));
+CKBD1_LVT_ELT controllerStateBufA1_inst(.Z(I2CSTAT_controllerStateBufA[1]), .I(I2CSTAT_controllerStateA[1]), .VDD(VDD_D), .VSS(VSS_D));
+CKBD1_LVT_ELT controllerStateBufA2_inst(.Z(I2CSTAT_controllerStateBufA[2]), .I(I2CSTAT_controllerStateA[2]), .VDD(VDD_D), .VSS(VSS_D));
+CKBD1_LVT_ELT controllerStateBufA3_inst(.Z(I2CSTAT_controllerStateBufA[3]), .I(I2CSTAT_controllerStateA[3]), .VDD(VDD_D), .VSS(VSS_D));
+
+CKBD1_LVT_ELT controllerStateBufB0_inst(.Z(I2CSTAT_controllerStateBufB[0]), .I(I2CSTAT_controllerStateB[0]), .VDD(VDD_D), .VSS(VSS_D));
+CKBD1_LVT_ELT controllerStateBufB1_inst(.Z(I2CSTAT_controllerStateBufB[1]), .I(I2CSTAT_controllerStateB[1]), .VDD(VDD_D), .VSS(VSS_D));
+CKBD1_LVT_ELT controllerStateBufB2_inst(.Z(I2CSTAT_controllerStateBufB[2]), .I(I2CSTAT_controllerStateB[2]), .VDD(VDD_D), .VSS(VSS_D));
+CKBD1_LVT_ELT controllerStateBufB3_inst(.Z(I2CSTAT_controllerStateBufB[3]), .I(I2CSTAT_controllerStateB[3]), .VDD(VDD_D), .VSS(VSS_D));
+
+CKBD1_LVT_ELT controllerStateBufC0_inst(.Z(I2CSTAT_controllerStateBufC[0]), .I(I2CSTAT_controllerStateC[0]), .VDD(VDD_D), .VSS(VSS_D));
+CKBD1_LVT_ELT controllerStateBufC1_inst(.Z(I2CSTAT_controllerStateBufC[1]), .I(I2CSTAT_controllerStateC[1]), .VDD(VDD_D), .VSS(VSS_D));
+CKBD1_LVT_ELT controllerStateBufC2_inst(.Z(I2CSTAT_controllerStateBufC[2]), .I(I2CSTAT_controllerStateC[2]), .VDD(VDD_D), .VSS(VSS_D));
+CKBD1_LVT_ELT controllerStateBufC3_inst(.Z(I2CSTAT_controllerStateBufC[3]), .I(I2CSTAT_controllerStateC[3]), .VDD(VDD_D), .VSS(VSS_D));
+
+
+CKBD1_LVT_ELT fcBitAlignStatusBufA0_inst(.Z(I2CSTAT_fcBitAlignStatusBufA[0]), .I(I2CSTAT_fcBitAlignStatusA[0]), .VDD(VDD_D), .VSS(VSS_D));
+CKBD1_LVT_ELT fcBitAlignStatusBufA1_inst(.Z(I2CSTAT_fcBitAlignStatusBufA[1]), .I(I2CSTAT_fcBitAlignStatusA[1]), .VDD(VDD_D), .VSS(VSS_D));
+CKBD1_LVT_ELT fcBitAlignStatusBufA2_inst(.Z(I2CSTAT_fcBitAlignStatusBufA[2]), .I(I2CSTAT_fcBitAlignStatusA[2]), .VDD(VDD_D), .VSS(VSS_D));
+CKBD1_LVT_ELT fcBitAlignStatusBufA3_inst(.Z(I2CSTAT_fcBitAlignStatusBufA[3]), .I(I2CSTAT_fcBitAlignStatusA[3]), .VDD(VDD_D), .VSS(VSS_D));
+
+CKBD1_LVT_ELT fcBitAlignStatusBufB0_inst(.Z(I2CSTAT_fcBitAlignStatusBufB[0]), .I(I2CSTAT_fcBitAlignStatusB[0]), .VDD(VDD_D), .VSS(VSS_D));
+CKBD1_LVT_ELT fcBitAlignStatusBufB1_inst(.Z(I2CSTAT_fcBitAlignStatusBufB[1]), .I(I2CSTAT_fcBitAlignStatusB[1]), .VDD(VDD_D), .VSS(VSS_D));
+CKBD1_LVT_ELT fcBitAlignStatusBufB2_inst(.Z(I2CSTAT_fcBitAlignStatusBufB[2]), .I(I2CSTAT_fcBitAlignStatusB[2]), .VDD(VDD_D), .VSS(VSS_D));
+CKBD1_LVT_ELT fcBitAlignStatusBufB3_inst(.Z(I2CSTAT_fcBitAlignStatusBufB[3]), .I(I2CSTAT_fcBitAlignStatusB[3]), .VDD(VDD_D), .VSS(VSS_D));
+
+CKBD1_LVT_ELT fcBitAlignStatusBufC0_inst(.Z(I2CSTAT_fcBitAlignStatusBufC[0]), .I(I2CSTAT_fcBitAlignStatusC[0]), .VDD(VDD_D), .VSS(VSS_D));
+CKBD1_LVT_ELT fcBitAlignStatusBufC1_inst(.Z(I2CSTAT_fcBitAlignStatusBufC[1]), .I(I2CSTAT_fcBitAlignStatusC[1]), .VDD(VDD_D), .VSS(VSS_D));
+CKBD1_LVT_ELT fcBitAlignStatusBufC2_inst(.Z(I2CSTAT_fcBitAlignStatusBufC[2]), .I(I2CSTAT_fcBitAlignStatusC[2]), .VDD(VDD_D), .VSS(VSS_D));
+CKBD1_LVT_ELT fcBitAlignStatusBufC3_inst(.Z(I2CSTAT_fcBitAlignStatusBufC[3]), .I(I2CSTAT_fcBitAlignStatusC[3]), .VDD(VDD_D), .VSS(VSS_D));
+
+
+globalDigitalTMR  globalDigitalTMR_inst(
+  .clk40A(CLK40_toGlobalDigA), .clk40B(CLK40_toGlobalDigB), .clk40C(CLK40_toGlobalDigC),
+  .clk1280A(CLK1280_toGlobalDigA), .clk1280B(CLK1280_toGlobalDigB), .clk1280C(CLK1280_toGlobalDigC),
+  .clkRefA(CLK40REF_int), .clkRefB(CLK40REF_int), .clkRefC(CLK40REF_int),
+  .PORA(PORA), .PORB(PORB), .PORC(PORC),
+  .softBootA(I2CCon_softBootA), .softBootB(I2CCon_softBootB), .softBootC(I2CCon_softBootC),
+  .disPowerSequenceA(I2CCon_disPowerSequenceA),
+  .disPowerSequenceB(I2CCon_disPowerSequenceB),
+  .disPowerSequenceC(I2CCon_disPowerSequenceC),
+  .pllCalibrationDoneA(pllCalDone), .pllCalibrationDoneB(pllCalDone), .pllCalibrationDoneC(pllCalDone),
+  .asyLinkResetA(I2CCon_asyLinkResetA), .asyLinkResetB(I2CCon_asyLinkResetB), .asyLinkResetC(I2CCon_asyLinkResetC),
+  .asyPLLResetA(I2CCon_asyPLLResetA), .asyPLLResetB(I2CCon_asyPLLResetB), .asyPLLResetC(I2CCon_asyPLLResetC),
+  .asyAlignFastcommandA(I2CCon_asyAlignFastcommandA), .asyAlignFastcommandB(I2CCon_asyAlignFastcommandB), .asyAlignFastcommandC(I2CCon_asyAlignFastcommandC),
+  .asyResetFastcommandA(I2CCon_asyResetFastcommandA),
+  .asyResetFastcommandB(I2CCon_asyResetFastcommandB),
+  .asyResetFastcommandC(I2CCon_asyResetFastcommandC),
+  .asyStartCalibrationA(I2CCon_asyStartCalibrationA),
+  .asyStartCalibrationB(I2CCon_asyStartCalibrationB),
+  .asyStartCalibrationC(I2CCon_asyStartCalibrationC),
+  .asyResetLockDetectA(I2CCon_asyResetLockDetectA),
+  .asyResetLockDetectB(I2CCon_asyResetLockDetectB),
+  .asyResetLockDetectC(I2CCon_asyResetLockDetectC),
+  .asyResetGlobalReadoutA(I2CCon_asyResetGlobalReadoutA),
+  .asyResetGlobalReadoutB(I2CCon_asyResetGlobalReadoutB),
+  .asyResetGlobalReadoutC(I2CCon_asyResetGlobalReadoutC),
+  .asyResetChargeInjA(I2CCon_asyResetChargeInjA),
+  .asyResetChargeInjB(I2CCon_asyResetChargeInjB),
+  .asyResetChargeInjC(I2CCon_asyResetChargeInjC),
+  .pllResetA(AFC_RstA), .pllResetB(AFC_RstB), .pllResetC(AFC_RstC),
+  .startPLLCalibrationA(AFC_StartA), .startPLLCalibrationB(AFC_StartB), .startPLLCalibrationC(AFC_StartC),
+  .controllerStateA(I2CSTAT_controllerStateA),
+  .controllerStateB(I2CSTAT_controllerStateB),
+  .controllerStateC(I2CSTAT_controllerStateC),
+  .pllUnlockCountA(I2CSTAT_pllUnlockCountA), .pllUnlockCountB(I2CSTAT_pllUnlockCountB), .pllUnlockCountC(I2CSTAT_pllUnlockCountC),
+  .invalidFCCountA(I2CSTAT_invalidFCCountA), .invalidFCCountB(I2CSTAT_invalidFCCountB), .invalidFCCountC(I2CSTAT_invalidFCCountC),
+  .PFDInstLock(INSTLOCK_PLL),
+  .lfLockThrCounterA(I2CCon_lfLockThrCounterA),.lfLockThrCounterB(I2CCon_lfLockThrCounterB), .lfLockThrCounterC(I2CCon_lfLockThrCounterC),
+  .lfReLockThrCounterA(I2CCon_lfReLockThrCounterA),
+  .lfReLockThrCounterB(I2CCon_lfReLockThrCounterB),
+  .lfReLockThrCounterC(I2CCon_lfReLockThrCounterC),
+  .lfUnLockThrCounterA(I2CCon_lfUnLockThrCounterA),
+  .lfUnLockThrCounterB(I2CCon_lfUnLockThrCounterB),
+  .lfUnLockThrCounterC(I2CCon_lfUnLockThrCounterC),
+  .readoutClock(CLK40MRO_HTreeIn),
+  .chipIdA(EFuseQ[16:0]), .chipIdB(EFuseQ[16:0]), .chipIdC(EFuseQ[16:0]),
+  .readoutClockDelayPixelA(I2CCon_readoutClockDelayPixelA),
+  .readoutClockDelayPixelB(I2CCon_readoutClockDelayPixelB),
+  .readoutClockDelayPixelC(I2CCon_readoutClockDelayPixelC),
+  .readoutClockWidthPixelA(I2CCon_readoutClockWidthPixelA),
+  .readoutClockWidthPixelB(I2CCon_readoutClockWidthPixelB),
+  .readoutClockWidthPixelC(I2CCon_readoutClockWidthPixelC),
+  .readoutClockDelayGlobalA(I2CCon_readoutClockDelayGlobalA),
+  .readoutClockDelayGlobalB(I2CCon_readoutClockDelayGlobalB),
+  .readoutClockDelayGlobalC(I2CCon_readoutClockDelayGlobalC),
+  .readoutClockWidthGlobalA(I2CCon_readoutClockWidthGlobalA),
+  .readoutClockWidthGlobalB(I2CCon_readoutClockWidthGlobalB),
+  .readoutClockWidthGlobalC(I2CCon_readoutClockWidthGlobalC),
+  .serRateRightA(I2CCon_serRateRightA), .serRateRightB(I2CCon_serRateRightB), .serRateRightC(I2CCon_serRateRightC),
+  .serRateLeftA(I2CCon_serRateLeftA), .serRateLeftB(I2CCon_serRateLeftB), .serRateLeftC(I2CCon_serRateLeftC),
+  .linkResetTestPatternA(I2CCon_linkResetTestPatternA),
+  .linkResetTestPatternB(I2CCon_linkResetTestPatternB),
+  .linkResetTestPatternC(I2CCon_linkResetTestPatternC),
+  .linkResetFixedPatternA(I2CCon_linkResetFixedPatternA),
+  .linkResetFixedPatternB(I2CCon_linkResetFixedPatternB),
+  .linkResetFixedPatternC(I2CCon_linkResetFixedPatternC),
+  .emptySlotBCIDA(I2CCon_emptySlotBCIDA), .emptySlotBCIDB(I2CCon_emptySlotBCIDB), .emptySlotBCIDC(I2CCon_emptySlotBCIDC),
+  .triggerGranularityA(I2CCon_triggerGranularityA), 
+  .triggerGranularityB(I2CCon_triggerGranularityB),
+  .triggerGranularityC(I2CCon_triggerGranularityC),
+  .disScramblerA(I2CCon_disScramblerA), .disScramblerB(I2CCon_disScramblerB), .disScramblerC(I2CCon_disScramblerC),
+  .mergeTriggerDataA(I2CCon_mergeTriggerDataA),.mergeTriggerDataB(I2CCon_mergeTriggerDataB),.mergeTriggerDataC(I2CCon_mergeTriggerDataC),
+  .singlePortA(I2CCon_singlePortA), .singlePortB(I2CCon_singlePortB), .singlePortC(I2CCon_singlePortC),
+  .onChipL1AConfA(I2CCon_onChipL1AConfA), .onChipL1AConfB(I2CCon_onChipL1AConfB), .onChipL1AConfC(I2CCon_onChipL1AConfC),
+  .BCIDoffsetA(I2CCon_BCIDoffsetA), .BCIDoffsetB(I2CCon_BCIDoffsetB), .BCIDoffsetC(I2CCon_BCIDoffsetC),
+  .fcSelfAlignA(I2CCon_fcSelfAlignA), .fcSelfAlignB(I2CCon_fcSelfAlignB), .fcSelfAlignC(I2CCon_fcSelfAlignC),
+  .fcClkDelayEnA(I2CCon_fcClkDelayEnA), .fcClkDelayEnB(I2CCon_fcClkDelayEnB), .fcClkDelayEnC(I2CCon_fcClkDelayEnC),
+  .fcDataDelayEnA(I2CCon_fcDataDelayEnA), .fcDataDelayEnB(I2CCon_fcDataDelayEnB), .fcDataDelayEnC(I2CCon_fcDataDelayEnC),
+  .fcBitAlignErrorA(I2CSTAT_fcBitAlignErrorA), .fcBitAlignErrorB(I2CSTAT_fcBitAlignErrorB), .fcBitAlignErrorC(I2CSTAT_fcBitAlignErrorC),
+  .fcBitAlignStatusA(I2CSTAT_fcBitAlignStatusA), .fcBitAlignStatusB(I2CSTAT_fcBitAlignStatusB), .fcBitAlignStatusC(I2CSTAT_fcBitAlignStatusC),
+  .fcData(FC_int),
+  .fcAlignFinalStateA(I2CSTAT_fcAlignFinalStateA), .fcAlignFinalStateB(I2CSTAT_fcAlignFinalStateB), .fcAlignFinalStateC(I2CSTAT_fcAlignFinalStateC),
+  .chargeInjection(QInj_HTreeIn),
+  .chargeInjectionDelayA(I2CCon_chargeInjectionDelayA), .chargeInjectionDelayB(I2CCon_chargeInjectionDelayB), .chargeInjectionDelayC(I2CCon_chargeInjectionDelayC),
+  .wsStart(wsStart), .wsStop(wsStop),
+  .colDataChain(colDataChain), .colHitChain(colHitChain), .trigHitsColumn(trigHitsColumn), .colReadChain(colReadChain), .colBCSTChain(colBCSTChain),
+  .soutRight(soutRight), .soutLeft(soutLeft), .VDD(VDD_D), .VSS(VSS_D)
+  );
+
+
+OutputDriver OutputDriver_inst( 
+  .DOLn(DOLn), .DOLp(DOLp), .DORn(DORn), .DORp(DORp), 
+  .VDD_SL(VDD_SL), .VSS_SL(VSS_SL), .CLK40MTDC_Test(CLK40MTDC_Test),
+  .I2CCon_LTx_AmplSel(I2CCon_LTx_AmplSel), .I2CCon_RTx_AmplSel(I2CCon_RTx_AmplSel), 
+  .I2CCon_TDCClockTest(I2CCon_TDCClockTest), .I2CCon_TDCStrobeTest(I2CCon_TDCStrobeTest),
+  .I2CCon_disLTx(I2CCon_disLTx), .I2CCon_disRTx(I2CCon_disRTx), .REFStrobeTest(REFStrobeTest), 
+  .soutLeft(soutLeft), .soutRight(soutRight) );
+
+GRO GRO_inst( 
+  .GRO_Out_Down256(GRO_Out), .GRO_Start(I2CCon_GRO_Start), .GRO_TOARST_N(I2CCon_GRO_TOARST_N), .GRO_TOA_CK(I2CCon_GRO_TOA_CK), 
+  .GRO_TOA_Latch(I2CCon_GRO_TOA_Latch), .GRO_TOTRST_N(I2CCon_GRO_TOTRST_N), .GRO_TOT_CK(I2CCon_GRO_TOT_CK), .vdd(VDD_D), .vss(VSS_D) );
+
+VRefGen VRefGen_inst( .AMP_OUT(VREF), .VBG_OUT(VBG), .VDD(VDD_PA), .VSS(VSS_PA), .AMP_PD(I2CCon_VRefGenPD) );
+ETROC_TS ETROC_TS_inst( .VTemp(VTemp), .VDD(VDD_PA), .VSS(VSS_PA), .PD_TS(I2CCon_TSPD), .VRefIn(VREF) );
+
+powerOnResetLong_LongerRst PORA_inst(
+  .POR(PORA), .VDD(VDD_D), .VSS(VSS_D)
+);
+powerOnResetLong_LongerRst PORB_inst(
+  .POR(PORB), .VDD(VDD_D), .VSS(VSS_D)
+);
+powerOnResetLong_LongerRst PORC_inst(
+  .POR(PORC), .VDD(VDD_D), .VSS(VSS_D)
+);
+
+ETROC2_IO_v7 ETROC2_IO_v7_inst( 
+  .CLK40_Int(CLK40REF_int), .CLK1280_Int(CLK1280_int), .FC_Int(FC_int), .RSTNin(RSTN_int), .SCLin(SCL_int), .SDAin(SDA_int),
+  .DOLn(DOLn), .DOLp(DOLp), .DORn(DORn), .DORp(DORp), 
+  .I2CAddr(I2CAddr), .I2CAddr_int(I2CAddr_int), .RSTN(RSTN), .SCL(SCL), .SDA(SDA), 
+  .VDD_CLK(VDD_CLK), .VDD_D(VDD_D), .VDD_Dis(VDD_Dis), .VDD_EFUSE(VDD_EFUSE), .VDD_IO2(VDD_IO2), 
+  .VDD_PA(VDD_PA), .VDD_QInj(VDD_QInj), .VDD_SL(VDD_SL), .VP(VP), .VREF(VREF), .VSS_CLK(VSS_CLK), .VSS_D(VSS_D),
+  .VSS_Dis(VSS_Dis), .VSS_IO1(VSS_IO1), .VSS_IO2(VSS_IO2), .VSS_IO3(VSS_IO3), .VSS_PA(VSS_PA), .VSS_QInj(VSS_QInj), 
+  .VSS_S(VSS_S), .VSS_SL(VSS_SL), .VTemp(VTemp),
+  .CLK40_EnRx(CLK40_EnRx), .CLK40_EnTer(CLK40_EnTer), .CLK40_Equ(CLK40_Equ), .CLK40_InvData(CLK40_InvData), .CLK40_SetCM(CLK40_SetCM), 
+  .CLK40n(CLK40n), .CLK40p(CLK40p),
+  .CLK1280_EnRx(CLK1280_EnRx), .CLK1280_EnTer(CLK1280_EnTer), .CLK1280_Equ(CLK1280_Equ), .CLK1280_InvData(CLK1280_InvData), .CLK1280_SetCM(CLK1280_SetCM), 
+  .CLK1280n(CLK1280n), .CLK1280p(CLK1280p), 
+  .FC_EnRx(FC_EnRx), .FC_EnTer(FC_EnTer), .FC_Equ(FC_Equ), .FC_InvData(FC_InvData), .FC_SetCM(FC_SetCM), .FCn(FCn), .FCp(FCp), 
+  .RSTNds(RSTNds), .RSTNen(RSTNen), .RSTNout(RSTNout), .RSTNpe(RSTNpe), .RSTNud(RSTNud), 
+  .SCLds(SCLds), .SCLen(SCLen), .SCLout(SCLout), .SCLpe(SCLpe), .SCLud(SCLud), 
+  .SDAds(SDAds), .SDAen(SDAen), .SDAout(SDAout), .SDApe(SDApe), .SDAud(SDAud) 
+);
+
+WS_CLKBuffer WS_CLKBuffer_inst(.en_clk(en_clk_WS), .CLK_WS_Out(CLK_WS), .VDD(VDD_D), .VSS(VSS_D), 
+  .CLK_WS_Inn(CLK2G56N), .CLK_WS_Inp(CLK2G56P)
+);
+
+wire CLK40EFuse0, CLK40EFuse1, CLK40EFuse2, CLK40EFuse3, CLK40EFuse4, CLK40EFuse5, CLK40EFuse;
+
+EFuse EFuse_inst( 
+  .EFuseQ(EFuseQ), .state(), .VDD(VDD_D), .VDD2V5(VDD_EFUSE), .VSS(VSS_D), .TCKHP(I2CCon_EFuse_TCKHP), .en_clk(I2CCon_EFuse_EnClk), 
+  .int_clk(CLK40EFuse), .mode(I2CCon_EFuse_Mode), .prog(I2CCon_EFuse_Prog), .rst(I2CCon_EFuse_Rst), .start(I2CCon_EFuse_Start),
+  .EFuse_Bypass(I2CCon_EFuse_Bypass) );
+
+ND2D1_LVT_ELT EFuseCLK_EnNAND_inst(.ZN(CLK40EFuse0), .A1(CLK40MTDC_Test), .A2(I2CCon_EFuse_EnClk), .VDD(VDD_D), .VSS(VSS_D));
+CKBD2_LVT_ELT EFuseCLK_Buf0_inst(.Z(CLK40EFuse1), .I(CLK40EFuse0), .VDD(VDD_D), .VSS(VSS_D));
+CKBD2_LVT_ELT EFuseCLK_Buf1_inst(.Z(CLK40EFuse2), .I(CLK40EFuse1), .VDD(VDD_D), .VSS(VSS_D));
+CKBD2_LVT_ELT EFuseCLK_Buf2_inst(.Z(CLK40EFuse3), .I(CLK40EFuse2), .VDD(VDD_D), .VSS(VSS_D));
+CKBD2_LVT_ELT EFuseCLK_Buf3_inst(.Z(CLK40EFuse4), .I(CLK40EFuse3), .VDD(VDD_D), .VSS(VSS_D));
+CKBD2_LVT_ELT EFuseCLK_Buf4_inst(.Z(CLK40EFuse5), .I(CLK40EFuse4), .VDD(VDD_D), .VSS(VSS_D));
+CKBD2_LVT_ELT EFuseCLK_Buf5_inst(.Z(CLK40EFuse), .I(CLK40EFuse5), .VDD(VDD_D), .VSS(VSS_D));
+
+ETROC2_Peripheral_Caps ETROC2_Peripheral_Caps_inst(
+  .VDD_QInj(VDD_QInj),
+  .VDD_PA(VDD_PA),
+  .VDD_Dis(VDD_Dis),
+  .VDD_D(VDD_D),
+  .VDD_SL(VDD_SL),
+  .VDD_CLK(VDD_CLK),
+  .VSS_QInj(VSS_QInj),
+  .VSS_PA(VSS_PA),
+  .VSS_Dis(VSS_Dis),
+  .VSS_D(VSS_D),
+  .VSS_SL(VSS_SL),
+  .VSS_CLK(VSS_CLK)
+);
+
+endmodule
+

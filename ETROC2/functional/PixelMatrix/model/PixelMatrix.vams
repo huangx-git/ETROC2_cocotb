@@ -1,0 +1,192 @@
+//Verilog-AMS HDL for "ETROC2_Core", "PixelMatrix" "verilogams"
+
+`include "constants.vams"
+`include "disciplines.vams"
+
+module PixelMatrix ( PAOut, busDataMisoOutA, busDataMisoOutB, busDataMisoOutC,
+busTmrErrorOutA, busTmrErrorOutB, busTmrErrorOutC, colDataChain, colHitChain,
+trigHitsColumn, VDD_D, VDD_Dis, VDD_PA, VDD_QInj, VSS_D, VSS_Dis, VSS_PA, VSS_QInj,
+VSS_S, ClkRO, ClkTDC, PAIn, QInj, RefStrobe, VRef, busAddrInA, busAddrInB, busAddrInC,
+busClkInA, busClkInB, busClkInC, busDataMosiInA, busDataMosiInB, busDataMosiInC,
+busReInA, busReInB, busReInC, busRstInA, busRstInB, busRstInC, busWeInA, busWeInB,
+busWeInC, colBCSTChain, colReadChain );
+
+input busRstInC;
+input VSS_PA;
+input  [255:0] QInj;
+input busRstInA;
+output  [63:0] trigHitsColumn;
+input VSS_QInj;
+input VRef;
+input VSS_D;
+input busClkInA;
+output  PAOut [255:0];
+output busTmrErrorOutB;
+input  [15:0] busAddrInA;
+output  [7:0] busDataMisoOutC;
+output  [15:0] colHitChain;
+input VDD_Dis;
+output busTmrErrorOutA;
+input VDD_QInj;
+input  [7:0] busDataMosiInA;
+output  [7:0] busDataMisoOutA;
+output busTmrErrorOutC;
+input busWeInA;
+input busReInB;
+input VDD_D;
+input busReInC;
+input busClkInB;
+input  [431:0] colBCSTChain;
+input busRstInB;
+input  [7:0] busDataMosiInC;
+input  [15:0] busAddrInB;
+input  [255:0] ClkRO;
+input busWeInC;
+input  [15:0] busAddrInC;
+input VSS_S;
+input  [255:0] RefStrobe;
+input busWeInB;
+output  [7:0] busDataMisoOutB;
+input  [255:0] ClkTDC;
+input VDD_PA;
+input busReInA;
+input  [7:0] busDataMosiInB;
+input  [15:0] colReadChain;
+input  PAIn [255:0];
+input busClkInC;
+output  [735:0] colDataChain;
+input VSS_Dis;
+
+wreal  PAOut[255:0];
+wreal PAIn[255:0];
+wreal VRef;
+wreal VDD_Dis, VDD_PA, VDD_QInj, VSS_Dis, VSS_PA, VSS_QInj, VSS_S;
+wire VDD_D, VSS_D;
+wire [271:0] busAddrA, busAddrB, busAddrC;
+wire [16:0] busClkA, busClkB, busClkC;
+wire [135:0] busDataMisoA, busDataMisoB, busDataMisoC;
+wire [135:0] busDataMosiA, busDataMosiB, busDataMosiC;
+wire [16:0] busReA, busReB, busReC;
+wire [16:0] busRstA, busRstB, busRstC;
+wire [16:0] busTmrErrorA, busTmrErrorB, busTmrErrorC; 
+wire [16:0] busWeA, busWeB, busWeC;
+wire [67:0] columnAddrA, columnAddrB, columnAddrC;
+wire [79:0] dnHit;
+wire vlowLA, vlowLB, vlowLC, vlowRA, vlowRB, vlowRC;
+
+assign busDataMisoOutA = busDataMisoA[7:0];
+assign busDataMisoOutB = busDataMisoB[7:0];
+assign busDataMisoOutC = busDataMisoC[7:0];
+assign busTmrErrorOutA = busTmrErrorA[0];
+assign busTmrErrorOutB = busTmrErrorB[0];
+assign busTmrErrorOutC = busTmrErrorC[0];
+assign busAddrA[15:0] = busAddrInA;
+assign busAddrB[15:0] = busAddrInB;
+assign busAddrC[15:0] = busAddrInC;
+assign busClkA[0] = busClkInA;
+assign busClkB[0] = busClkInB;
+assign busClkC[0] = busClkInC;
+assign busDataMisoA[135:128] = {8{vlowLA}};
+assign busDataMisoB[135:128] = {8{vlowLB}};
+assign busDataMisoC[135:128] = {8{vlowLC}};
+assign busDataMosiA[7:0] = busDataMosiInA;
+assign busDataMosiB[7:0] = busDataMosiInB;
+assign busDataMosiC[7:0] = busDataMosiInC;
+assign busReA[0] = busReInA;
+assign busReB[0] = busReInB;
+assign busReC[0] = busReInC;
+assign busRstA[0] = busRstInA;
+assign busRstB[0] = busRstInB;
+assign busRstC[0] = busRstInC;
+assign busWeA[0] = busWeInA;
+assign busWeB[0] = busWeInB;
+assign busWeC[0] = busWeInC;
+assign busTmrErrorA[16] = vlowLA;
+assign busTmrErrorB[16] = vlowLB;
+assign busTmrErrorC[16] = vlowLC;
+assign columnAddrA[3:0] = {4{vlowRA}};
+assign columnAddrB[3:0] = {4{vlowRB}};
+assign columnAddrC[3:0] = {4{vlowRC}};
+
+
+TIEL_LVT_ELT TIELLA_inst(.VDD(VDD_D), .VSS(VSS_D), .ZN(vlowLA));
+TIEL_LVT_ELT TIELLB_inst(.VDD(VDD_D), .VSS(VSS_D), .ZN(vlowLB));
+TIEL_LVT_ELT TIELLC_inst(.VDD(VDD_D), .VSS(VSS_D), .ZN(vlowLC));
+TIEL_LVT_ELT TIELRA_inst(.VDD(VDD_D), .VSS(VSS_D), .ZN(vlowRA));
+TIEL_LVT_ELT TIELRB_inst(.VDD(VDD_D), .VSS(VSS_D), .ZN(vlowRB));
+TIEL_LVT_ELT TIELRC_inst(.VDD(VDD_D), .VSS(VSS_D), .ZN(vlowRC));
+
+genvar c;
+generate
+  for(c = 0; c < 8; c = c + 1) begin : colLoop
+    PixelCol PixelCol_inst( 
+        .PAOut(PAOut[(c+1)*16-1:c*16]), 
+        .busAddrOutA(busAddrA[(c+2)*16-1:(c+1)*16]), .busAddrOutB(busAddrB[(c+2)*16-1:(c+1)*16]), .busAddrOutC(busAddrC[(c+2)*16-1:(c+1)*16]), 
+        .busClkOutA(busClkA[c+1]), .busClkOutB(busClkB[c+1]), .busClkOutC(busClkC[c+1]), 
+        .busDataMisoOutA(busDataMisoA[(c+1)*8-1:c*8]), .busDataMisoOutB(busDataMisoB[(c+1)*8-1:c*8]), .busDataMisoOutC(busDataMisoC[(c+1)*8-1:c*8]), 
+        .busDataMosiOutA(busDataMosiA[(c+2)*8-1:(c+1)*8]), .busDataMosiOutB(busDataMosiB[(c+2)*8-1:(c+1)*8]), .busDataMosiOutC(busDataMosiC[(c+2)*8-1:(c+1)*8]), 
+        .busReOutA(busReA[c+1]), .busReOutB(busReB[c+1]), .busReOutC(busReC[c+1]), 
+        .busRstOutA(busRstA[c+1]), .busRstOutB(busRstB[c+1]), .busRstOutC(busRstC[c+1]), 
+        .busTmrErrorOutA(busTmrErrorA[c]), .busTmrErrorOutB(busTmrErrorB[c]), .busTmrErrorOutC((busTmrErrorC[c])), 
+        .busWeOutA(busWeA[c+1]), .busWeOutB(busWeB[c+1]), .busWeOutC(busWeC[c+1]), 
+        .columnAddrNextOutA(columnAddrA[(c+2)*4-1:(c+1)*4]), .columnAddrNextOutB(columnAddrB[(c+2)*4-1:(c+1)*4]), .columnAddrNextOutC(columnAddrC[(c+2)*4-1:(c+1)*4]),
+        .dnData(colDataChain[(c+1)*46-1:c*46]), .dnHit(dnHit[(c+1)*5-1:c*5]),
+        .PAIn(PAIn[(c+1)*16-1:c*16]), 
+        .VDD_D(VDD_D), .VDD_Dis(VDD_Dis), .VDD_PA(VDD_PA), .VDD_QInj(VDD_QInj), .VSS_D(VSS_D), .VSS_Dis(VSS_Dis), .VSS_PA(VSS_PA),
+        .VSS_QInj(VSS_QInj), .VSS_S(VSS_S), 
+        .ClkRO(ClkRO[(c+1)*16-1:c*16]), .ClkTDC(ClkTDC[(c+1)*16-1:c*16]), .QInj(QInj[(c+1)*16-1:c*16]), .RefStrobe(RefStrobe[(c+1)*16-1:c*16]), .VRef(VRef), 
+        .busAddrInA(busAddrA[(c+1)*16-1:c*16]), .busAddrInB(busAddrB[(c+1)*16-1:c*16]), .busAddrInC(busAddrC[(c+1)*16-1:c*16]), 
+        .busClkInA(busClkA[c]), .busClkInB(busClkB[c]), .busClkInC(busClkC[c]), 
+        .busDataMisoInA(busDataMisoA[(c+2)*8-1:(c+1)*8]), .busDataMisoInB(busDataMisoB[(c+2)*8-1:(c+1)*8]), .busDataMisoInC(busDataMisoC[(c+2)*8-1:(c+1)*8]), 
+        .busDataMosiInA(busDataMosiA[(c+1)*8-1:c*8]), .busDataMosiInB(busDataMosiB[(c+1)*8-1:c*8]), .busDataMosiInC(busDataMosiC[(c+1)*8-1:c*8]), 
+        .busReInA(busReA[c]), .busReInB(busReB[c]), .busReInC(busReC[c]), 
+        .busRstInA(busRstA[c]), .busRstInB(busRstB[c]), .busRstInC(busRstC[c]), 
+        .busTmrErrorInA(busTmrErrorA[c+1]), .busTmrErrorInB(busTmrErrorB[c+1]), .busTmrErrorInC(busTmrErrorC[c+1]),
+        .busWeInA(busWeA[c]), .busWeInB(busWeB[c]), .busWeInC(busWeC[c]), 
+        .columnAddrInA(columnAddrA[(c+1)*4-1:c*4]), .columnAddrInB(columnAddrB[(c+1)*4-1:c*4]), .columnAddrInC(columnAddrC[(c+1)*4-1:c*4]), 
+        .dnBCST(colBCSTChain[(c+1)*27-1:c*27]),
+        .dnRead(colReadChain[c]));
+    assign trigHitsColumn[(c+1)*4-1:c*4] = dnHit[(c+1)*5-1:c*5+1];
+    assign colHitChain[c] = dnHit[colHitChain];
+  end
+endgenerate
+
+
+generate
+  for(c = 8; c < 16; c = c + 1) begin : colLoop
+    PixelCol1 PixelCol1_inst( 
+        .PAOut(PAOut[(c+1)*16-1:c*16]), 
+        .busAddrOutA(busAddrA[(c+2)*16-1:(c+1)*16]), .busAddrOutB(busAddrB[(c+2)*16-1:(c+1)*16]), .busAddrOutC(busAddrC[(c+2)*16-1:(c+1)*16]), 
+        .busClkOutA(busClkA[c+1]), .busClkOutB(busClkB[c+1]), .busClkOutC(busClkC[c+1]), 
+        .busDataMisoOutA(busDataMisoA[(c+1)*8-1:c*8]), .busDataMisoOutB(busDataMisoB[(c+1)*8-1:c*8]), .busDataMisoOutC(busDataMisoC[(c+1)*8-1:c*8]), 
+        .busDataMosiOutA(busDataMosiA[(c+2)*8-1:(c+1)*8]), .busDataMosiOutB(busDataMosiB[(c+2)*8-1:(c+1)*8]), .busDataMosiOutC(busDataMosiC[(c+2)*8-1:(c+1)*8]), 
+        .busReOutA(busReA[c+1]), .busReOutB(busReB[c+1]), .busReOutC(busReC[c+1]), 
+        .busRstOutA(busRstA[c+1]), .busRstOutB(busRstB[c+1]), .busRstOutC(busRstC[c+1]), 
+        .busTmrErrorOutA(busTmrErrorA[c]), .busTmrErrorOutB(busTmrErrorB[c]), .busTmrErrorOutC((busTmrErrorC[c])), 
+        .busWeOutA(busWeA[c+1]), .busWeOutB(busWeB[c+1]), .busWeOutC(busWeC[c+1]), 
+        .columnAddrNextOutA(columnAddrA[(c+2)*4-1:(c+1)*4]), .columnAddrNextOutB(columnAddrB[(c+2)*4-1:(c+1)*4]), .columnAddrNextOutC(columnAddrC[(c+2)*4-1:(c+1)*4]),
+        .dnData(colDataChain[(c+1)*46-1:c*46]), .dnHit(dnHit[(c+1)*5-1:c*5]),
+        .PAIn(PAIn[(c+1)*16-1:c*16]), 
+        .VDD_D(VDD_D), .VDD_Dis(VDD_Dis), .VDD_PA(VDD_PA), .VDD_QInj(VDD_QInj), .VSS_D(VSS_D), .VSS_Dis(VSS_Dis), .VSS_PA(VSS_PA),
+        .VSS_QInj(VSS_QInj), .VSS_S(VSS_S), 
+        .ClkRO(ClkRO[(c+1)*16-1:c*16]), .ClkTDC(ClkTDC[(c+1)*16-1:c*16]), .QInj(QInj[(c+1)*16-1:c*16]), .RefStrobe(RefStrobe[(c+1)*16-1:c*16]), .VRef(VRef), 
+        .busAddrInA(busAddrA[(c+1)*16-1:c*16]), .busAddrInB(busAddrB[(c+1)*16-1:c*16]), .busAddrInC(busAddrC[(c+1)*16-1:c*16]), 
+        .busClkInA(busClkA[c]), .busClkInB(busClkB[c]), .busClkInC(busClkC[c]), 
+        .busDataMisoInA(busDataMisoA[(c+2)*8-1:(c+1)*8]), .busDataMisoInB(busDataMisoB[(c+2)*8-1:(c+1)*8]), .busDataMisoInC(busDataMisoC[(c+2)*8-1:(c+1)*8]), 
+        .busDataMosiInA(busDataMosiA[(c+1)*8-1:c*8]), .busDataMosiInB(busDataMosiB[(c+1)*8-1:c*8]), .busDataMosiInC(busDataMosiC[(c+1)*8-1:c*8]), 
+        .busReInA(busReA[c]), .busReInB(busReB[c]), .busReInC(busReC[c]), 
+        .busRstInA(busRstA[c]), .busRstInB(busRstB[c]), .busRstInC(busRstC[c]), 
+        .busTmrErrorInA(busTmrErrorA[c+1]), .busTmrErrorInB(busTmrErrorB[c+1]), .busTmrErrorInC(busTmrErrorC[c+1]),
+        .busWeInA(busWeA[c]), .busWeInB(busWeB[c]), .busWeInC(busWeC[c]), 
+        .columnAddrInA(columnAddrA[(c+1)*4-1:c*4]), .columnAddrInB(columnAddrB[(c+1)*4-1:c*4]), .columnAddrInC(columnAddrC[(c+1)*4-1:c*4]), 
+        .dnBCST(colBCSTChain[(c+1)*27-1:c*27]),
+        .dnRead(colReadChain[c]));
+    assign trigHitsColumn[(c+1)*4-1:c*4] = dnHit[(c+1)*5-1:c*5+1];
+    assign colHitChain[c] = dnHit[colHitChain];
+  end
+endgenerate
+
+
+
+endmodule
+

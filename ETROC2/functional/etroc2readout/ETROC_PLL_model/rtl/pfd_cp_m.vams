@@ -1,0 +1,32 @@
+//Verilog-AMS HDL for "ETROC_PLL_Sim0", "pfd_cp_m" "verilogams"
+
+`include "constants.vams"
+`include "disciplines.vams"
+
+module pfd_cp_m (out, ref, vco);
+input ref, vco; output out; electrical ref, vco, out;
+parameter real Iout=50u;
+parameter integer dir=1 from [-1:1] exclude 0; // dir=1 for positive edge trigger
+// dir=<96>1 for negative edge trigger
+parameter real tt=10p from (0:inf);
+parameter real td=10p from (0:inf);
+parameter real vthreshold=0.6 from (-inf:inf);
+parameter real jitter=0 from [0:td/5); // edge-to-edge jitter
+parameter real ttol=1p from (0:td/5); // recommend ttol << jitter
+integer state, seed;
+real dt;
+analog begin
+@(initial_step) seed = 716;
+@(cross(V(ref) - vthreshold, dir, ttol)) begin
+if (state > -1) state = state - 1;
+dt = jitter*$rdist_normal(seed,0,1);
+end
+@(cross(V(vco) - vthreshold, dir, ttol)) begin
+if (state < 1) state = state + 1;
+dt = jitter*$rdist_normal(seed,0,1);
+end
+
+I(out) <+ transition(Iout*state, td + dt, tt);
+end
+endmodule
+

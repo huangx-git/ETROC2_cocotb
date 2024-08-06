@@ -1,0 +1,4 @@
+sed 's/wreal/wire/g' functional/ETROC2/model/ETROC2.vams > ./ETROC2_lvs.vams.tmp
+sed 's/`include/\/\/`include/g' ./ETROC2_lvs.vams.tmp > ./ETROC2_lvs.vams
+rm -f ETROC2_lvs.vams.tmp
+

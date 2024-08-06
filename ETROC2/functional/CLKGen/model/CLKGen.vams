@@ -1,0 +1,387 @@
+//Verilog-AMS HDL for "ETROC2_Core", "CLKGen" "verilogams"
+
+// `include "constants.vams"
+// `include "disciplines.vams"
+`timescale 1ps/1ps
+module CLKGen ( CLK2G56N, CLK2G56P, CLK40MTDC, CLK40MTest, I2CSTAT_AFCBusy,
+I2CSTAT_AFCcalCap, I2CSTAT_PS_LateA, I2CSTAT_PS_LateB, I2CSTAT_PS_LateC, INSTLOCK_PLL,
+NCalBusy, REFStrobe, REFStrobeTest, clk1G28OutA, clk1G28OutB, clk1G28OutC, clk40MOutA,
+clk40MOutB, clk40MOutC, VDD_CLK, VDD_Dig, VP, VSS_CLK, VSS_Dig, AFC_RstA, AFC_RstB,
+AFC_RstC, AFC_StartA, AFC_StartB, AFC_StartC, CLK1G28OC, CLK40REF, I2CCon_CLKGen_disCLKA,
+I2CCon_CLKGen_disCLKB, I2CCon_CLKGen_disCLKC, I2CCon_CLKGen_disDESA, I2CCon_CLKGen_disDESB,
+I2CCon_CLKGen_disDESC, I2CCon_CLKGen_disEOMA, I2CCon_CLKGen_disEOMB, I2CCon_CLKGen_disEOMC,
+I2CCon_CLKGen_disSERA, I2CCon_CLKGen_disSERB, I2CCon_CLKGen_disSERC, I2CCon_CLKGen_disVCOA,
+I2CCon_CLKGen_disVCOB, I2CCon_CLKGen_disVCOC, I2CCon_CLKSel, I2CCon_FBDiv_clkTreeDisableA,
+I2CCon_FBDiv_clkTreeDisableB, I2CCon_FBDiv_clkTreeDisableC, I2CCon_FBDiv_skipA,
+I2CCon_FBDiv_skipB, I2CCon_FBDiv_skipC, I2CCon_PLL_BiasGen_CONFIG, I2CCon_PLL_CONFIG_I_PLL,
+I2CCon_PLL_CONFIG_P_PLL, I2CCon_PLL_ENABLEPLL, I2CCon_PLL_OverrideVcA, I2CCon_PLL_OverrideVcB,
+I2CCon_PLL_OverrideVcC, I2CCon_PLL_R_CONFIG, I2CCon_PLL_vcoDAC, I2CCon_PLL_vcoRailMode,
+I2CCon_PS_CPCurrent, I2CCon_PS_CapRstA, I2CCon_PS_CapRstB, I2CCon_PS_CapRstC,
+I2CCon_PS_EnableA, I2CCon_PS_EnableB, I2CCon_PS_EnableC, I2CCon_PS_ForceDown,
+I2CCon_PS_PhaseAdj, I2CCon_RefStrobGenSel );
+
+input I2CCon_FBDiv_skipC;
+input I2CCon_CLKSel;
+output CLK2G56N;
+output NCalBusy;
+input  [3:0] I2CCon_PLL_vcoDAC;
+input CLK40REF;
+output I2CSTAT_PS_LateB;
+input VSS_Dig;
+input I2CCon_CLKGen_disCLKB;
+output I2CSTAT_PS_LateC;
+output CLK2G56P;
+output CLK40MTDC;
+input I2CCon_PS_CapRstB;
+input  [3:0] I2CCon_PLL_CONFIG_I_PLL;
+input I2CCon_FBDiv_clkTreeDisableC;
+output CLK40MTest;
+input I2CCon_PLL_OverrideVcA;
+input VSS_CLK;
+output clk1G28OutA;
+input I2CCon_CLKGen_disSERB;
+input I2CCon_CLKGen_disDESA;
+input AFC_StartC;
+input I2CCon_CLKGen_disDESB;
+input AFC_RstC;
+input I2CCon_PLL_ENABLEPLL;
+input VP;
+output REFStrobeTest;
+input I2CCon_PLL_OverrideVcB;
+input I2CCon_PS_EnableA;
+input  [3:0] I2CCon_PLL_CONFIG_P_PLL;
+input I2CCon_PS_EnableB;
+input I2CCon_CLKGen_disSERC;
+input I2CCon_CLKGen_disEOMB;
+output clk40MOutB;
+input VDD_CLK;
+input AFC_RstA;
+output clk1G28OutB;
+input  [7:0] I2CCon_RefStrobGenSel;
+input  [3:0] I2CCon_PS_CPCurrent;
+input I2CCon_CLKGen_disEOMC;
+input  [7:0] I2CCon_PS_PhaseAdj;
+input I2CCon_PS_CapRstC;
+input I2CCon_PS_CapRstA;
+input I2CCon_FBDiv_clkTreeDisableB;
+input I2CCon_FBDiv_clkTreeDisableA;
+input I2CCon_CLKGen_disDESC;
+input AFC_StartB;
+output I2CSTAT_PS_LateA;
+input VDD_Dig;
+input I2CCon_FBDiv_skipA;
+input AFC_StartA;
+input I2CCon_PS_EnableC;
+input I2CCon_PLL_vcoRailMode;
+input  [3:0] I2CCon_PLL_R_CONFIG;
+input I2CCon_CLKGen_disEOMA;
+output REFStrobe;
+input I2CCon_CLKGen_disCLKA;
+input AFC_RstB;
+output  [5:0] I2CSTAT_AFCcalCap;
+output clk40MOutC;
+input I2CCon_PS_ForceDown;
+input I2CCon_PLL_OverrideVcC;
+input I2CCon_CLKGen_disVCOC;
+input I2CCon_CLKGen_disSERA;
+input CLK1G28OC;
+output clk40MOutA;
+input I2CCon_CLKGen_disVCOB;
+output I2CSTAT_AFCBusy;
+input  [3:0] I2CCon_PLL_BiasGen_CONFIG;
+input I2CCon_CLKGen_disVCOA;
+output clk1G28OutC;
+input I2CCon_FBDiv_skipB;
+input I2CCon_CLKGen_disCLKC;
+output INSTLOCK_PLL;
+
+wire CLK40REFA, CLK40REFB, CLK40REFC;
+wire clk1G28A, clk1G28B, clk1G28C;
+wire clk40MA, clk40MB, clk40MC;
+wire AFCBusy_src;
+wire [5:0] toI2C_AFCcalCap;
+wire EXT40MCLK, EXT40MCLK_inv1, EXT40MCLK_inv2;
+wire AFC_RstA_syn, AFC_RstB_syn, AFC_RstC_syn, AFC_RstA_syn0, AFC_RstB_syn0, AFC_RstC_syn0;
+wire AFC_StartA_syn, AFC_StartB_syn, AFC_StartC_syn, AFC_StartA_syn0, AFC_StartB_syn0, AFC_StartC_syn0;
+wire CLK40REF_buf0A, CLK40REF_buf0B, CLK40REF_buf0C;
+wire buf1, CLK40REF_PS;
+wire clk1G28BufA, clk1G28BufB, clk1G28BufC;
+wire clk40MBufA, clk40MBufB, clk40MBufC;
+wire CLK1G28PS, CLK40M_PSIn;
+wire CLK40MPS, CLK320MPS;
+wire clk40_pulse, clk320_pulse;
+wire EXT40MCLK_Buf1, EXT40MCLK_Buf2;
+
+fc_CKB4_LVT_ELT_wDECAP fc_CKB4_LVT_ELT_wDECAP_buf1_inst(
+    .IN(CLK40REF),
+    .OUT(buf1),
+    .VDD(VDD_CLK),
+    .VSS(VSS_CLK)
+);
+fc_CKB4_LVT_ELT_wDECAP fc_CKB4_LVT_ELT_wDECAP_EXT40MCLK_inst(
+    .IN(buf1),
+    .OUT(EXT40MCLK),
+    .VDD(VDD_CLK),
+    .VSS(VSS_CLK)
+);
+fc_CKB4_LVT_ELT_wDECAP fc_CKB4_LVT_ELT_wDECAP_CLK40REF_PS_inst(
+    .IN(buf1),
+    .OUT(CLK40REF_PS),
+    .VDD(VDD_CLK),
+    .VSS(VSS_CLK)
+);
+fc_CKB4_LVT_ELT_wDECAP fc_CKB4_LVT_ELT_wDECAP_CLK40REF_buf0A_inst(
+    .IN(CLK40REF),
+    .OUT(CLK40REF_buf0A),
+    .VDD(VDD_CLK),
+    .VSS(VSS_CLK)
+);
+fc_CKB4_LVT_ELT_wDECAP fc_CKB4_LVT_ELT_wDECAP_CLK40REF_buf0B_inst(
+    .IN(CLK40REF),
+    .OUT(CLK40REF_buf0B),
+    .VDD(VDD_CLK),
+    .VSS(VSS_CLK)
+);
+fc_CKB4_LVT_ELT_wDECAP fc_CKB4_LVT_ELT_wDECAP_CLK40REF_buf0C_inst(
+    .IN(CLK40REF),
+    .OUT(CLK40REF_buf0C),
+    .VDD(VDD_CLK),
+    .VSS(VSS_CLK)
+);
+fc_CKB4_LVT_ELT_wDECAP fc_CKB4_LVT_ELT_wDECAP_CLK40REFA_inst(
+    .IN(CLK40REF_buf0A),
+    .OUT(CLK40REFA),
+    .VDD(VDD_CLK),
+    .VSS(VSS_CLK)
+);
+fc_CKB4_LVT_ELT_wDECAP fc_CKB4_LVT_ELT_wDECAP_CLK40REFB_inst(
+    .IN(CLK40REF_buf0B),
+    .OUT(CLK40REFB),
+    .VDD(VDD_CLK),
+    .VSS(VSS_CLK)
+);
+fc_CKB4_LVT_ELT_wDECAP fc_CKB4_LVT_ELT_wDECAP_CLK40REFC_inst(
+    .IN(CLK40REF_buf0C),
+    .OUT(CLK40REFC),
+    .VDD(VDD_CLK),
+    .VSS(VSS_CLK)
+);
+
+CKBD2_LVT_ELT CKBD2_LVT_ELT_AFCBusy_inst(
+    .Z(I2CSTAT_AFCBusy), 
+    .I(AFCBusy_src), 
+    .VDD(VDD_Dig), 
+    .VSS(VSS_Dig)
+);
+
+INVD2_LVT_ELT INVD2_LVT_ELT_NCalBusy_inst(
+    .ZN(NCalBusy), 
+    .I(AFCBusy_src), 
+    .VDD(VDD_Dig), 
+    .VSS(VSS_Dig)
+);
+
+CKBD2_LVT_ELT CKBD2_LVT_ELT_I2CSTAT_AFCcalCap5_inst(
+    .Z(I2CSTAT_AFCcalCap[5]), 
+    .I(toI2C_AFCcalCap[5]), 
+    .VDD(VDD_Dig), 
+    .VSS(VSS_Dig)
+);
+CKBD2_LVT_ELT CKBD2_LVT_ELT_I2CSTAT_AFCcalCap4_inst(
+    .Z(I2CSTAT_AFCcalCap[4]), 
+    .I(toI2C_AFCcalCap[4]), 
+    .VDD(VDD_Dig), 
+    .VSS(VSS_Dig)
+);
+CKBD2_LVT_ELT CKBD2_LVT_ELT_I2CSTAT_AFCcalCap3_inst(
+    .Z(I2CSTAT_AFCcalCap[3]), 
+    .I(toI2C_AFCcalCap[3]), 
+    .VDD(VDD_Dig), 
+    .VSS(VSS_Dig)
+);
+CKBD2_LVT_ELT CKBD2_LVT_ELT_I2CSTAT_AFCcalCap2_inst(
+    .Z(I2CSTAT_AFCcalCap[2]), 
+    .I(toI2C_AFCcalCap[2]), 
+    .VDD(VDD_Dig), 
+    .VSS(VSS_Dig)
+);
+CKBD2_LVT_ELT CKBD2_LVT_ELT_I2CSTAT_AFCcalCap1_inst(
+    .Z(I2CSTAT_AFCcalCap[1]), 
+    .I(toI2C_AFCcalCap[1]), 
+    .VDD(VDD_Dig), 
+    .VSS(VSS_Dig)
+);
+CKBD2_LVT_ELT CKBD2_LVT_ELT_I2CSTAT_AFCcalCap0_inst(
+    .Z(I2CSTAT_AFCcalCap[0]), 
+    .I(toI2C_AFCcalCap[0]), 
+    .VDD(VDD_Dig), 
+    .VSS(VSS_Dig)
+);
+
+
+INVD2_LVT_ELT INVD2_LVT_ELT_EXT40MCLK_inv1_inst(
+    .ZN(EXT40MCLK_inv1), 
+    .I(EXT40MCLK), 
+    .VDD(VDD_Dig), 
+    .VSS(VSS_Dig)
+);
+
+INVD2_LVT_ELT INVD2_LVT_ELT_EXT40MCLK_inv2_inst(
+    .ZN(EXT40MCLK_inv2), 
+    .I(EXT40MCLK), 
+    .VDD(VDD_Dig), 
+    .VSS(VSS_Dig)
+);
+
+INVD2_LVT_ELT INVD2_LVT_ELT_EXT40MCLK_buf1_inst(
+    .ZN(EXT40MCLK_buf1), 
+    .I(EXT40MCLK_inv1), 
+    .VDD(VDD_Dig), 
+    .VSS(VSS_Dig)
+);
+
+INVD2_LVT_ELT INVD2_LVT_ELT_EXT40MCLK_buf2_inst(
+    .ZN(EXT40MCLK_buf2), 
+    .I(EXT40MCLK_inv2), 
+    .VDD(VDD_Dig), 
+    .VSS(VSS_Dig)
+);
+
+
+wire vlow2A, vlow2B, vlow2C;
+wire vlow0A, vlow0B, vlow0C;
+wire [5:0] vlow;
+
+TIEL_LVT_ELT TIEL_LVT_ELT_vlow2A_inst(.ZN(vlow2A), .VDD(VDD_CLK), .VSS(VSS_CLK));
+TIEL_LVT_ELT TIEL_LVT_ELT_vlow2B_inst(.ZN(vlow2B), .VDD(VDD_CLK), .VSS(VSS_CLK));
+TIEL_LVT_ELT TIEL_LVT_ELT_vlow2C_inst(.ZN(vlow2C), .VDD(VDD_CLK), .VSS(VSS_CLK));
+TIEL_LVT_ELT TIEL_LVT_ELT_vlow0A_inst(.ZN(vlow0A), .VDD(VDD_CLK), .VSS(VSS_CLK));
+TIEL_LVT_ELT TIEL_LVT_ELT_vlow0B_inst(.ZN(vlow0B), .VDD(VDD_CLK), .VSS(VSS_CLK));
+TIEL_LVT_ELT TIEL_LVT_ELT_vlow0C_inst(.ZN(vlow0C), .VDD(VDD_CLK), .VSS(VSS_CLK));
+
+TIEL_LVT_ELT TIEL_LVT_ELT_vlow0_inst(.ZN(vlow[0]), .VDD(VDD_CLK), .VSS(VSS_CLK));
+TIEL_LVT_ELT TIEL_LVT_ELT_vlow1_inst(.ZN(vlow[1]), .VDD(VDD_CLK), .VSS(VSS_CLK));
+TIEL_LVT_ELT TIEL_LVT_ELT_vlow2_inst(.ZN(vlow[2]), .VDD(VDD_CLK), .VSS(VSS_CLK));
+TIEL_LVT_ELT TIEL_LVT_ELT_vlow3_inst(.ZN(vlow[3]), .VDD(VDD_CLK), .VSS(VSS_CLK));
+TIEL_LVT_ELT TIEL_LVT_ELT_vlow4_inst(.ZN(vlow[4]), .VDD(VDD_CLK), .VSS(VSS_CLK));
+TIEL_LVT_ELT TIEL_LVT_ELT_vlow5_inst(.ZN(vlow[5]), .VDD(VDD_CLK), .VSS(VSS_CLK));
+
+wire clkTreeADisableA, clkTreeADisableB, clkTreeADisableC;
+wire clkTreeBDisableA, clkTreeBDisableB, clkTreeBDisableC;
+wire clkTreeCDisableA, clkTreeCDisableB, clkTreeCDisableC;
+
+CKBD1_LVT_ELT CKBD1_LVT_ELT_clkTreeADisableA_inst(.Z(clkTreeADisableA), .I(I2CCon_FBDiv_clkTreeDisableA), .VDD(VDD_Dig), .VSS(VSS_Dig));
+CKBD1_LVT_ELT CKBD1_LVT_ELT_clkTreeBDisableA_inst(.Z(clkTreeBDisableA), .I(I2CCon_FBDiv_clkTreeDisableA), .VDD(VDD_Dig), .VSS(VSS_Dig));
+CKBD1_LVT_ELT CKBD1_LVT_ELT_clkTreeCDisableA_inst(.Z(clkTreeCDisableA), .I(I2CCon_FBDiv_clkTreeDisableA), .VDD(VDD_Dig), .VSS(VSS_Dig));
+
+CKBD1_LVT_ELT CKBD1_LVT_ELT_clkTreeADisableB_inst(.Z(clkTreeADisableB), .I(I2CCon_FBDiv_clkTreeDisableB), .VDD(VDD_Dig), .VSS(VSS_Dig));
+CKBD1_LVT_ELT CKBD1_LVT_ELT_clkTreeBDisableB_inst(.Z(clkTreeBDisableB), .I(I2CCon_FBDiv_clkTreeDisableB), .VDD(VDD_Dig), .VSS(VSS_Dig));
+CKBD1_LVT_ELT CKBD1_LVT_ELT_clkTreeCDisableB_inst(.Z(clkTreeCDisableB), .I(I2CCon_FBDiv_clkTreeDisableB), .VDD(VDD_Dig), .VSS(VSS_Dig));
+
+CKBD1_LVT_ELT CKBD1_LVT_ELT_clkTreeADisableC_inst(.Z(clkTreeADisableC), .I(I2CCon_FBDiv_clkTreeDisableC), .VDD(VDD_Dig), .VSS(VSS_Dig));
+CKBD1_LVT_ELT CKBD1_LVT_ELT_clkTreeBDisableC_inst(.Z(clkTreeBDisableC), .I(I2CCon_FBDiv_clkTreeDisableC), .VDD(VDD_Dig), .VSS(VSS_Dig));
+CKBD1_LVT_ELT CKBD1_LVT_ELT_clkTreeCDisableC_inst(.Z(clkTreeCDisableC), .I(I2CCon_FBDiv_clkTreeDisableC), .VDD(VDD_Dig), .VSS(VSS_Dig));
+
+ETROC_PLL_Core ETROC_PLL_Core_inst( 
+  .INSTLOCK_PLL(INSTLOCK_PLL), .clk1G28A(clk1G28A), .clk1G28B(clk1G28B), .clk1G28C(clk1G28C), 
+  .clk2g56In(), .clk2g56Ip(), .clk2g56Qn(CLK2G56N), .clk2g56Qp(CLK2G56P), 
+  .clk2g56S(), .clk2g56SN(), .clk5g12EOMn(), .clk5g12EOMp(), .clk5g12S(), .clk5g12SN(), 
+  .clk40MA(clk40MA), .clk40MB(clk40MB), .clk40MC(clk40MC), .clk320MA(), .clk320MB(), .clk320MC(),
+  .toI2C_AFCbusy(AFCBusy_src), .toI2C_AFCcalCap(toI2C_AFCcalCap), .CLK40REFA(CLK40REFA), .CLK40REFB(CLK40REFB), .CLK40REFC(CLK40REFC), 
+  .VDD(VDD_Dig), .VDD_PLL(VDD_CLK), .VP(VP), .VSS(VSS_Dig), .VSS_PLL(VSS_CLK), .EXT40MCLK(EXT40MCLK), 
+  .clkTreeADisableA(clkTreeADisableA), .clkTreeADisableB(clkTreeADisableB), .clkTreeADisableC(clkTreeADisableC),
+  .clkTreeBDisableA(clkTreeBDisableA), .clkTreeBDisableB(clkTreeBDisableB), .clkTreeBDisableC(clkTreeBDisableC), 
+  .clkTreeCDisableA(clkTreeCDisableA), .clkTreeCDisableB(clkTreeCDisableB), .clkTreeCDisableC(clkTreeCDisableC), 
+  .toAFC_ModeA(vlow0A), .toAFC_ModeB(vlow0B), .toAFC_ModeC(vlow0C), 
+  .toAFC_OverrideCtrlA(vlow2A), .toAFC_OverrideCtrlB(vlow2B), .toAFC_OverrideCtrlC(vlow2C), .toAFC_OverrideCtrl_val1(vlow), 
+  .toAFC_RSTA(AFC_RstA_syn), .toAFC_RSTB(AFC_RstB_syn), .toAFC_RSTC(AFC_RstC_syn), 
+  .toAFC_StartA(AFC_StartA_syn), .toAFC_StartB(AFC_StartB_syn), .toAFC_StartC(AFC_StartC_syn), 
+  .toclkgen_disCLKA(I2CCon_CLKGen_disCLKA), .toclkgen_disCLKB(I2CCon_CLKGen_disCLKB), .toclkgen_disCLKC(I2CCon_CLKGen_disCLKC), 
+  .toclkgen_disDESA(I2CCon_CLKGen_disDESA), .toclkgen_disDESB(I2CCon_CLKGen_disDESB), .toclkgen_disDESC(I2CCon_CLKGen_disDESC),
+  .toclkgen_disEOMA(I2CCon_CLKGen_disEOMA), .toclkgen_disEOMB(I2CCon_CLKGen_disEOMB), .toclkgen_disEOMC(I2CCon_CLKGen_disEOMC), 
+  .toclkgen_disSERA(I2CCon_CLKGen_disSERA), .toclkgen_disSERB(I2CCon_CLKGen_disSERB), .toclkgen_disSERC(I2CCon_CLKGen_disSERC), 
+  .toclkgen_disVCOA(I2CCon_CLKGen_disVCOA), .toclkgen_disVCOB(I2CCon_CLKGen_disVCOB), .toclkgen_disVCOC(I2CCon_CLKGen_disVCOC), 
+  .tofbDiv_skipA(I2CCon_FBDiv_skipA), .tofbDiv_skipB(I2CCon_FBDiv_skipB), .tofbDiv_skipC(I2CCon_FBDiv_skipC), 
+  .topll_BIASGEN_CONFIG(I2CCon_PLL_BiasGen_CONFIG), .topll_CONFIG_I_PLL(I2CCon_PLL_CONFIG_I_PLL), .topll_CONFIG_P_PLL(I2CCon_PLL_CONFIG_P_PLL),
+  .topll_ENABLEPLL(I2CCon_PLL_ENABLEPLL), .topll_PLL_R_CONFIG(I2CCon_PLL_R_CONFIG), 
+  .topll_overrideVcA(I2CCon_PLL_OverrideVcA), .topll_overrideVcB(I2CCon_PLL_OverrideVcB), .topll_overrideVcC(I2CCon_PLL_OverrideVcC),
+  .topll_vcoDAC(I2CCon_PLL_vcoDAC), .topll_vcoRailMode(I2CCon_PLL_vcoRailMode) );
+
+DDFQD1_LVT_ELT AFC_RstA_Syn0(.Q(AFC_RstA_syn0), .D(AFC_RstA), .CP(EXT40MCLK_buf1), .VDD(VDD_Dig), .VSS(VSS_Dig));
+DDFQD1_LVT_ELT AFC_RstB_Syn0(.Q(AFC_RstB_syn0), .D(AFC_RstB), .CP(EXT40MCLK_buf1), .VDD(VDD_Dig), .VSS(VSS_Dig));
+DDFQD1_LVT_ELT AFC_RstC_Syn0(.Q(AFC_RstC_syn0), .D(AFC_RstC), .CP(EXT40MCLK_buf1), .VDD(VDD_Dig), .VSS(VSS_Dig));
+DDFQD1_LVT_ELT AFC_RstA_Syn1(.Q(AFC_RstA_syn), .D(AFC_RstA_syn0), .CP(EXT40MCLK_inv1), .VDD(VDD_Dig), .VSS(VSS_Dig));
+DDFQD1_LVT_ELT AFC_RstB_Syn1(.Q(AFC_RstB_syn), .D(AFC_RstB_syn0), .CP(EXT40MCLK_inv1), .VDD(VDD_Dig), .VSS(VSS_Dig));
+DDFQD1_LVT_ELT AFC_RstC_Syn1(.Q(AFC_RstC_syn), .D(AFC_RstC_syn0), .CP(EXT40MCLK_inv1), .VDD(VDD_Dig), .VSS(VSS_Dig));
+
+DDFQD1_LVT_ELT AFC_StartA_Syn0(.Q(AFC_StartA_syn0), .D(AFC_StartA), .CP(EXT40MCLK_buf2), .VDD(VDD_Dig), .VSS(VSS_Dig));
+DDFQD1_LVT_ELT AFC_StartB_Syn0(.Q(AFC_StartB_syn0), .D(AFC_StartB), .CP(EXT40MCLK_buf2), .VDD(VDD_Dig), .VSS(VSS_Dig));
+DDFQD1_LVT_ELT AFC_StartC_Syn0(.Q(AFC_StartC_syn0), .D(AFC_StartC), .CP(EXT40MCLK_buf2), .VDD(VDD_Dig), .VSS(VSS_Dig));
+DDFQD1_LVT_ELT AFC_StartA_Syn1(.Q(AFC_StartA_syn), .D(AFC_StartA_syn0), .CP(EXT40MCLK_inv2), .VDD(VDD_Dig), .VSS(VSS_Dig));
+DDFQD1_LVT_ELT AFC_StartB_Syn1(.Q(AFC_StartB_syn), .D(AFC_StartB_syn0), .CP(EXT40MCLK_inv2), .VDD(VDD_Dig), .VSS(VSS_Dig));
+DDFQD1_LVT_ELT AFC_StartC_Syn1(.Q(AFC_StartC_syn), .D(AFC_StartC_syn0), .CP(EXT40MCLK_inv2), .VDD(VDD_Dig), .VSS(VSS_Dig));
+
+CKBD2_LVT_ELT clk1G28A_PS(.Z(clk1G28BufA), .I(clk1G28A), .VDD(VDD_CLK), .VSS(VSS_CLK));
+CKBD2_LVT_ELT clk1G28B_PS(.Z(clk1G28BufB), .I(clk1G28B), .VDD(VDD_CLK), .VSS(VSS_CLK));
+CKBD2_LVT_ELT clk1G28C_PS(.Z(clk1G28BufC), .I(clk1G28C), .VDD(VDD_CLK), .VSS(VSS_CLK));
+CKBD2_LVT_ELT clk1G28A_Out(.Z(clk1G28OutA), .I(clk1G28A), .VDD(VDD_CLK), .VSS(VSS_CLK));
+CKBD2_LVT_ELT clk1G28B_Out(.Z(clk1G28OutB), .I(clk1G28B), .VDD(VDD_CLK), .VSS(VSS_CLK));
+CKBD2_LVT_ELT clk1G28C_Out(.Z(clk1G28OutC), .I(clk1G28C), .VDD(VDD_CLK), .VSS(VSS_CLK));
+
+CKBD2_LVT_ELT clk40MA_PS(.Z(clk40MBufA), .I(clk40MA), .VDD(VDD_CLK), .VSS(VSS_CLK));
+CKBD2_LVT_ELT clk40MB_PS(.Z(clk40MBufB), .I(clk40MB), .VDD(VDD_CLK), .VSS(VSS_CLK));
+CKBD2_LVT_ELT clk40MC_PS(.Z(clk40MBufC), .I(clk40MC), .VDD(VDD_CLK), .VSS(VSS_CLK));
+CKBD2_LVT_ELT clk40MA_Out(.Z(clk40MOutA), .I(clk40MA), .VDD(VDD_CLK), .VSS(VSS_CLK));
+CKBD2_LVT_ELT clk40MB_Out(.Z(clk40MOutB), .I(clk40MB), .VDD(VDD_CLK), .VSS(VSS_CLK));
+CKBD2_LVT_ELT clk40MC_Out(.Z(clk40MOutC), .I(clk40MC), .VDD(VDD_CLK), .VSS(VSS_CLK));
+
+MUX2_LVT_ELT Mux2_CLK1G28_PSIn(.out(CLK1G28PS), .in0(CLK1G28OC), .in1(clk1G28BufA), .s(I2CCon_CLKSel), .VDD(VDD_CLK), .VSS(VSS_CLK));
+MUX2_LVT_ELT Mux2_CLK40M_PSIn(.out(CLK40M_PSIn), .in0(CLK40REF_PS), .in1(clk40MBufA), .s(I2CCon_CLKSel), .VDD(VDD_CLK), .VSS(VSS_CLK));
+
+wire vCtrl_PS;
+phaseShifter_Top phaseShifter_Top_inst(
+  .clk1G28(CLK1G28PS),
+  .dllCapResetA(I2CCon_PS_CapRstA), 
+  .dllCapResetB(I2CCon_PS_CapRstB), 
+  .dllCapResetC(I2CCon_PS_CapRstC),
+  .dllChargePumpCurrent(I2CCon_PS_CPCurrent),
+  .dllEnableA(I2CCon_PS_EnableA),
+  .dllEnableB(I2CCon_PS_EnableB),
+  .dllEnableC(I2CCon_PS_EnableC),
+  .dllForceDown(I2CCon_PS_ForceDown),
+  .s(I2CCon_PS_PhaseAdj),
+  .syncCK40(CLK40M_PSIn),
+  .clk40MOut(CLK40MPS),
+  .clk320MOut(CLK320MPS),
+  .dllLateA(I2CSTAT_PS_LateA),
+  .dllLateB(I2CSTAT_PS_LateB),
+  .dllLateC(I2CSTAT_PS_LateC),
+  .vCtrl(vCtrl_PS),
+  .VDD(VDD_CLK),
+  .VSS(VSS_CLK)
+);
+
+pulseGenerator pulseGenerator_inst(
+  .CLK40M(CLK40MPS),
+  .CLK320M(CLK320MPS),
+  .s(I2CCon_RefStrobGenSel),
+  .clk40_pulse(clk40_pulse),
+  .clk320_pulse(clk320_pulse),
+  .VDD(VDD_CLK),
+  .VSS(VSS_CLK)
+);
+
+CKBD4_LVT_ELT CLK40MTDC_buf(.Z(CLK40MTDC), .I(clk40_pulse), .VDD(VDD_CLK), .VSS(VSS_CLK));
+CKBD4_LVT_ELT CLK40MTest_buf(.Z(CLK40MTest), .I(clk40_pulse), .VDD(VDD_CLK), .VSS(VSS_CLK));
+CKBD4_LVT_ELT REFStrobe_buf(.Z(REFStrobe), .I(clk320_pulse), .VDD(VDD_CLK), .VSS(VSS_CLK));
+CKBD4_LVT_ELT REFStrobeTest_buf(.Z(REFStrobeTest), .I(clk320_pulse), .VDD(VDD_CLK), .VSS(VSS_CLK));
+
+CLKGen_decouplingCaps CLKGen_decouplingCaps_inst(
+    .VDD_CLK(VDD_CLK),
+    .VDD_Dig(VDD_Dig),
+    .VSS_CLK(VSS_CLK),
+    .VSS_Dig(VSS_Dig)
+);
+
+endmodule
+

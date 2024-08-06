@@ -1,0 +1,33 @@
+`include "constants.vams"
+`include "disciplines.vams"
+
+`timescale 1ps/1ps
+
+module eRxIO_tb;
+
+wreal VDD_SL, VSS_IO2, VSS_SL, CLK40p, CLK40n;
+reg CLK40REF;
+real VDD1P2, VSS;
+initial begin
+    VSS = 0.0;
+    VDD1P2 = 0.0;
+    CLK40REF = 0;
+    #10000000
+    VDD1P2 = 1.2;
+
+    #10000000
+    $finish();
+end
+always #12500 CLK40REF = ~CLK40REF;
+S2D S2D_CLK40_inst(.SIn(CLK40REF), .DOutP(CLK40p), .DOutN(CLK40n));
+
+assign VSS_IO2 = VSS;
+assign VSS_SL = VSS;
+assign VDD_SL = VDD1P2;
+
+wire dateOut;
+
+eRxIO eRxIO_inst( .dataOut(dataOut), .vdd(VDD_SL), .vss(VSS), .vss_IO(VSS_IO2), .I_N(CLK40n), .I_P(CLK40p), .enableRx(1'b1), 
+.enableTermination(1'b1), .equalizer(0), .invertData(1'b0), .setCommonMode(1'b1) );
+
+endmodule

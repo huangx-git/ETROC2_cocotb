@@ -1,0 +1,7 @@
+`include "ETROC2/functional/CLKGen/model/CLKGen.vams"
+    `include "ETROC2/functional/PLL/model/ETROC_PLL_Model_include.vams"
+    `include "ETROC2/functional/CLKGen/model/fc_CKB4_LVT_ELT_wDECAP.v"
+    `include "ETROC2/functional/phaseshifter_Top/model/phaseShifter_Top_include.v"
+    `include "ETROC2/functional/pulseGenerator/model/pulseGenerator_include.v"
+    `include "ETROC2/functional/CLKGen/model/CLKGen_decouplingCaps.v"
+    

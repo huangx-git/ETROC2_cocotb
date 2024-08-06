@@ -1,0 +1,222 @@
+//////////////////////////////////////////////////////////////////////////////////
+// Org:        	FNAL
+// Author:      Quan Sun
+// 
+// Create Date:    April. 15th, 2022
+// Description: ETROC_PLL_Core_noAFC wreal model for ETROC PLL
+//
+// Revision: 
+//
+//
+//////////////////////////////////////////////////////////////////////////////////
+
+`timescale 1ns / 1ps
+module ETROC_PLL_Core_noAFC ( AFC_fbCKA, AFC_fbCKB, AFC_fbCKC, clk1G28A, clk1G28B,
+clk1G28C, clk2g56In, clk2g56Ip, clk2g56Qn, clk2g56Qp, clk2g56S, clk2g56SN, clk5g12EOMn,
+clk5g12EOMp, clk5g12S, clk5g12SN, clk40MA, clk40MB, clk40MC, clk320MA, clk320MB,
+clk320MC, CKFBA, CKFBB, CKFBC, CLK40REFA, CLK40REFB, CLK40REFC, INSTLOCK_PLL,
+VDD, VDD_PLL, VP, VSS, VSS_PLL, clk2g56A, clk2g56B, clk2g56C, vco5g12n, vco5g12p,
+clkTreeADisableA, clkTreeADisableB, clkTreeADisableC, clkTreeBDisableA, clkTreeBDisableB,
+clkTreeBDisableC, clkTreeCDisableA, clkTreeCDisableB, clkTreeCDisableC, toclkgen_disCLKA,
+toclkgen_disCLKB, toclkgen_disCLKC, toclkgen_disDESA, toclkgen_disDESB, toclkgen_disDESC,
+toclkgen_disEOMA, toclkgen_disEOMB, toclkgen_disEOMC, toclkgen_disSERA, toclkgen_disSERB,
+toclkgen_disSERC, toclkgen_disVCOA, toclkgen_disVCOB, toclkgen_disVCOC, tofbDiv_skipA,
+tofbDiv_skipB, tofbDiv_skipC, topll_BIASGEN_CONFIG, topll_CONFIG_I_PLL, topll_CONFIG_P_PLL,
+topll_ENABLEPLL, topll_PLL_R_CONFIG, topll_overrideVcA, topll_overrideVcB, topll_overrideVcC,
+topll_vcoCapSelect, topll_vcoDAC, topll_vcoRailMode );
+
+  input  [3:0] topll_CONFIG_P_PLL;
+  input toclkgen_disEOMA;
+  inout clk2g56B;
+  input topll_overrideVcC;
+  input topll_overrideVcA;
+  input toclkgen_disSERA;
+  inout clk2g56A;
+  output clk5g12S;
+  input toclkgen_disDESC;
+  inout CLK40REFA;
+  input  [3:0] topll_CONFIG_I_PLL;
+  input  [3:0] topll_BIASGEN_CONFIG;
+  input toclkgen_disSERB;
+  input toclkgen_disCLKC;
+  output AFC_fbCKB;
+  inout CKFBA;
+  inout CLK40REFB;
+  output clk320MC;
+  input tofbDiv_skipB;
+  inout CKFBC;
+  input toclkgen_disVCOC;
+  inout VP;
+  inout VDD;
+  output clk320MB;
+  input tofbDiv_skipC;
+  input clkTreeADisableB;
+  inout VDD_PLL;
+  output clk2g56Ip;
+  output clk2g56SN;
+  inout VSS_PLL;
+  output clk1G28C;
+  input toclkgen_disEOMB;
+  input toclkgen_disDESA;
+  input clkTreeCDisableA;
+  input clkTreeBDisableB;
+  inout vco5g12n;
+  output clk2g56In;
+  inout CLK40REFC;
+  output clk1G28A;
+  output clk2g56Qp;
+  input clkTreeCDisableC;
+  inout clk2g56C;
+  input clkTreeBDisableC;
+  output clk1G28B;
+  output clk40MC;
+  input toclkgen_disSERC;
+  input clkTreeBDisableA;
+  output clk40MA;
+  output clk320MA;
+  output clk5g12EOMn;
+  inout CKFBB;
+  input clkTreeADisableC;
+  inout vco5g12p;
+  input toclkgen_disEOMC;
+  output AFC_fbCKA;
+  output AFC_fbCKC;
+  input  [3:0] topll_vcoDAC;
+  input topll_overrideVcB;
+  input toclkgen_disVCOA;
+  output clk2g56S;
+  output clk5g12EOMp;
+  output clk5g12SN;
+  output clk40MB;
+  input  [3:0] topll_PLL_R_CONFIG;
+  input clkTreeADisableA;
+  input topll_ENABLEPLL;
+  input tofbDiv_skipA;
+  input toclkgen_disVCOB;
+  input topll_vcoRailMode;
+  input  [8:0] topll_vcoCapSelect;
+  input toclkgen_disCLKA;
+  inout VSS;
+  input toclkgen_disDESB;
+  input toclkgen_disCLKB;
+  input clkTreeCDisableB;
+  inout INSTLOCK_PLL;
+  output clk2g56Qn;
+
+wreal clk5g12vcop, clk5g12vcon;
+wreal clk2g56S, clk2g56SN;
+wreal clk5g12S, clk5g12SN;
+wreal clk2g56Ip, clk2g56In;
+wreal clk2g56Qp, clk2g56Qn;
+wreal clk5g12EOMp, clk5g12EOMn;
+
+LJCDR LJCDR_INST( 
+	//DATAOUP, DATAOUTN, 
+	//clkRefA, clkRefB, clkRefC, 
+	.instlockPLL(INSTLOCK_PLL), 
+	.vco5g12n(vco5g12n), .vco5g12p(vco5g12p), 
+	.VDD(VDD), .VSS(VSS), 
+	.BIASDES(1'b0), 
+	.BIASGEN_CONFIG(topll_BIASGEN_CONFIG), 
+	.BIASMUX0(1'b0), .BIASMUX1(1'b0), 
+	.CLK2G56IN(1'b0), .CLK2G56IP(1'b0), .CLK2G56QN(1'b0), .CLK2G56QP(1'b0), 
+	.CONFIG_FF_CAP(3'b000), .CONFIG_I_CDR(4'b0000), .CONFIG_I_FLL(4'b0000),
+	.CONFIG_I_PLL(topll_CONFIG_I_PLL),
+	.CONFIG_P_CDR(4'b0000), .CONFIG_P_FF_CDR(4'b0000), 
+	.CONFIG_P_PLL(topll_CONFIG_P_PLL), 
+	.ENABLE_CDR_R(1'b0), 
+	.PLL_R_CONFIG(topll_PLL_R_CONFIG),
+	.VCObiasn(1'b0), 
+	.clk40A(CKFBA), .clk40B(CKFBB), .clk40C(CKFBC), 
+	.clk40refA(CLK40REFA), .clk40refB(CLK40REFB), .clk40refC(CLK40REFC), 
+	.connectCDR(1'b0), .connectPLL(1'b1), 
+	.dataMuxCfg1A(1'b1), .dataMuxCfg1B(1'b1), .dataMuxCfg1C(1'b1), .dataMuxCfg0A(1'b1), .dataMuxCfg0B(1'b1), .dataMuxCfg0C(1'b1),
+	.datan(1'b0), .datap(1'b0), 
+	.disDESA(1'b1), .disDESB(1'b1), .disDESC(1'b1), .disDataCounterRef(1'b1),
+	.enableCDR(1'b0), .enableFD(1'b0), .enablePLL(topll_ENABLEPLL), 
+	.overrideVcA(topll_overrideVcA), .overrideVcB(topll_overrideVcA), .overrideVcC(topll_overrideVcA), 
+	.refClkSelA(1'b1), .refClkSelB(1'b1), .refClkSelC(1'b1),
+	.vcoCapSelect(topll_vcoCapSelect), .vcoDAC(topll_vcoDAC), .vcoRailMode(topll_vcoRailMode), 
+	.VP(VP)
+	//DATASYNC
+);
+
+
+
+wire clkTreeCDisable_to_full_customA, clkTreeCDisable_to_full_customB, clkTreeCDisable_to_full_customC;
+wire clkTreeBDisable_to_full_customA, clkTreeBDisable_to_full_customB, clkTreeBDisable_to_full_customC; 
+wire clkTreeADisable_to_full_customA, clkTreeADisable_to_full_customB, clkTreeADisable_to_full_customC; 
+
+lpgbt_clkgen_wbias lpgbt_clkgen_wbias_INST( 
+	.clk2g56A(clk2g56C), .clk2g56B(clk2g56B), .clk2g56C(clk2g56A), 
+	.clk2g56In(clk2g56In), .clk2g56Ip(clk2g56Ip), .clk2g56Qn(clk2g56Qn), .clk2g56Qp(clk2g56Qp), 
+	.clk2g56S(clk2g56S), .clk2g56SN(clk2g56SN), .clk5g12EOMn(clk5g12EOMn), .clk5g12EOMp(clk5g12EOMp), 
+	.clk5g12S(clk5g12S), .clk5g12SN(clk5g12SN), 
+	.AVDD(VDD_PLL), .AVSS(VSS_PLL), .VDD(VDD), .VSS(VSS), 
+	//clk5g12extn, clk5g12extp, 
+	.clk5g12vcon(vco5g12n), .clk5g12vcop(vco5g12p),
+	.clkTreeADisableA(clkTreeCDisable_to_full_customA), .clkTreeADisableB(clkTreeCDisable_to_full_customB), .clkTreeADisableC(clkTreeCDisable_to_full_customC), 
+	.clkTreeBDisableA(clkTreeBDisable_to_full_customA), .clkTreeBDisableB(clkTreeBDisable_to_full_customB), .clkTreeBDisableC(clkTreeBDisable_to_full_customC),
+	.clkTreeCDisableA(clkTreeADisable_to_full_customA), .clkTreeCDisableB(clkTreeADisable_to_full_customB), .clkTreeCDisableC(clkTreeADisable_to_full_customC),
+	.disCLKA(toclkgen_disCLKA), .disCLKB(toclkgen_disCLKB), .disCLKC(toclkgen_disCLKC), 
+	.disDESA(toclkgen_disDESA), .disDESB(toclkgen_disDESB), .disDESC(toclkgen_disDESC), 
+	.disEOMA(toclkgen_disEOMA), .disEOMB(toclkgen_disEOMB), .disEOMC(toclkgen_disEOMA), 
+	.disEXTA(1'b1), .disEXTB(1'b1), .disEXTC(1'b1), 
+	.disSERA(toclkgen_disSERA), .disSERB(toclkgen_disSERB), .disSERC(toclkgen_disSERC), 
+	.disVCOA(toclkgen_disVCOA), .disVCOB(toclkgen_disVCOB), .disVCOC(toclkgen_disVCOC), 
+	.ibiaspn60uCLK(1'b0), .ibiaspn60uDES(1'b0), .ibiaspn60uEOM(1'b0), .ibiaspn60uEXT(1'b0), .ibiaspn60uSER(1'b0), .ibiaspn60uVCO(1'b0) 
+);
+
+
+wire clk40MpllA, clk40MpllB, clk40MpllC;
+feedbackDividerTMR feedbackDividerTMR_INST( 
+	.clk2G56inA(clk2g56A), .clk2G56inB(clk2g56B), .clk2G56inC(clk2g56C), 
+	.skipA(tofbDiv_skipA), .skipB(tofbDiv_skipB), .skipC(tofbDiv_skipC), 
+	.clk40MA(clk40MA), .clk40MB(clk40MB), .clk40MC(clk40MC), 
+	//clk80MA, clk80MB, clk80MC, clk160MA, clk160MB, clk160MC, 
+	.clk320MA(clk320MA), .clk320MB(clk320MB), .clk320MC(clk320MC), 
+	//clk640MA, clk640MB, clk640MC, 
+	.clk1G28A(clk1G28A), .clk1G28B(clk1G28B), .clk1G28C(clk1G28C), 
+	//clk2G56A, clk2G56B, clk2G56C, 
+	.clk40MpllA(clk40MpllA), .clk40MpllB(clk40MpllB), .clk40MpllC(clk40MpllC),
+	.eclk40MEnableA(1'b0), .eclk40MEnableB(1'b0), .eclk40MEnableC(1'b0), 
+	.eclk80MEnableA(1'b0), .eclk80MEnableB(1'b0), .eclk80MEnableC(1'b0), 
+	.eclk160MEnableA(1'b0), .eclk160MEnableB(1'b0), .eclk160MEnableC(1'b0), 
+	.eclk320MEnableA(1'b0), .eclk320MEnableB(1'b0), .eclk320MEnableC(1'b0), 
+	.eclk640MEnableA(1'b0), .eclk640MEnableB(1'b0), .eclk640MEnableC(1'b0),
+	.eclk1G28EnableA(1'b0), .eclk1G28EnableB(1'b0), .eclk1G28EnableC(1'b0), 
+	.eclk2G56EnableA(1'b0), .eclk2G56EnableB(1'b0), .eclk2G56EnableC(1'b0), 
+	//clk40Meclk, clk80Meclk, clk160Meclk, clk320Meclk, clk640Meclk, clk1G28eclk, clk2G56eclk, 
+	.enablePhaseShifterA(1'b0), .enablePhaseShifterB(1'b0), .enablePhaseShifterC(1'b0),
+	//clk40Mps, clk80Mps, clk160Mps, clk320Mps, clk640Mps, clk1G28ps, clk2G56ps, 
+	.enableDesA(1'b0), .enableDesB(1'b0), .enableDesC(1'b0), 
+	//enableDesVote, 
+	//clk40Mdes, clk80Mdes, clk160Mdes, clk320Mdes, clk640Mdes, clk1G28des, clk2G56des, 
+	.enableSerA(1'b0), .enableSerB(1'b0), .enableSerC(1'b0), 
+	//enableSerOutA, enableSerOutB, enableSerOutC, 
+	//clk40Mser, clk80Mser, clk160Mser, clk320Mser, clk640Mser, clk1G28ser, clk2G56ser, 
+	.clkTreeADisableA(clkTreeADisableA), .clkTreeADisableB(clkTreeADisableB), .clkTreeADisableC(clkTreeADisableC),
+	.clkTreeBDisableA(clkTreeBDisableA), .clkTreeBDisableB(clkTreeBDisableB), .clkTreeBDisableC(clkTreeBDisableC),
+	.clkTreeCDisableA(clkTreeCDisableA), .clkTreeCDisableB(clkTreeCDisableB), .clkTreeCDisableC(clkTreeCDisableC),
+	.clkTreeADisable_to_full_customA(clkTreeADisable_to_full_customA), 
+	.clkTreeADisable_to_full_customB(clkTreeADisable_to_full_customB),
+	.clkTreeADisable_to_full_customC(clkTreeADisable_to_full_customC), 
+	.clkTreeBDisable_to_full_customA(clkTreeBDisable_to_full_customA), 
+	.clkTreeBDisable_to_full_customB(clkTreeBDisable_to_full_customB),
+	.clkTreeBDisable_to_full_customC(clkTreeBDisable_to_full_customC), 
+	.clkTreeCDisable_to_full_customA(clkTreeCDisable_to_full_customA), 
+	.clkTreeCDisable_to_full_customB(clkTreeCDisable_to_full_customB),
+	.clkTreeCDisable_to_full_customC(clkTreeCDisable_to_full_customC), 
+	.VSS(VSS), .VDD(VDD) );
+
+assign CKFBA = clk40MpllA;
+assign CKFBB = clk40MpllB;
+assign CKFBC = clk40MpllC;
+
+assign AFC_fbCKA = clk40MpllA;
+assign AFC_fbCKB = clk40MpllB;
+assign AFC_fbCKC = clk40MpllC;
+
+
+endmodule
+

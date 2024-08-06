@@ -1,0 +1,23 @@
+//////////////////////////////////////////////////////////////////////////////////
+// Org:        	FNAL
+// Author:      Quan Sun
+// 
+// Create Date:    April. 19th, 2022
+// Description: 10-bit DAC wreal model for ETROC
+//
+// Revision: 
+//
+//
+//////////////////////////////////////////////////////////////////////////////////
+
+`timescale 1ns/1ps
+`define Nbits 10
+//`include "constants.vams"
+//`include "disciplines.vams"
+module DAC10bit (a0, a1, a2, a3, a4, a5, a6, a7, a8, a9, out, IN, pd, vdd, vss);
+input a0, a1, a2, a3, a4, a5, a6, a7, a8, a9;  
+input 	   vdd, vss; 
+output 	      out;
+input pd;  
+input IN;
+endmodule 

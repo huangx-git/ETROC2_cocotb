@@ -1,0 +1,6 @@
+rm -rf INCA_libs
+rm *.log
+rm *~
+rm irun.key
+rm -rf waves.shm
+rm -rf .simvision

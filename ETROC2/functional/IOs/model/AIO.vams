@@ -1,0 +1,7 @@
+
+module AIO(vss_IO, vss, vdd, pad);
+inout vss_IO, vss, vdd, pad;
+wreal vss_IO, vss, vdd, pad;
+
+
+endmodule

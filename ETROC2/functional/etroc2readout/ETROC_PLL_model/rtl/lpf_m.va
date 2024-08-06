@@ -1,0 +1,18 @@
+// VerilogA for ETROC_PLL_Sim0, LPF, veriloga
+
+`include "constants.vams"
+`include "disciplines.vams"
+
+module lpf_m(LPFOut,gnd);
+inout LPFOut, gnd;
+electrical LPFOut, gnd;
+
+parameter real c1 = 160p;
+parameter real c2 = 8p;
+parameter real r1 = 8k;
+
+capacitor #(.c(c2), .ic(0)) C2(LPFOut,gnd);
+resistor #(.r(r1)) R1(LPFOut,nrc);
+capacitor #(.c(c1), .ic(0)) C1(nrc,gnd);
+endmodule
+

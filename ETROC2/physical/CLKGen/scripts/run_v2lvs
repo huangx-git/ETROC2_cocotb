@@ -1,0 +1,9 @@
+v2lvs \
+-s ./V1.7A_1/1p9m6x1z1u/tsmcN65/../PVS_QRC/lvs/source.added \
+-l ./functional/PLL/model/ETROC1_HsLib.v -s ./physical/PixelAnalog/spice_netlist/ETROC1_HsLibs.src.net \
+-l ./functional/PLL/model/ETROC_PLL_Core.vams -s ./CDLDir/ETROC_PLL_Core.src.cdl \
+-l ./functional/phaseshifter_Top/model/phaseShifter_Top.v -s ./CDLDir/phaseShifter_Top.src.cdl \
+-l ./functional/pulseGenerator/model/pulseGenerator.v -s ./CDLDir/pulseGenerator.src.cdl \
+-l ./functional/CLKGen/model/fc_CKB4_LVT_ELT_wDECAP.v -s ./CDLDir/fc_CKB4_LVT_ELT_wDECAP.src.cdl \
+-l ./functional/CLKGen/model/CLKGen_decouplingCaps.v -s ./CDLDir/CLKGen_decouplingCaps.src.cdl \
+-v CLKGen_lvs.vams -o CLKGen.src.spi -a "<"

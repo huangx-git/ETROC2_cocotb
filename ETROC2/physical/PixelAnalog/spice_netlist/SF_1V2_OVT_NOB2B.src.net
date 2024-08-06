@@ -1,0 +1,33 @@
+************************************************************************
+* auCdl Netlist:
+* 
+* Library Name:  ETROC1_ESD_elongated
+* Top Cell Name: SF_1V2_OVT_NOB2B
+* View Name:     schematic
+* Netlisted on:  Apr 21 22:12:06 2022
+************************************************************************
+
+*.INCLUDE  /asic/cad/Library/tsmc/TSMC65_CERN_2017_DL20/V1.7A_1/1p9m6x1z1u/tsmcN65/../PVS_QRC/lvs/source.added
+*.EQUATION
+*.SCALE METER
+*.MEGA
+.PARAM
+
+
+
+************************************************************************
+* Library Name: ETROC1_ESD_elongated
+* Cell Name:    SF_1V2_OVT_NOB2B
+* View Name:    schematic
+************************************************************************
+
+.SUBCKT SF_1V2_OVT_NOB2B IO VSSPST
+*.PININFO IO:B VSSPST:B
+DD0 VSSPST IO ndio area=1.6524e-11 pj=4e-05 m=1
+DD1 net13 VSSPST ndio area=5.45292e-11 pj=4e-05 m=1
+DD2 IO N0 pdio area=1.6524e-11 pj=4e-05 m=1
+DD4 N0 N1 pdio area=5.20506e-11 pj=4e-05 m=1
+DD5 N1 N2 pdio area=2.60253e-11 pj=4e-05 m=1
+DD6 N2 VSSPST pdio area=2.60253e-11 pj=4e-05 m=1
+.ENDS
+

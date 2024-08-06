@@ -1,0 +1,43 @@
+[tmrg]
+# output direcotry
+tmr_dir     = ./pixelTMR2
+# directory where script should work for files
+#rtl_dir     = /users/qsun/workarea/tsmc65nm/ETROC_PLL/digital_work/git1/etroc2/rtl
+
+#number of spaces to be insterted for indentation
+spaces      = 5
+
+# variables below do NOT have any effect yet
+#tmr_order   = 3
+#tmr_suffix  = TMR
+#tmr_signals = ("%{name}sA","%{name}sB","%{name}sC")
+
+overwrite_files   = True
+
+# Defines whether common definitions (as majorirtyVoter, fanout) should be 
+# added to the output verilog file. If yes, the definitions are added to the 
+# file which contains top level cell. One has to define voter_definition and
+# fanout_definition
+add_common_definitions = True
+# path to the file which contains majorityVoter module declaration
+# (relative to tmrg.py script or absolut path)
+voter_definition  = ../common/voter.v
+# path to the file which contains fanout module declaration
+# (relative to tmrg.py script or absolut path)
+fanout_definition = ../common/fanout.v
+
+
+# should SDC file for DC be generated? [true/false]
+sdc_generate = true
+# should headers of SDC file be added ? [true/false]
+sdc_headers = true
+# file name of sdc file (if empty, SDC file will have the same name as top module)
+#sdc_file_name = ./pixelTMR/tmrg.sdc
+
+# file list to be processed (space separated)
+#files = TDCTestPatternGen.v PRBS31.v TestL1Generator.v BCIDCounter.v
+files = pixelReadout.v L1EventBuffer.v CircularBuffer.v memBlock/cb_data_mem_rtl.v memBlock/cb_data_mem_null.v memBlock/cb_hit_mem8_rtl.v memBlock/cb_hit_mem8_null.v memBlock/L1_hit_mem_rtl.v memBlock/L1_hit_mem_null.v memBlock/L1_data_mem_null.v TDCTestPatternGen.v PRBS31.v TestL1Generator.v BCIDCounter.v gateClockCell.v hitSRAMCircularBuffer.v hitSRAML1Buffer.v
+# libs list to be processed (space separated)
+libs =
+
+

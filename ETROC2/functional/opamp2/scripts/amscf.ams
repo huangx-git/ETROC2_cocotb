@@ -1,0 +1,171 @@
+//
+//
+#1 "nosuchfile.sp" 1
+simulator lang=spectre version=2.0 
+local __cds_internal_stub_node__
+ahdl_include "xcelium.d/AMSD/ahdlSimDB/connectLib__E2R__module__0x10000001_behavioral.flex.va"
+ahdl_include "xcelium.d/AMSD/ahdlSimDB/connectLib__R2E_2__module__0x10000001_behavioral.flex.va"
+
+#13 "/asic/cad/cadence/XCELIUM2009/tools/affirma_ams/etc/connect_lib/E2R.vams;AMS:8"
+simulator lang=spectre version=2.0 binding=vlog insensitive=no
+subckt connectLib__E2R__module__0x10000001 Ain(Ain)
+local Ain
+
+#20 "/asic/cad/cadence/XCELIUM2009/tools/affirma_ams/etc/connect_lib/E2R.vams;AMS:8"
+parameters vss=0
+
+#21 "/asic/cad/cadence/XCELIUM2009/tools/affirma_ams/etc/connect_lib/E2R.vams;AMS:8"
+parameters vsup=1.8
+
+#22 "/asic/cad/cadence/XCELIUM2009/tools/affirma_ams/etc/connect_lib/E2R.vams;AMS:8"
+parameters vdelta=(vsup)/(64)
+
+#23 "/asic/cad/cadence/XCELIUM2009/tools/affirma_ams/etc/connect_lib/E2R.vams;AMS:8"
+parameters vtol=(vdelta)/(4)
+
+#24 "/asic/cad/cadence/XCELIUM2009/tools/affirma_ams/etc/connect_lib/E2R.vams;AMS:8"
+parameters ttol=9.999999999999999e-12
+
+#25 "/asic/cad/cadence/XCELIUM2009/tools/affirma_ams/etc/connect_lib/E2R.vams;AMS:8"
+parameters currentmode=0
+
+#26 "/asic/cad/cadence/XCELIUM2009/tools/affirma_ams/etc/connect_lib/E2R.vams;AMS:8"
+parameters idelta=1e-05
+
+#27 "/asic/cad/cadence/XCELIUM2009/tools/affirma_ams/etc/connect_lib/E2R.vams;AMS:8"
+parameters itol=(idelta)/(4)
+
+#28 "/asic/cad/cadence/XCELIUM2009/tools/affirma_ams/etc/connect_lib/E2R.vams;AMS:8"
+parameters vbias=(vss)+((vsup)/(2))
+
+#29 "/asic/cad/cadence/XCELIUM2009/tools/affirma_ams/etc/connect_lib/E2R.vams;AMS:8"
+parameters rin=200
+
+#31 "/asic/cad/cadence/XCELIUM2009/tools/affirma_ams/etc/connect_lib/E2R.vams;AMS:8"
+parameters vdd=(vss)+(vsup)
+
+#32 "/asic/cad/cadence/XCELIUM2009/tools/affirma_ams/etc/connect_lib/E2R.vams;AMS:8"
+parameters vdd10=(vdd)+((vsup)*(10))
+
+#33 "/asic/cad/cadence/XCELIUM2009/tools/affirma_ams/etc/connect_lib/E2R.vams;AMS:8"
+parameters vss10=(vss)-((vsup)*(10))
+
+#34 "/asic/cad/cadence/XCELIUM2009/tools/affirma_ams/etc/connect_lib/E2R.vams;AMS:8"
+parameters voltagemode=(1)-(currentmode)
+
+#35 "/asic/cad/cadence/XCELIUM2009/tools/affirma_ams/etc/connect_lib/E2R.vams;AMS:8"
+parameters debug=0
+
+#36 "/asic/cad/cadence/XCELIUM2009/tools/affirma_ams/etc/connect_lib/E2R.vams;AMS:8"
+parameters vinlimit=2.4
+parameters termcurs=0
+
+#13 "/asic/cad/cadence/XCELIUM2009/tools/affirma_ams/etc/connect_lib/E2R.vams;AMS:8"
+_cds_internal_E2R_ (Ain) connectLib__E2R__module__0x10000001_behavioral currentmode=currentmode debug=debug idelta=idelta itol=itol rin=rin ttol=ttol vbias=vbias vdd=vdd vdd10=vdd10 vdelta=vdelta vinlimit=vinlimit voltagemode=voltagemode vss=vss vss10=vss10 vsup=vsup vtol=vtol
+ends
+
+
+#11 "/asic/cad/cadence/XCELIUM2009/tools/affirma_ams/etc/connect_lib/R2E_2.vams;AMS:8"
+simulator lang=spectre version=2.0 binding=vlog insensitive=no
+subckt connectLib__R2E_2__module__0x10000001 Aout(Aout)
+local Aout
+
+#18 "/asic/cad/cadence/XCELIUM2009/tools/affirma_ams/etc/connect_lib/R2E_2.vams;AMS:8"
+parameters vss=0
+
+#19 "/asic/cad/cadence/XCELIUM2009/tools/affirma_ams/etc/connect_lib/R2E_2.vams;AMS:8"
+parameters vsup=1.8
+
+#20 "/asic/cad/cadence/XCELIUM2009/tools/affirma_ams/etc/connect_lib/R2E_2.vams;AMS:8"
+parameters vdelta=(vsup)/(64)
+
+#21 "/asic/cad/cadence/XCELIUM2009/tools/affirma_ams/etc/connect_lib/R2E_2.vams;AMS:8"
+parameters vx=vss
+
+#22 "/asic/cad/cadence/XCELIUM2009/tools/affirma_ams/etc/connect_lib/R2E_2.vams;AMS:8"
+parameters tr=9.999999999999999e-12
+
+#23 "/asic/cad/cadence/XCELIUM2009/tools/affirma_ams/etc/connect_lib/R2E_2.vams;AMS:8"
+parameters tf=tr
+
+#24 "/asic/cad/cadence/XCELIUM2009/tools/affirma_ams/etc/connect_lib/R2E_2.vams;AMS:8"
+parameters ttol_t=((tr)+(tf))/(20)
+
+#25 "/asic/cad/cadence/XCELIUM2009/tools/affirma_ams/etc/connect_lib/R2E_2.vams;AMS:8"
+parameters tdelay=0
+
+#26 "/asic/cad/cadence/XCELIUM2009/tools/affirma_ams/etc/connect_lib/R2E_2.vams;AMS:8"
+parameters rout=200
+
+#27 "/asic/cad/cadence/XCELIUM2009/tools/affirma_ams/etc/connect_lib/R2E_2.vams;AMS:8"
+parameters rx=rout
+
+#28 "/asic/cad/cadence/XCELIUM2009/tools/affirma_ams/etc/connect_lib/R2E_2.vams;AMS:8"
+parameters rz=10000000
+
+#29 "/asic/cad/cadence/XCELIUM2009/tools/affirma_ams/etc/connect_lib/R2E_2.vams;AMS:8"
+parameters currentmode=0
+
+#30 "/asic/cad/cadence/XCELIUM2009/tools/affirma_ams/etc/connect_lib/R2E_2.vams;AMS:8"
+parameters idelta=1e-05
+
+#31 "/asic/cad/cadence/XCELIUM2009/tools/affirma_ams/etc/connect_lib/R2E_2.vams;AMS:8"
+parameters ix=0
+
+#32 "/asic/cad/cadence/XCELIUM2009/tools/affirma_ams/etc/connect_lib/R2E_2.vams;AMS:8"
+parameters i0=0
+
+#33 "/asic/cad/cadence/XCELIUM2009/tools/affirma_ams/etc/connect_lib/R2E_2.vams;AMS:8"
+parameters clamp=0
+
+#34 "/asic/cad/cadence/XCELIUM2009/tools/affirma_ams/etc/connect_lib/R2E_2.vams;AMS:8"
+parameters dvclamp=(vsup)/(20)
+
+#35 "/asic/cad/cadence/XCELIUM2009/tools/affirma_ams/etc/connect_lib/R2E_2.vams;AMS:8"
+parameters idealmode=0
+
+#37 "/asic/cad/cadence/XCELIUM2009/tools/affirma_ams/etc/connect_lib/R2E_2.vams;AMS:8"
+parameters vdd=(vss)+(vsup)
+
+#38 "/asic/cad/cadence/XCELIUM2009/tools/affirma_ams/etc/connect_lib/R2E_2.vams;AMS:8"
+parameters vdd10=(vdd)+((vsup)*(10))
+
+#39 "/asic/cad/cadence/XCELIUM2009/tools/affirma_ams/etc/connect_lib/R2E_2.vams;AMS:8"
+parameters vss10=(vss)-((vsup)*(10))
+
+#40 "/asic/cad/cadence/XCELIUM2009/tools/affirma_ams/etc/connect_lib/R2E_2.vams;AMS:8"
+parameters debug=0
+
+#41 "/asic/cad/cadence/XCELIUM2009/tools/affirma_ams/etc/connect_lib/R2E_2.vams;AMS:8"
+parameters vinlimit=((vsup)*(4))/(3)
+parameters termcurs=0
+
+#11 "/asic/cad/cadence/XCELIUM2009/tools/affirma_ams/etc/connect_lib/R2E_2.vams;AMS:8"
+_cds_internal_R2E_2_ (Aout) connectLib__R2E_2__module__0x10000001_behavioral clamp=clamp currentmode=currentmode debug=debug dvclamp=dvclamp i0=i0 idealmode=idealmode idelta=idelta ix=ix rout=rout rx=rx rz=rz tdelay=tdelay tf=tf tr=tr ttol_t=ttol_t vdd=vdd vdd10=vdd10 vdelta=vdelta vinlimit=vinlimit vss=vss vss10=vss10 vsup=vsup vx=vx
+ends
+
+
+#4 "/asic/projects/E/ETROC_PLL/qsun/git_repo/ETROC2/functional/10bitDAC2_opamp2/workdir/model/10bitDAC2_opamp2_tb.vams;AMS:8"
+simulator lang=spectre version=2.0 binding=vlog insensitive=no
+subckt worklib__opa10bitDAC2_opamp2_tb__vams__0x10000001 
+local in
+local out
+ground gnd
+in__E2R__logic (in) connectLib__E2R__module__0x10000001 currentmode=0 debug=0 idelta=1e-05 itol=2.5e-06 rin=200 ttol=5e-12 vbias=0.9 vdd=1.8 vdd10=19.8 vdelta=1e-07 vinlimit=2.4 voltagemode=1 vss=0 vss10=-18 vsup=1.8 vtol=1e-08
+out__E2R__logic (out) connectLib__E2R__module__0x10000001 currentmode=0 debug=0 idelta=1e-05 itol=2.5e-06 rin=200 ttol=5e-12 vbias=0.9 vdd=1.8 vdd10=19.8 vdelta=1e-07 vinlimit=2.4 voltagemode=1 vss=0 vss10=-18 vsup=1.8 vtol=1e-08
+out__R2E_2__logic (out) connectLib__R2E_2__module__0x10000001 clamp=0 currentmode=0 debug=0 dvclamp=0.06 i0=0 idealmode=0 idelta=1e-05 ix=0 rout=200 rx=200 rz=10000000 tdelay=0 tf=5e-12 tr=5e-12 ttol_t=5e-13 vdd=1.2 vdd10=13.2 vdelta=1e-07 vinlimit=1.6 vss=0 vss10=-12 vsup=1.2 vx=0
+
+#17 "/asic/projects/E/ETROC_PLL/qsun/git_repo/ETROC2/functional/10bitDAC2_opamp2/workdir/model/10bitDAC2_opamp2_tb.vams;AMS:8"
+V0 (in gnd) vsource pwlperiod=5e-08 type=pwl  wave=[ (1.0n) (0) (1.5n) (0) (1.51n) (1.2) (15.0n) (1.2) (15.01n) (0) ]
+
+#21 "/asic/projects/E/ETROC_PLL/qsun/git_repo/ETROC2/functional/10bitDAC2_opamp2/workdir/model/10bitDAC2_opamp2_tb.vams;AMS:8"
+Rload (out gnd) resistor r=10000
+ends
+
+simulator lang=spectre version=2.0 insensitive=no
+opa10bitDAC2_opamp2_tb  worklib__opa10bitDAC2_opamp2_tb__vams__0x10000001 
+//
+//
+#1 "nosuchfile.sp" 1
+simulator lang=spectre version=2.0 
+include "amscf.scs"

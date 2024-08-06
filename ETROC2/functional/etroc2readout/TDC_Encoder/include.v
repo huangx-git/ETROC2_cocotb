@@ -1,0 +1,8 @@
+`include "from_SMU/rtl/TDC_Encoder/TDC_Encoder.v"
+`include "from_SMU/rtl/TDC_Encoder/encode8b3b.v"
+`include "from_SMU/rtl/TDC_Encoder/TOA_fineEncoder.v"
+`include "from_SMU/rtl/TDC_Encoder/TOT_fineEncoder.v"
+`include "from_SMU/rtl/TDC_Encoder/TOA_Encoder.v"
+`include "from_SMU/rtl/TDC_Encoder/TOT_Encoder.v"
+`include "from_SMU/rtl/TDC_Encoder/TOA_fineEncoder_core.v"
+`include "from_SMU/rtl/TDC_Encoder/TOT_fineEncoder_core.v"

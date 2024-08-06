@@ -1,0 +1,110 @@
+//Verilog-AMS HDL for "ETROC_PLL_Sim0", "LJCDR" "verilogams"
+
+`include "constants.vams"
+`include "disciplines.vams"
+`timescale 1ns / 1ps
+module LJCDR ( DATAOUP, DATAOUTN, clkRefA, clkRefB, clkRefC, instlockPLL, vco5g12n,
+vco5g12p, VDD, VSS, BIASDES, BIASGEN_CONFIG, BIASMUX0, BIASMUX1, CLK2G56IN,
+CLK2G56IP, CLK2G56QN, CLK2G56QP, CONFIG_FF_CAP, CONFIG_I_CDR, CONFIG_I_FLL,
+CONFIG_I_PLL, CONFIG_P_CDR, CONFIG_P_FF_CDR, CONFIG_P_PLL, ENABLE_CDR_R, PLL_R_CONFIG,
+VCObiasn, clk40A, clk40B, clk40C, clk40refC, connectCDR, connectPLL, dataMuxCfg1A,
+dataMuxCfg1B, dataMuxCfg1C, datan, datap, disDESA, disDESB, disDESC, disDataCounterRef,
+enableCDR, enableFD, enablePLL, overrideVcC, refClkSelA, refClkSelB, refClkSelC,
+vcoCapSelect, vcoDAC, vcoRailMode, VP, DATASYNC, dataMuxCfg0A, dataMuxCfg0B,
+dataMuxCfg0C, overrideVcA, overrideVcB, clk40refA, clk40refB );
+
+  input enableFD;
+  input dataMuxCfg1B;
+  input dataMuxCfg0A;
+  input enablePLL;
+  input  [3:0] CONFIG_P_FF_CDR;
+  input CLK2G56QN;
+  input vcoRailMode;
+  input enableCDR;
+  input disDESC;
+  input  [3:0] CONFIG_P_CDR;
+  input disDataCounterRef;
+  input dataMuxCfg0B;
+  input dataMuxCfg0C;
+  input clk40C;
+  input BIASMUX1;
+  input clk40B;
+  input overrideVcB;
+  input connectCDR;
+  output DATAOUTN;
+  input  [3:0] CONFIG_I_CDR;
+  inout VDD;
+  inout VP;
+  input CLK2G56IN;
+  output DATAOUP;
+  input  [2:0] CONFIG_FF_CAP;
+  output instlockPLL;
+  input datan;
+  input  [3:0] CONFIG_I_FLL;
+  input refClkSelC;
+  input clk40A;
+  output vco5g12n;
+  input connectPLL;
+  input  [3:0] BIASGEN_CONFIG;
+  input VCObiasn;
+  input ENABLE_CDR_R;
+  input CLK2G56QP;
+  input refClkSelA;
+  input overrideVcA;
+  input overrideVcC;
+  input disDESA;
+  input clk40refC;
+  output DATASYNC;
+  output vco5g12p;
+  input refClkSelB;
+  output clkRefB;
+  input BIASDES;
+  input dataMuxCfg1C;
+  input CLK2G56IP;
+  input  [3:0] vcoDAC;
+  input clk40refA;
+  output clkRefA;
+  input BIASMUX0;
+  input disDESB;
+  input datap;
+  input dataMuxCfg1A;
+  input  [3:0] CONFIG_P_PLL;
+  inout VSS;
+  input  [8:0] vcoCapSelect;
+  input clk40refB;
+  input  [3:0] PLL_R_CONFIG;
+  output clkRefC;
+  input  [3:0] CONFIG_I_PLL;
+
+localparam real VoHi=1.2, VoLo=0.5;
+localparam real tt=10p;
+
+wreal  LPFOut, vco5g12p, vco5g12n, Vctrl, Icp;
+
+real Vctrl_real;
+
+wire clk40ref, clk40fb, clkVCO, clk40fb_inv;
+assign clk40ref = clk40refA;
+assign clk40fb = clk40A;
+assign clk40fb_inv = ~clk40fb;
+
+assign clkRefA = clk40refA;
+assign clkRefB = clk40refB;
+assign clkRefC = clk40refC;
+
+vco #(.HighVoltage(1.2), .LowVoltage(0.5)) vco_inst(.capSel(vcoCapSelect), .vin(Vctrl), .clkp(vco5g12p), .clkn(vco5g12n));
+//vco #(.HighVoltage(1.2), .LowVoltage(0.5)) vco_inst(.capSel(0), .vin(Vctrl), .clkp(vco5g12p), .clkn(vco5g12n));
+pfdcp #(.fs(10G), .ICP(50u)) pfdcp_inst(.CLKRef(clk40ref), .CLKFB(clk40fb), .IOut(Icp), .INSTLock(instlockPLL));
+lpf #(.fs(10G), .Rzero(8000), .RCenter(10G), .C1(8p), .C2(160p)) lpf_inst(.IIn(Icp), .VOut(LPFOut));
+
+//assign Vctrl = Vctrl_real;
+assign Vctrl = (overrideVcA == 1'b1 && overrideVcB == 1'b1 && overrideVcC == 1'b1)?0.6:LPFOut;
+/*
+always @(overrideVcA,overrideVcB, overrideVcC) begin
+	if(overrideVcA == 1'b1 && overrideVcB == 1'b1 && overrideVcC == 1'b1)
+		Vctrl_real = 0.6;
+	else
+		Vctrl_real = LPFOut;
+end
+*/
+endmodule

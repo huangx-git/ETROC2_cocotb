@@ -1,0 +1,1 @@
+strmout -library 'ETROC2_Top' -strmFile './ETROC2.gds.gz' -topCell 'ETROC2' -view 'layout' -logFile 'strmOut.log'

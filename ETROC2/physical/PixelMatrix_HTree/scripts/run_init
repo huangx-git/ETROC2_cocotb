@@ -1,0 +1,1 @@
+sed 's/wreal/wire/g' functional/PixelMatrix_HTree/model/PixelMatrix_HTree_nogen.vams > ./PixelMatrix_HTree_lvs.vams

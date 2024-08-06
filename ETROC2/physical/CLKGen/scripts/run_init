@@ -1,0 +1,1 @@
+sed 's/wreal/wire/g' functional/CLKGen/model/CLKGen.vams > ./CLKGen_lvs.vams

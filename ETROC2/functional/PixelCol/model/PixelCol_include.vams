@@ -1,0 +1,4 @@
+// `include "ETROC2/functional/PixelCol/model/PixelCol.vams"
+`include "ETROC2/functional/PixelCol/model/PixelCol_nogen.vams"
+    `include "ETROC2/functional/Pixel/model/Pixel_include.vams"
+    `include "ETROC2/functional/busColumnAdpaterTMR/model/busColumnAdapterTMR.v"

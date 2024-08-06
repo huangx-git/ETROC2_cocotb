@@ -1,0 +1,48 @@
+//Verilog-AMS HDL for "ETROC2_IO", "eRxIO" "verilogams"
+
+`include "constants.vams"
+`include "disciplines.vams"
+`timescale 1ps/1ps
+module eRxIO ( dataOut, vdd, vss, vss_IO, I_N, I_P, enableRx, enableTermination,
+equalizer, invertData, setCommonMode );
+
+input setCommonMode;
+input  [1:0] equalizer;
+input enableTermination;
+input I_P;
+input I_N;
+inout vss_IO;
+input invertData;
+input enableRx;
+input vdd;
+input vss;
+output dataOut;
+
+wreal I_N, I_P, vdd, vss;
+
+parameter 	      real Td=50p;
+
+real timescale = 1p;    // match with timescale
+real ts;
+reg dataOut_int;
+
+initial begin
+	ts = timescale;
+end
+
+// always #ts begin
+// 	if(I_P > I_N) dataOut_int = ((vdd-vss)>1.0)?(invertData?1'b1:1'b0):1'bx;
+// 	else dataOut_int = ((vdd-vss)>1.0)?(invertData?1'b0:1'b1):1'bx;
+// end
+
+always #1 begin
+if((vdd-vss) < 1.0) dataOut_int = 1'bx;
+else begin
+	dataOut_int = invertData?(I_P < I_N):(I_P > I_N);
+end
+end
+
+assign dataOut = dataOut_int;
+
+
+endmodule

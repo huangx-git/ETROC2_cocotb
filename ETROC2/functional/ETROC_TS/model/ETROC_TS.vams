@@ -1,0 +1,14 @@
+//Verilog-AMS HDL for "ETROC2_GlobalAnalog", "ETROC_TS" "verilogams"
+
+//`include "constants.vams"
+//`include "disciplines.vams"
+
+module ETROC_TS ( VTemp, VDD, VSS, PD_TS, VRefIn );
+
+  input VRefIn;
+  output VTemp;
+  inout VDD;
+  inout VSS;
+  input PD_TS;
+endmodule
+

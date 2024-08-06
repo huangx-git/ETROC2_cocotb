@@ -1,0 +1,15 @@
+v2lvs \
+-l $TSMC_DIG_LIBS/Front_End/verilog/tcbn65lp_200a/tcbn65lp_pwr.v -s $TSMC_DIG_LIBS/Back_End/spice/tcbn65lp_200a/tcbn65lp_200a.spi \
+-l functional/DAC10bit/model/DAC10bit.vams -s ../../PixelAnalog/spice_netlist/DAC10bit.src.net \
+-l functional/PA/model/PreAmp.vams -s ../../PixelAnalog/spice_netlist/PreAmp.src.net \
+-l functional/QInj/model/QInj.vams -s ../../PixelAnalog/spice_netlist/QInj.src.net \
+-l functional/opamp2/model/opamp2.vams -s ../../PixelAnalog/spice_netlist/opamp2.src.net \
+-l functional/Discriminator/model/Discri2.vams -s ../../PixelAnalog/spice_netlist/Discri2.src.net \
+-l functional/SF_1V2_OVT_NOB2B/model/SF_1V2_OVT_NOB2B.vams -s ../../PixelAnalog/spice_netlist/SF_1V2_OVT_NOB2B.src.net \
+-l ../../ETROC2_TDC/netlist/ETROC2_TDC.v -s ../../ETROC2_TDC/netlist/ETROC2_TDC.src.net \
+-l functional/PreAmpBias/model/PreAmpBias.vams -s ../../PixelAnalog/spice_netlist/PreAmpBias.src.net \
+-l ../../TH_CtrlTMR/netlist/TH_CtrlTMR.v -s ../../TH_CtrlTMR/netlist/TH_CtrlTMR.src.net \
+-l functional/pixelDigitalTMR/model/pixelDigitalTMR.v -s ../../PixelAnalog/spice_netlist/pixelDigitalTMR.src.net \
+-l functional/pixelReadoutWithSWCell/model/pixelReadoutWithSWCell.v -s ../netlist/pixelReadoutWithSWCell.src.net \
+-v functional/PixelAnalog/model/PixelAnalog_lvs.vams \
+-v functional/Pixel/model/Pixel_lvs.vams -o Pixel.src.spi -a "<"

@@ -1,0 +1,17 @@
+`include "etroc2readout/ETROC2Digital/ETROC2Digital_include.v"
+`include "etroc2readout/ETROC2Digital/ETROC2Digital_tb.v"
+
+`include "etroc2readout/fullChainDataCheck.v"
+`include "etroc2readout/dataStreamCheck.v"
+`include "etroc2readout/DataExtract.v"
+`include "etroc2readout/DataExtractUnit.v"
+`include "etroc2readout/Descrambler.v"
+`include "etroc2readout/Deserializer.v"
+`include "etroc2readout/DeserializerWithTriggerData.v"
+`include "etroc2readout/dataRecordCheck.v"
+`include "etroc2readout/delayLine.v"
+`include "etroc2readout/multiplePixelL1TDCDataCheck.v"
+`include "etroc2readout/CRC8.v"
+`include "etroc2readout/simplePLL.v"
+`include "etroc2readout/PRBS31.v"
+

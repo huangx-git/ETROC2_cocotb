@@ -1,0 +1,270 @@
+//Verilog-AMS HDL for "ETROC2_Core", "PixelAnalog" "verilogams"
+
+//`include "constants.vams"
+//`include "disciplines.vams"
+
+module PixelAnalog1 ( ErrFlagCal, ErrFlagTOA, ErrFlagTOT, PAOut, TDC_CAL, TDC_TOA,
+TDC_TOT, TDC_hit, busAddrOutA, busAddrOutB, busAddrOutC, busClkOutA, busClkOutB,
+busClkOutC, busDataMisoOutA, busDataMisoOutB, busDataMisoOutC, busDataMosiOutA,
+busDataMosiOutB, busDataMosiOutC, busReOutA, busReOutB, busReOutC, busRstOutA,
+busRstOutB, busRstOutC, busTmrErrorOutA, busTmrErrorOutB, busTmrErrorOutC, busWeOutA,
+busWeOutB, busWeOutC, colAddrOutA, colAddrOutB, colAddrOutC, pixelAddrNextOutA,
+pixelAddrNextOutB, pixelAddrNextOutC, pixelConfig, pixelID, vhigh, vlow, PAIn,
+VDD_D, VDD_Dis, VDD_PA, VDD_QInj, VSS_D, VSS_Dis, VSS_PA, VSS_QInj, VSS_S, QInj,
+RefStrobe, VRef, busAddrInA, busAddrInB, busAddrInC, busClkInA, busClkInB, busClkInC,
+busDataMisoInA, busDataMisoInB, busDataMisoInC, busDataMosiInA, busDataMosiInB,
+busDataMosiInC, busReInA, busReInB, busReInC, busRstInA, busRstInB, busRstInC,
+busTmrErrorInA, busTmrErrorInB, busTmrErrorInC, busWeInA, busWeInB, busWeInC,
+clk40, colAddrInA, colAddrInB, colAddrInC, pixelAddrInA, pixelAddrInB, pixelAddrInC,
+CalCounterAMon, TOTCounterBMon, CalCounterBMon, TOACounterAMon, TOACounterBMon,
+TOARawDataMon, TOTRawDataMon, TOTCounterAMon, CalRawDataMon
+);
+
+input busRstInC;
+input VSS_PA;
+input QInj;
+output  [7:0] pixelID;
+input busRstInA;
+output  [3:0] colAddrOutC;
+input VSS_QInj;
+input  [3:0] colAddrInB;
+input busTmrErrorInB;
+input VRef;
+output  [3:0] pixelAddrNextOutC;
+output TDC_hit;
+input VSS_D;
+output  [3:0] pixelAddrNextOutB;
+output busWeOutA;
+input busClkInA;
+output busTmrErrorOutB;
+output PAOut;
+output busReOutC;
+input  [15:0] busAddrInA;
+input VDD_Dis;
+output  [9:0] TDC_CAL;
+output  [7:0] busDataMisoOutC;
+output  [7:0] busDataMosiOutA;
+input clk40;
+input VDD_QInj;
+output busTmrErrorOutA;
+output  [7:0] busDataMosiOutB;
+input  [7:0] busDataMosiInA;
+output busTmrErrorOutC;
+output  [7:0] busDataMisoOutA;
+input  [3:0] pixelAddrInC;
+input busWeInA;
+input busReInB;
+input VDD_D;
+output ErrFlagTOT;
+output busReOutA;
+input  [3:0] colAddrInC;
+output busClkOutB;
+output busReOutB;
+input  [3:0] pixelAddrInB;
+input  [3:0] pixelAddrInA;
+input busReInC;
+input busClkInB;
+output vhigh;
+output  [7:0] busDataMosiOutC;
+output busClkOutA;
+input busRstInB;
+input  [7:0] busDataMosiInC;
+output ErrFlagCal;
+output ErrFlagTOA;
+input  [15:0] busAddrInB;
+input busWeInC;
+input  [15:0] busAddrInC;
+input RefStrobe;
+input VSS_S;
+output  [3:0] colAddrOutA;
+output busRstOutA;
+input  [3:0] colAddrInA;
+output busClkOutC;
+input busWeInB;
+output  [7:0] busDataMisoOutB;
+input busTmrErrorInC;
+input  [7:0] busDataMisoInC;
+input  [7:0] busDataMisoInB;
+input VDD_PA;
+output busRstOutB;
+output  [8:0] TDC_TOT;
+output busWeOutB;
+output  [3:0] pixelAddrNextOutA;
+output  [3:0] colAddrOutB;
+output busWeOutC;
+output busRstOutC;
+output  [15:0] busAddrOutB;
+input busTmrErrorInA;
+output  [255:0] pixelConfig;
+input busReInA;
+input  [7:0] busDataMosiInB;
+input  [7:0] busDataMisoInA;
+input PAIn;
+output  [15:0] busAddrOutC;
+input busClkInC;
+output vlow;
+output  [15:0] busAddrOutA;
+input VSS_Dis;
+output  [9:0] TDC_TOA;
+
+output  [2:0] CalCounterAMon;
+output  [2:0] TOTCounterBMon;
+output  [2:0] CalCounterBMon;
+output  [2:0] TOACounterAMon;
+output  [2:0] TOACounterBMon;
+output  [62:0] TOARawDataMon;
+output  [31:0] TOTRawDataMon;
+output  [2:0] TOTCounterAMon;
+output  [62:0] CalRawDataMon;
+
+wreal VRef, VSS_S, VSS_QInj, VSS_PA, VSS_Dis, VDD_QInj, VDD_PA, VDD_Dis;
+wreal VRef_buf, PAIn, nibn, PAOut, nibp, VTH;
+wire VDD_D, VSS_D;
+wire vlow1, vhigh1;
+wire [255:0] pixelConfig;
+wire DiscriOut_int, DiscriOut_int_bar;
+wire [255:0] defaultPixelConfig;
+wire [63:0] pixelStatus;
+wire [7:0] pixelID;
+wire DiscriPul_gated;
+
+// TIEL TIEL_inst(.VDD(VDD_D), .VSS(VSS_D), .ZN(vlow1));
+// TIEH TIEH_inst(.VDD(VDD_D), .VSS(VSS_D), .Z(vhigh1));
+
+TIEH_LVT_ELT TIEH_LVT_ELT_inst(.ZN(vhigh1), .VDD(VDD_D), .VSS(VSS_D));
+TIEL_LVT_ELT TIEL_LVT_ELT_inst(.ZN(vlow1), .VDD(VDD_D), .VSS(VSS_D));
+
+opamp2 opamp2_inst(.inp(VRef), .inn(VRef_buf), .out(VRef_buf), .vdd(VDD_PA), .vss(VSS_PA), .pd(vlow1));
+QInj  #(.fs(100G)) QInj_inst (.CIS(QInj), .ISEL(pixelConfig[12:8]), .EN(pixelConfig[13]), .QOUTSel(vhigh1), 
+            .VREF(VRef_buf), .Qout1(PAIn), .Qout2(), .TV1(), .vss(VSS_QInj), .vdd(VDD_QInj));
+PreAmp  #(.fc(500M), .fs(100000M)) PreAmp_inst(.in(PAIn), .CLSel(pixelConfig[1:0]), ._IBSel(pixelConfig[4:2]), 
+            .RfSel(pixelConfig[6:5]), .IB(nibn), .out(PAOut), .vss(VSS_PA), .vdd(VDD_PA));
+PreAmpBias PreAmpBias_inst(.In1(nibn), .Ip1(nibp), .vdd(VDD_PA), .vss(VSS_PA));
+SF_1V2_OVT_NOB2B SF_1V2_OVT_NOB2B_inst(.IO(PAIn), .VSSPST(VSS_PA));
+DAC10bit DAC10bit_inst(.a0(pixelStatus[30]), .a1(pixelStatus[31]), .a2(pixelStatus[32]), .a3(pixelStatus[33]), .a4(pixelStatus[34]), 
+            .a5(pixelStatus[35]), .a6(pixelStatus[36]), .a7(pixelStatus[37]), .a8(pixelStatus[38]), .a9(pixelStatus[39]), 
+            .out(VTH), .IN(VRef_buf), .pd(pixelConfig[20]), .vdd(VDD_PA), .vss(VSS_PA));
+Discri2 Discri2_inst(.inp(PAOut), .inn(VTH), .HysSelB(pixelConfig[19:16]), .pd(pixelConfig[20]), 
+            .vss(VSS_Dis), .vdd(VDD_Dis), .ib(nibp), .out(DiscriOut_int));
+ETROC2_TDC ETROC2_TDC_inst( .CalCounterAMon(CalCounterAMon), .CalCounterBMon(CalCounterBMon), .CalRawDataMon(CalRawDataMon), .Cal_codeReg(TDC_CAL),
+            .CalerrorFlagReg(ErrFlagCal), .DBF_QC(), .RO_DBF_QC(), .TOACounterAMon(TOACounterAMon), .TOACounterBMon(TOACounterBMon), .TOARawDataMon(TOARawDataMon),
+            .TOA_codeReg(TDC_TOA), .TOAerrorFlagReg(ErrFlagTOA), .TOTCounterAMon(TOTCounterAMon), .TOTCounterBMon(TOTCounterBMon), .TOTRawDataMon(TOTRawDataMon),
+            .TOT_codeReg(TDC_TOT), .TOTerrorFlagReg(ErrFlagTOT), .hitFlag(TDC_hit), .vdd(VDD_Dis), .vss(VSS_Dis), .autoReset(pixelConfig[53]), .clk40(clk40), .clk320(RefStrobe), .enable(pixelConfig[55]),
+            .enableMon(vlow1), .level(pixelConfig[51:49]), .offset({7{vlow1}}), .polaritySel(vhigh1), .pulse(DiscriOut_int), .resetn(pixelConfig[54]), .selRawCode(vlow1), .testMode(pixelConfig[52]),
+            .timeStampMode(vlow1));
+
+pixelDigitalTMR pixelDigitalTMR_inst(
+            .pixelAddrInA(pixelAddrInA),
+            .pixelAddrInB(pixelAddrInB),
+            .pixelAddrInC(pixelAddrInC),
+            .busRstInA(busRstInA),
+            .busRstInB(busRstInB),
+            .busRstInC(busRstInC),
+            .busWeInA(busWeInA),
+            .busWeInB(busWeInB),
+            .busWeInC(busWeInC),
+            .busClkInA(busClkInA),
+            .busClkInB(busClkInB),
+            .busClkInC(busClkInC),
+            .busReInA(busReInA),
+            .busReInB(busReInB),
+            .busReInC(busReInC),
+            .busAddrInA(busAddrInA),
+            .busAddrInB(busAddrInB),
+            .busAddrInC(busAddrInC),
+            .busDataMosiInA(busDataMosiInA),
+            .busDataMosiInB(busDataMosiInB),
+            .busDataMosiInC(busDataMosiInC),
+            .colAddrInA(colAddrInA),
+            .colAddrInB(colAddrInB),
+            .colAddrInC(colAddrInC),
+            .busDataMisoOutA(busDataMisoOutA),
+            .busDataMisoOutB(busDataMisoOutB),
+            .busDataMisoOutC(busDataMisoOutC),
+            .busTmrErrorOutA(busTmrErrorOutA),
+            .busTmrErrorOutB(busTmrErrorOutB),
+            .busTmrErrorOutC(busTmrErrorOutC),
+            .pixelAddrNextOutA(pixelAddrNextOutA),
+            .pixelAddrNextOutB(pixelAddrNextOutB),
+            .pixelAddrNextOutC(pixelAddrNextOutC),
+            .busRstOutA(busRstOutA),
+            .busRstOutB(busRstOutB),
+            .busRstOutC(busRstOutC),
+            .busWeOutA(busWeOutA),
+            .busWeOutB(busWeOutB),
+            .busWeOutC(busWeOutC),
+            .busClkOutA(busClkOutA),
+            .busClkOutB(busClkOutB),
+            .busClkOutC(busClkOutC),
+            .busReOutA(busReOutA),
+            .busReOutB(busReOutB),
+            .busReOutC(busReOutC),
+            .busAddrOutA(busAddrOutA),
+            .busAddrOutB(busAddrOutB),
+            .busAddrOutC(busAddrOutC),
+            .colAddrOutA(colAddrOutA),
+            .colAddrOutB(colAddrOutB),
+            .colAddrOutC(colAddrOutC),
+            .busDataMosiOutA(busDataMosiOutA),
+            .busDataMosiOutB(busDataMosiOutB),
+            .busDataMosiOutC(busDataMosiOutC),
+            .busDataMisoInA(busDataMisoInA),
+            .busDataMisoInB(busDataMisoInB),
+            .busDataMisoInC(busDataMisoInC),
+            .busTmrErrorInA(busTmrErrorInA),
+            .busTmrErrorInB(busTmrErrorInB),
+            .busTmrErrorInC(busTmrErrorInC),
+            .defaultPixelConfig(defaultPixelConfig),
+            .pixelConfig(pixelConfig),
+            .pixelStatus(pixelStatus),
+            .pixelID(pixelID),
+            .HIGH(vhigh),
+            .LOW(vlow),
+            .VDD(VDD_D),
+            .VSS(VSS_D)
+                  );
+
+assign pixelStatus[29:26] = {4{vlow1}};
+assign pixelStatus[63:56] = pixelConfig[255:248];
+assign pixelStatus[7:0] = pixelID;
+// assign defaultPixelConfig[255:192] = {{62{vlow}},vhigh,vlow};
+// assign defaultPixelConfig[191:128] = {{9{vlow}},vhigh,{4{vlow}},vhigh,{13{vlow}},vhigh,{5{vlow}},vhigh,{14{vlow}},vhigh,{4{vlow}},vhigh,{9{vlow}}};
+// assign defaultPixelConfig[127:64] = {{3{vlow}},vhigh,{7{vlow}},vhigh,{10{vlow}},vhigh,{8{vlow}},vhigh,{11{vlow}},vhigh,{19{vlow}},vhigh};
+// assign defaultPixelConfig[63:0] = {{3{vlow}},{3{vhigh}},{4{vlow}},vhigh,{3{vlow}},vhigh,vlow,vhigh,{20{vlow}},vhigh,vlow,vhigh,{4{vlow}},{4{vhigh}},{5{vlow}},{2{vhigh}},{2{vlow}},vhigh,vlow,{3{vhigh}},{2{vlow}}};
+
+assign defaultPixelConfig[15:0] = {{5{vlow}},{2{vhigh}},{2{vlow}},vhigh,vlow,{3{vhigh}},{2{vlow}}};
+assign defaultPixelConfig[31:16] = {{5{vlow}},vhigh,vlow,vhigh,{4{vlow}},{4{vhigh}}};
+assign defaultPixelConfig[63:32] = {{7{vlow}},vhigh,{2{vhigh}},{4{vlow}},vhigh,vlow,{2{vlow}},vhigh,vlow,vhigh,{11{vlow}}};
+assign defaultPixelConfig[95:64] = {{11{vlow}},vhigh,{4{vlow}},{5{vhigh}},vlow, vhigh, vlow, vhigh, {6{vlow}},vhigh};
+assign defaultPixelConfig[127:96] = {{3{vlow}},vhigh,{4{vlow}},vhigh,{13{vlow}},vhigh,{5{vlow}},vhigh, {3{vlow}}};
+assign defaultPixelConfig[159:128] = {{2{vlow}},vhigh,{14{vlow}},vhigh,{4{vlow}},vhigh,{9{vlow}}};
+assign defaultPixelConfig[191:160] = {{9{vlow}},vhigh,{4{vlow}},vhigh,{13{vlow}},vhigh,{3{vlow}}};
+assign defaultPixelConfig[223:192] = {{30{vlow}},vhigh,vlow};
+assign defaultPixelConfig[255:224] = {{32{vlow}}};
+
+
+TH_CtrlTMR TH_CtrlTMR_inst(
+            .CLK(clk40),
+            .RSTn(pixelConfig[24]),
+            .DiscriPul(DiscriPul_gated),
+            .Bypass(pixelConfig[26]),
+            .CLKEn(pixelConfig[27]),
+            .ScanStart(pixelConfig[28]),
+            .ScanDone(pixelStatus[8]),
+            .DAC(pixelConfig[41:32]),
+            .TH_offset(pixelConfig[47:42]),
+            .TH(pixelStatus[39:30]),
+            .BL(pixelStatus[25:16]),
+            .NW(pixelStatus[12:9]),
+            .Acc(pixelStatus[55:40]),
+            .StateOut(pixelStatus[15:13]),
+            .VDD(VDD_D),
+            .VSS(VSS_D)
+);
+
+ND2D1_LVT_ELT ND2D1_LVT_ELT_inst(.ZN(DiscriPul_gated_bar), .A1(DiscriOut_int), .A2(pixelConfig[25]), .VDD(VDD_D), .VSS(VSS_D));
+INVD2_LVT_ELT INVD2_LVT_ELT_inst(.ZN(DiscriPul_gated), .I(DiscriPul_gated_bar), .VDD(VDD_D), .VSS(VSS_D));
+
+
+endmodule
+

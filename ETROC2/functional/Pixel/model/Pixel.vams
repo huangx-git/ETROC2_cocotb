@@ -1,0 +1,191 @@
+//Verilog-AMS HDL for "ETROC2_Core", "Pixel" "verilogams"
+
+//`include "constants.vams"
+//`include "disciplines.vams"
+
+module Pixel ( PAOut, busAddrOutA, busAddrOutB, busAddrOutC, busClkOutA, busClkOutB,
+busClkOutC, busDataMisoOutA, busDataMisoOutB, busDataMisoOutC, busDataMosiOutA,
+busDataMosiOutB, busDataMosiOutC, busReOutA, busReOutB, busReOutC, busRstOutA,
+busRstOutB, busRstOutC, busTmrErrorOutA, busTmrErrorOutB, busTmrErrorOutC, busWeOutA,
+busWeOutB, busWeOutC, colAddrOutA, colAddrOutB, colAddrOutC, dnData, dnHits,
+pixelAddrNextOutA, pixelAddrNextOutB, pixelAddrNextOutC, upBCST, upRead, PAIn,
+VDD_D, VDD_Dis, VDD_PA, VDD_QInj, VSS_D, VSS_Dis, VSS_PA, VSS_QInj, VSS_S, CLKRO,
+ClkTDC, QInj, RefStrobe, VRef, busAddrInA, busAddrInB, busAddrInC, busClkInA,
+busClkInB, busClkInC, busDataMisoInA, busDataMisoInB, busDataMisoInC, busDataMosiInA,
+busDataMosiInB, busDataMosiInC, busReInA, busReInB, busReInC, busRstInA, busRstInB,
+busRstInC, busTmrErrorInA, busTmrErrorInB, busTmrErrorInC, busWeInA, busWeInB,
+busWeInC, colAddrInA, colAddrInB, colAddrInC, dnBCST, dnRead, pixelAddrInA,
+pixelAddrInB, pixelAddrInC, upData, upHits );
+
+input  [26:0] dnBCST;
+input busRstInC;
+inout VSS_PA;
+input QInj;
+input CLKRO;
+input busRstInA;
+output  [3:0] colAddrOutC;
+input  [4:0] upHits;
+inout VSS_QInj;
+input  [3:0] colAddrInB;
+input busTmrErrorInB;
+input VRef;
+output upRead;
+output  [3:0] pixelAddrNextOutC;
+inout VSS_D;
+output  [3:0] pixelAddrNextOutB;
+output busWeOutA;
+input busClkInA;
+output PAOut;
+output busTmrErrorOutB;
+output busReOutC;
+input  [15:0] busAddrInA;
+inout VDD_Dis;
+output  [7:0] busDataMisoOutC;
+output  [7:0] busDataMosiOutA;
+inout VDD_QInj;
+output busTmrErrorOutA;
+output  [7:0] busDataMosiOutB;
+input  [7:0] busDataMosiInA;
+output  [7:0] busDataMisoOutA;
+output busTmrErrorOutC;
+input  [3:0] pixelAddrInC;
+input busWeInA;
+input busReInB;
+inout VDD_D;
+output busReOutA;
+input dnRead;
+input  [3:0] colAddrInC;
+output busClkOutB;
+output busReOutB;
+input  [3:0] pixelAddrInB;
+input  [3:0] pixelAddrInA;
+input busReInC;
+input busClkInB;
+output  [7:0] busDataMosiOutC;
+output busClkOutA;
+input busRstInB;
+input  [7:0] busDataMosiInC;
+output  [26:0] upBCST;
+input  [15:0] busAddrInB;
+input busWeInC;
+input  [15:0] busAddrInC;
+input RefStrobe;
+inout VSS_S;
+output  [3:0] colAddrOutA;
+output busRstOutA;
+input  [3:0] colAddrInA;
+output  [45:0] dnData;
+output busClkOutC;
+input busWeInB;
+input ClkTDC;
+output  [7:0] busDataMisoOutB;
+input busTmrErrorInC;
+input  [7:0] busDataMisoInC;
+input  [7:0] busDataMisoInB;
+inout VDD_PA;
+output busRstOutB;
+output  [4:0] dnHits;
+output busWeOutB;
+output  [3:0] pixelAddrNextOutA;
+output  [3:0] colAddrOutB;
+output busWeOutC;
+output  [15:0] busAddrOutB;
+output busRstOutC;
+input  [45:0] upData;
+input busTmrErrorInA;
+input busReInA;
+input  [7:0] busDataMosiInB;
+input  [7:0] busDataMisoInA;
+inout PAIn;
+output  [15:0] busAddrOutC;
+input busClkInC;
+output  [15:0] busAddrOutA;
+inout VSS_Dis;
+
+wire ErrCal, ErrTOA, ErrTOT;
+wreal PAOut, PAIn, VRef;
+wreal VDD_Dis, VDD_PA, VDD_QInj, VSS_Dis, VSS_PA, VSS_QInj, VSS_S;
+wire VDD_D, VSS_D;
+wire [9:0] TDC_CAL;
+wire [9:0] TDC_TOA;
+wire [8:0] TDC_TOT; 
+wire TDC_hit;
+wire [255:0] pixelConfig;
+wire vhigh, vlow;
+wire [2:0] CalCounterAMon, CalCounterBMon;
+wire [62:0] CalRawDataMon;
+wire [2:0] TOACounterAMon, TOACounterBMon;
+wire [62:0] TOARawDataMon;
+wire [2:0] TOTCounterAMon, TOTCounterBMon;
+wire [31:0] TOTRawDataMon;
+wire [7:0] pixelID;
+wire QInj_inv, QInj_buf;
+wire CLKRO_inv, CLKRO_buf;
+
+INVD1_LVT_ELT INVD1_LVT_ELT_QINJ0(.ZN(QInj_inv), .I(QInj), .VDD(VDD_D), .VSS(VSS_D));
+INVD1_LVT_ELT INVD1_LVT_ELT_QINJ1(.ZN(QInj_buf), .I(QInj_inv), .VDD(VDD_D), .VSS(VSS_D));
+INVD1_LVT_ELT INVD1_LVT_ELT_CLKRO0(.ZN(CLKRO_inv), .I(CLKRO), .VDD(VDD_D), .VSS(VSS_D));
+INVD1_LVT_ELT INVD1_LVT_ELT_CLKRO1(.ZN(CLKRO_buf), .I(CLKRO_inv), .VDD(VDD_D), .VSS(VSS_D));
+
+PixelAnalog PixelAnalog_inst( 
+    .ErrFlagCal(ErrCal), .ErrFlagTOA(ErrTOA), .ErrFlagTOT(ErrTOT), .PAOut(PAOut), 
+    .TDC_CAL(TDC_CAL), .TDC_TOA(TDC_TOA), .TDC_TOT(TDC_TOT), .TDC_hit(TDC_hit), 
+    .busAddrOutA(busAddrOutA), .busAddrOutB(busAddrOutB), .busAddrOutC(busAddrOutC), 
+    .busClkOutA(busClkOutA), .busClkOutB(busClkOutB), .busClkOutC(busClkOutC), 
+    .busDataMisoOutA(busDataMisoOutA), .busDataMisoOutB(busDataMisoOutB), .busDataMisoOutC(busDataMisoOutC), 
+    .busDataMosiOutA(busDataMosiOutA), .busDataMosiOutB(busDataMosiOutB), .busDataMosiOutC(busDataMosiOutC), 
+    .busReOutA(busReOutA), .busReOutB(busReOutB), .busReOutC(busReOutC), 
+    .busRstOutA(busRstOutA), .busRstOutB(busRstOutB), .busRstOutC(busRstOutC), 
+    .busTmrErrorOutA(busTmrErrorOutA), .busTmrErrorOutB(busTmrErrorOutB), .busTmrErrorOutC(busTmrErrorOutC), 
+    .busWeOutA(busWeOutA), .busWeOutB(busWeOutB), .busWeOutC(busWeOutC), 
+    .colAddrOutA(colAddrOutA), .colAddrOutB(colAddrOutB), .colAddrOutC(colAddrOutC), 
+    .pixelAddrNextOutA(pixelAddrNextOutA), .pixelAddrNextOutB(pixelAddrNextOutB), .pixelAddrNextOutC(pixelAddrNextOutC), 
+    .pixelConfig(pixelConfig), .pixelID(pixelID), .vhigh(vhigh), .vlow(vlow), .PAIn(PAIn),
+    .VDD_D(VDD_D), .VDD_Dis(VDD_Dis), .VDD_PA(VDD_PA), .VDD_QInj(VDD_QInj), 
+    .VSS_D(VSS_D), .VSS_Dis(VSS_Dis), .VSS_PA(VSS_PA), .VSS_QInj(VSS_QInj), .VSS_S(VSS_S), 
+    .QInj(QInj_buf), .RefStrobe(RefStrobe), .VRef(VRef), 
+    .busAddrInA(busAddrInA), .busAddrInB(busAddrInB), .busAddrInC(busAddrInC), 
+    .busClkInA(busClkInA), .busClkInB(busClkInB), .busClkInC(busClkInC),
+    .busDataMisoInA(busDataMisoInA), .busDataMisoInB(busDataMisoInB), .busDataMisoInC(busDataMisoInC), 
+    .busDataMosiInA(busDataMosiInA), .busDataMosiInB(busDataMosiInB), .busDataMosiInC(busDataMosiInC), 
+    .busReInA(busReInA), .busReInB(busReInB), .busReInC(busReInC), 
+    .busRstInA(busRstInA), .busRstInB(busRstInB), .busRstInC(busRstInC),
+    .busTmrErrorInA(busTmrErrorInA), .busTmrErrorInB(busTmrErrorInB), .busTmrErrorInC(busTmrErrorInC), 
+    .busWeInA(busWeInA), .busWeInB(busWeInB), .busWeInC(busWeInC),
+    .clk40(ClkTDC), .colAddrInA(colAddrInA), .colAddrInB(colAddrInB), .colAddrInC(colAddrInC), 
+    .pixelAddrInA(pixelAddrInA), .pixelAddrInB(pixelAddrInB), .pixelAddrInC(pixelAddrInC), 
+    .CalCounterAMon(CalCounterAMon), .CalCounterBMon(CalCounterBMon), .CalRawDataMon(CalRawDataMon),
+    .TOACounterAMon(TOACounterAMon), .TOACounterBMon(TOACounterBMon), .TOARawDataMon(TOARawDataMon),
+    .TOTCounterAMon(TOTCounterAMon), .TOTCounterBMon(TOTCounterBMon), .TOTRawDataMon(TOTRawDataMon)
+);
+
+pixelReadoutWithSWCell #(.L1ADDRWIDTH(7), .BCSTWIDTH(27)) pixelReadoutWithSWCell_inst(
+.clk(CLKRO_buf), .workMode(pixelConfig[60:59]), .L1ADelay(pixelConfig[79:71]), .pixelID(pixelID), .disDataReadout(pixelConfig[57]), 
+.disTrigPath(pixelConfig[58]), .upperTOATrig(pixelConfig[177:168]), .lowerTOATrig(pixelConfig[167:158]), .upperTOTTrig(pixelConfig[195:187]),
+.lowerTOTTrig(pixelConfig[186:178]), .upperCalTrig(pixelConfig[157:148]), .lowerCalTrig(pixelConfig[147:138]), .upperTOA(pixelConfig[119:110]),
+.lowerTOA(pixelConfig[109:100]), .upperTOT(pixelConfig[137:129]), .lowerTOT(pixelConfig[128:120]), .upperCal(pixelConfig[99:90]),
+.lowerCal(pixelConfig[89:80]), .addrOffset(pixelConfig[56]), .TDC_TOT(TDC_TOT), .TDC_TOA(TDC_TOA), .TDC_Cal(TDC_CAL), .TDC_hit(TDC_hit),
+.TDC_EncError({ErrCal,ErrTOA, ErrTOT}), .selfTestOccupancy(pixelConfig[70:64]), .upData(upData), .dnData(dnData), .upHits(upHits),
+.dnHits(dnHits), .dnRead(dnRead), .upRead(upRead), .dnBCST(dnBCST), .upBCST(upBCST), .VDD(VDD_D), .VSS(VSS_D)  //
+);
+
+PixelCaps PixelCaps_inst(
+    .VDD_QInj(VDD_QInj),
+    .VDD_PA(VDD_PA),
+    .VDD_Dis(VDD_Dis),
+    .VDD_D(VDD_D),
+    .VSS_QInj(VSS_QInj),
+    .VSS_PA(VSS_PA),
+    .VSS_Dis(VSS_Dis),
+    .VSS_D(VSS_D)
+);
+
+/*
+D0_Pixel D0_Pixel_inst(.MINUS(VDD_D), .PLUS(VSS_D));
+D1_Pixel D1_Pixel_inst(.MINUS(VDD_D), .PLUS(VSS_D));
+D2_Pixel D2_Pixel_inst(.MINUS(VDD_D), .PLUS(VSS_D));
+D3_Pixel D3_Pixel_inst(.MINUS(VDD_D), .PLUS(VSS_D));
+*/
+
+endmodule
+

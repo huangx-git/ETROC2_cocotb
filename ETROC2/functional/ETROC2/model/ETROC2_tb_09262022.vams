@@ -1,0 +1,352 @@
+`include "constants.vams"
+`include "disciplines.vams"
+`include "../verification//FCGenLocal.v"
+`include "../verification/DataCheck.v"
+
+`timescale 1ns/1ps
+module ETROC2_tb(
+);
+
+
+wire CLK_WS;
+wire en_clk_WS = 1'b1;
+wreal DOLn, DOLp, DORn, DORp;
+wire GRO_Out_Down256;
+wreal VTemp, VREF;
+// wire PAOut224;
+wreal PAOut [255:0];
+wreal PAIn [255:0];
+wire wsStart, wsStop;
+wire SDA, RSTN, SCL;
+wire [4:0] I2CAddr;
+wreal VDD_CLK, VDD_Dis, VDD_EFUSE, VDD_IO2, VDD_PA, VDD_QInj,
+VDD_SL, VP, VSS_CLK, VSS_Dis, VSS_IO1, VSS_IO2, VSS_IO3, VSS_PA,
+VSS_QInj, VSS_S, VSS_SL;
+wire VDD_D, VSS_D;
+wreal CLK40n, CLK40p, CLK1280n, CLK1280p, FCn, FCp;
+
+`include "../verification/i2cMaster.v"
+`include "../verification/i2cTasks.v"
+
+pullup(SDA);
+pullup(SCL);
+pullup(I2CAddr[0]);
+pullup(I2CAddr[1]);
+pullup(I2CAddr[2]);
+pulldown(I2CAddr[3]);
+pulldown(I2CAddr[4]);
+pullup(RSTN);
+
+wire [7:0] I2CPeriDefaultByte [31:0];
+wire [255:0] I2CPeriDefault;
+wire vlowDef = 1'b0;
+wire vhighDef = 1'b1;
+wire [255:0] defaultPixelConfig;
+wire [9:0] FC_Ref;
+wire FCSource;
+
+assign I2CPeriDefault = {I2CPeriDefaultByte[31], I2CPeriDefaultByte[30], I2CPeriDefaultByte[29], I2CPeriDefaultByte[28],
+                        I2CPeriDefaultByte[27], I2CPeriDefaultByte[26], I2CPeriDefaultByte[25], I2CPeriDefaultByte[24],
+                        I2CPeriDefaultByte[23], I2CPeriDefaultByte[22], I2CPeriDefaultByte[21], I2CPeriDefaultByte[20],
+                        I2CPeriDefaultByte[19], I2CPeriDefaultByte[18], I2CPeriDefaultByte[17], I2CPeriDefaultByte[16],
+                        I2CPeriDefaultByte[15], I2CPeriDefaultByte[14], I2CPeriDefaultByte[13], I2CPeriDefaultByte[12],
+                        I2CPeriDefaultByte[11], I2CPeriDefaultByte[10], I2CPeriDefaultByte[9], I2CPeriDefaultByte[8],
+                        I2CPeriDefaultByte[7], I2CPeriDefaultByte[6], I2CPeriDefaultByte[5], I2CPeriDefaultByte[4],
+                        I2CPeriDefaultByte[3], I2CPeriDefaultByte[2], I2CPeriDefaultByte[1], I2CPeriDefaultByte[0]};
+
+assign I2CPeriDefaultByte[0] = 8'h2c;
+assign I2CPeriDefaultByte[1] = 8'h98;
+assign I2CPeriDefaultByte[2] = 8'h29;
+assign I2CPeriDefaultByte[3] = 8'h18;
+assign I2CPeriDefaultByte[4] = 8'h21;
+assign I2CPeriDefaultByte[5] = 8'h00;
+assign I2CPeriDefaultByte[6] = 8'h03;
+assign I2CPeriDefaultByte[7] = 8'ha3;
+assign I2CPeriDefaultByte[8] = 8'he3;
+assign I2CPeriDefaultByte[9] = 8'he3;
+assign I2CPeriDefaultByte[10] = 8'hd0;
+assign I2CPeriDefaultByte[11] = 8'h10;
+assign I2CPeriDefaultByte[12] = 8'h00;
+assign I2CPeriDefaultByte[13] = 8'h80;
+assign I2CPeriDefaultByte[14] = 8'hf0;
+assign I2CPeriDefaultByte[15] = 8'h60;
+assign I2CPeriDefaultByte[16] = 8'h90;
+assign I2CPeriDefaultByte[17] = 8'h98;
+assign I2CPeriDefaultByte[18] = 8'h00;
+assign I2CPeriDefaultByte[19] = 8'h56;
+assign I2CPeriDefaultByte[20] = 8'h40;
+assign I2CPeriDefaultByte[21] = 8'h0c;
+assign I2CPeriDefaultByte[22] = 8'h00;
+assign I2CPeriDefaultByte[23] = 8'h00;
+assign I2CPeriDefaultByte[24] = 8'h00;
+assign I2CPeriDefaultByte[25] = 8'h00;
+assign I2CPeriDefaultByte[26] = 8'hc5;
+assign I2CPeriDefaultByte[27] = 8'h8c;
+assign I2CPeriDefaultByte[28] = 8'hc7;
+assign I2CPeriDefaultByte[29] = 8'hac;
+assign I2CPeriDefaultByte[30] = 8'hbb;
+assign I2CPeriDefaultByte[31] = 8'h0b;
+
+assign defaultPixelConfig[31:0] = 32'h050f065c;
+assign defaultPixelConfig[63:32] = 32'h01c22800;
+assign defaultPixelConfig[95:64] = 32'h00100001;
+assign defaultPixelConfig[127:96] = 32'h10100201;
+assign defaultPixelConfig[159:128] = 32'h20004200;
+assign defaultPixelConfig[191:160] = 32'h00420008;
+assign defaultPixelConfig[223:192] = 32'h00000002;
+assign defaultPixelConfig[255:224] = 32'h00000000;
+
+real VDD1P2, VSS, VDD2P5;
+reg VDD_Dig;
+reg CLK40REF, CLK1280;
+reg [3:0] pixel_x;
+reg [3:0] pixel_y;
+reg [3:0] comReg;
+reg [255:0] comConfigDefault, pixelConfigDefault;
+reg [7:0] pixelConfig, periConfig, periConfigReadback;
+reg [5:0] pixelConfigAddrIn, periConfigAddrIn;
+reg FCStart;
+
+wire [6:0] SlaveAddr;
+assign SlaveAddr = 7'h67;
+
+initial begin
+    VSS = 0.0;
+    VDD1P2 = 0.0;
+    VDD2P5 = 0.0;
+    VDD_Dig = 0;
+    CLK40REF = 0;
+    CLK1280 = 0;
+    FCStart = 0;
+    comConfigDefault = I2CPeriDefault;
+    pixelConfigDefault = defaultPixelConfig;
+    #1000
+    force RSTN = 0;
+    #2000
+    VDD1P2 = 1.2;
+    VDD_Dig = 1;
+    #3000
+    release RSTN;
+    #300
+    FCStart = 1;
+
+
+    // start of I2C test 
+    
+
+    if($test$plusargs("I2C_TEST")) begin
+    	#1_000
+    	test_peripheral_default_config(I2CPeriDefault);
+
+       	#1_000;
+	comReg = 4;
+	test_common(comReg);
+
+    	#1_000;
+    	pixel_x = 4'h0;
+    	pixel_y = 4'h0;
+    	test_pixel(pixel_x, pixel_y);
+
+    	#1_000
+    	test_peripheral_config;
+	//end of I2C test 
+     end
+
+
+
+    #148    // write 0x80 to phase shifter
+    periConfig = 8'h80;
+    periConfigAddrIn = 5'b00101 ;
+    i2c_write_single(SlaveAddr, periConfigAddrIn | 16'h0, periConfig, 1'b1);
+    $display("%12d [Common Circuities Config Addr%0x] config: 0x%4h",$time, periConfigAddrIn, periConfig);
+
+    #148    // write 0x1 to disScrambler, to disable the scrambler
+    periConfig = 8'h57;
+    periConfigAddrIn = 5'b10011 ;
+    i2c_write_single(SlaveAddr, periConfigAddrIn | 16'h0, periConfig, 1'b1);
+    $display("%12d [Common Circuities Config Addr%0x] config: 0x%4h",$time, periConfigAddrIn, periConfig);
+
+
+
+    // i2c_read_single(SlaveAddr, periConfigAddrIn | 16'h0, periConfigReadback[7:0], 1'b1);
+    // $display("%12d [Common Circuities Config Addr%0x] config readback: 0x%4h",$time, periConfigAddrIn, periConfigReadback);
+
+    
+    #120_000        // waiting for power up sequence done
+    // // reset the in-pixel threshold calibration controller (releasing a ScanStart edge at the same time) with broadcast
+    // #1_000
+    // pixel_x = 4'hf;
+    // pixel_y = 4'hf;
+    // pixelConfig = 8'h12;
+    // pixelConfigAddrIn = 5'h03;
+    // pixel_bc(pixel_x, pixel_y, pixelConfig, pixelConfigAddrIn);
+
+    // // release the reset and set the ScanStart to low with broadcast
+    // #1_000
+    // pixel_x = 4'hf;
+    // pixel_y = 4'hf;
+    // pixelConfig = 8'h03;
+    // pixelConfigAddrIn = 5'h03;
+    // pixel_bc(pixel_x, pixel_y, pixelConfig, pixelConfigAddrIn);
+
+    // // initialize the in-pixel threshold calibration process with broadcast
+    // #1_000
+    // pixel_x = 4'hf;
+    // pixel_y = 4'hf;
+    // pixelConfig = 8'h13;
+    // pixelConfigAddrIn = 5'h03;
+    // pixel_bc(pixel_x, pixel_y, pixelConfig, pixelConfigAddrIn);
+
+    // writing DAC of 266 to pixels with broadcast, to set the VTH to around 702.4 mV
+    #1_000
+    pixel_x = 4'hf;
+    pixel_y = 4'hf;
+    pixelConfig = 8'h08;
+    pixelConfigAddrIn = 5'h04;
+    pixel_bc(pixel_x, pixel_y, pixelConfig, pixelConfigAddrIn);
+    pixelConfig = 8'h29;
+    pixelConfigAddrIn = 5'h05;
+    pixel_bc(pixel_x, pixel_y, pixelConfig, pixelConfigAddrIn);
+
+    // writing 1 to QInjEn with broadcast
+    #1_000
+    pixel_x = 4'hf;
+    pixel_y = 4'hf;
+    pixelConfig = 8'h26;
+    pixelConfigAddrIn = 5'h01;
+    pixel_bc(pixel_x, pixel_y, pixelConfig, pixelConfigAddrIn);
+
+    // writing 0 to QInjEn with broadcast
+    #16_000
+    pixel_x = 4'hf;
+    pixel_y = 4'hf;
+    pixelConfig = 8'h06;
+    pixelConfigAddrIn = 5'h01;
+    pixel_bc(pixel_x, pixel_y, pixelConfig, pixelConfigAddrIn);
+
+    // writing Pixel255(Row15, Col15): 1 to QInjEn 
+    #1_000
+    pixel_x = 4'hf;
+    pixel_y = 4'hf;
+    pixelConfig = 8'h26;
+    pixelConfigAddrIn = 5'h01;
+    pixel_write(pixel_x, pixel_y, pixelConfig, pixelConfigAddrIn);
+
+    // writing Pixel18(Row2, Col1): 1 to QInjEn, 24 to QSel 
+    #1_000
+    pixel_x = 4'h2;
+    pixel_y = 4'h1;
+    pixelConfig = 8'h38;
+    pixelConfigAddrIn = 5'h01;
+    pixel_write(pixel_x, pixel_y, pixelConfig, pixelConfigAddrIn);
+
+    // writing Pixel125(Row14, Col14): 1 to QInjEn, 31 to QSel 
+    #1_000
+    pixel_x = 4'he;
+    pixel_y = 4'he;
+    pixelConfig = 8'h3f;
+    pixelConfigAddrIn = 5'h01;
+    pixel_write(pixel_x, pixel_y, pixelConfig, pixelConfigAddrIn);
+
+
+    if($test$plusargs("I2C_TEST")) begin
+         #1_000;
+         pixel_x = 4'hF;
+         pixel_y = 4'hF;
+         test_pixel(pixel_x, pixel_y);
+
+         #1_000;
+	     comReg = 0;
+	     test_common(comReg);
+
+         #10_00;
+	     pixel_x = $random;
+         pixel_y = $random;// test_pixel_bc(pixel_x, pixel_y);
+	     test_pixel_bc(pixel_x, pixel_y);
+    end
+
+    #5_000_000;
+    $stop();
+end
+always #12.48 CLK40REF = ~CLK40REF;
+always #0.390 CLK1280 = ~CLK1280;
+
+assign VDD_CLK = VDD1P2;
+assign VDD_Dis = VDD1P2;
+assign VDD_EFUSE = VDD2P5;
+assign VDD_IO2 = VDD1P2;
+assign VDD_PA = VDD1P2;
+assign VDD_QInj = VDD1P2;
+assign VDD_SL = VDD1P2;
+assign VSS_SL = VSS;
+assign VSS_IO1 = VSS;
+assign VSS_IO2 = VSS;
+assign VSS_IO3 = VSS;
+assign VSS_PA = VSS;
+assign VSS_QInj = VSS;
+assign VSS_S = VSS;
+
+assign VDD_D = VDD_Dig;
+assign VSS_D = 1'b0;
+// assign VDD_D = VDD1P2;
+// assign VSS_D = VSS;
+
+wire clk40test;
+S2D S2D_CLK40_inst(.SIn(CLK40REF), .DOutP(CLK40p), .DOutN(CLK40n));
+S2D S2D_CLK1280_inst(.SIn(CLK40REF), .DOutP(CLK1280p), .DOutN(CLK1280n));
+S2D S2D_FC_inst(.SIn(FCSource), .DOutP(FCp), .DOutN(FCn));
+D2S D2S_Test_inst(.DInP(CLK40p), .DInN(CLK40n), .SOut(clk40test));
+
+ETROC2 ETROC2_inst( 
+    .en_clk_WS(en_clk_WS), .CLK_WS(CLK_WS), 
+    .DOLn(DOLn), .DOLp(DOLp), .DORn(DORn), .DORp(DORp), 
+    .PAOut(PAOut), .PAIn(PAIn),
+    .VTemp(VTemp), .VREF(VREF),
+    .wsStart(wsStart), .wsStop(wsStop), 
+    .SDA(SDA), .I2CAddr(I2CAddr), .RSTN(RSTN), .SCL(SCL),
+    .VDD_CLK(VDD_CLK), .VDD_D(VDD_D), .VDD_Dis(VDD_Dis), .VDD_EFUSE(VDD_EFUSE), .VDD_IO2(VDD_IO2), .VDD_PA(VDD_PA), .VDD_QInj(VDD_QInj),
+    .VDD_SL(VDD_SL), .VSS_CLK(VSS_CLK), .VSS_D(VSS_D), .VSS_Dis(VSS_Dis), .VSS_IO1(VSS_IO1), .VSS_IO2(VSS_IO2), .VSS_IO3(VSS_IO3), 
+    .VSS_PA(VSS_PA), .VSS_QInj(VSS_QInj), .VSS_S(VSS_S), .VSS_SL(VSS_SL),
+    .VP(VP),
+    .CLK40n(CLK40n), .CLK40p(CLK40p), .CLK1280n(CLK1280n), .CLK1280p(CLK1280p), .FCn(FCn), .FCp(FCp), 
+    .GRO_Out(GRO_Out_Down256)
+);
+
+wire DOL, DOR;
+D2S D2S_DOL_inst(.DInP(DOLp), .DInN(DOLn), .SOut(DOL));
+D2S D2S_DOR_inst(.DInP(DORp), .DInN(DORn), .SOut(DOR));
+
+
+/*
+fastCommandGenerator fastCommandGenerator_inst
+(
+	.clk40(CLK40REF),
+	.clk1280(CLK1280),
+	// .jitterLevel(2'b00),
+	.jitterHigh(0),
+	.jitterLow(0),
+	.reset(RSTN),
+	.start(FCStart),
+	.randomMode(1'b0),                      // need to disable randomMode to send consercutive IDELs for word alignment
+	// .errorRate(8'd128),
+	.flipError(3'b000),
+	.fcd_ref(FC_Ref),
+	.fcData(FCSource)
+);
+*/
+
+wire FastComSerial;
+wire [7:0] FastComParallel;
+FCGenLocal FCGenLocal_inst(
+    .clk40(CLK40REF),
+    .fastComSerial(FastComSerial),
+    .fastComParallel(FastComParallel)
+);
+assign FCSource = FastComSerial;
+
+DataCheck DataCheck_inst(
+    .CLK1280(CLK1280),
+    .DataIn(DOR)
+    );
+
+endmodule

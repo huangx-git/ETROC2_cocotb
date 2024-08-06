@@ -1,0 +1,15 @@
+// irunArgs
+model/opamp2_tb.vams
+model/opamp2.vams
+//amscf.scs
+//-iereport
+-clean
+-timescale 1ns/1ps
+-access +rwc
+-gui
+//MyConnRules12.vams
+//-amsconnrules My_ConnRules_12_full_fast
+//-discipline logic
+// -linedebug
+//-amsvivalog
+

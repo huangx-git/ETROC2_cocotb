@@ -1,0 +1,8 @@
+`include "ETROC2/functional/Pixel/model/Pixel.vams"
+    `include "ETROC2/functional/PixelAnalog/model/PixelAnalog_include.vams"
+    `include "ETROC2/functional/pixelReadoutWithSWCell/model/pixelReadoutWithSWCell_include.v"
+    // `include "ETROC2/functional/Diodes/model/D0_Pixel.v"
+    // `include "ETROC2/functional/Diodes/model/D1_Pixel.v"
+    // `include "ETROC2/functional/Diodes/model/D2_Pixel.v"
+    // `include "ETROC2/functional/Diodes/model/D3_Pixel.v"
+    `include "ETROC2/functional/Pixel/model/PixelCaps.v"

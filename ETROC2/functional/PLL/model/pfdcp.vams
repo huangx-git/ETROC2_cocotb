@@ -1,0 +1,70 @@
+//////////////////////////////////////////////////////////////////////////////////
+// Org:        	FNAL
+// Author:      Quan Sun
+// 
+// Create Date:    April. 15th, 2022
+// Description: PDF and CP model of wreal PLL
+//
+// Revision: 
+//
+//
+//////////////////////////////////////////////////////////////////////////////////
+
+`include "constants.vams"
+`include "disciplines.vams"
+`timescale 1ps / 1ps
+
+module pfdcp(CLKRef, CLKFB, IOut, INSTLock);
+input CLKRef, CLKFB;
+
+output IOut;
+wreal IOut;
+
+output INSTLock;
+reg INSTLock;
+
+
+/// model parameters
+parameter real fs = 100G from (0:inf);  // sampling frequency in Hz
+parameter real ICP = 50u from (0:inf);  // charge pump current
+
+
+
+///local variables
+real timescale = 1p;      // match verilog timescale
+wire reset;
+wire Up, Down;
+reg QRef,QFB;
+real Icp_int;
+real ts; 		// sampling period
+
+initial begin
+	ts = 1/(fs*timescale);
+end
+
+assign reset = QRef & QFB;
+assign Up = QRef;
+assign Down = QFB;
+
+always@(posedge CLKRef or posedge reset) begin
+	if(reset) QRef <= 0;
+	else QRef <= 1;
+end
+
+always@(posedge CLKFB or posedge reset) begin
+	if(reset) QFB <= 0;
+	else QFB <= 1;
+end
+
+always@(negedge CLKFB)
+	INSTLock <= ~(Up|Down);
+
+
+
+always #ts begin
+	Icp_int = -(ICP*Up - ICP*Down);
+end
+
+assign IOut = Icp_int;
+
+endmodule

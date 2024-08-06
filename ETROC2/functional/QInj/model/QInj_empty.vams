@@ -1,0 +1,18 @@
+//`include "disciplines.vams"
+//`include "constants.vams"
+
+`timescale 10ps/1ps
+
+module QInj(CIS, ISEL, EN, QOUTSel, VREF, Qout1, Qout2, TV1, vss, vdd);
+input CIS;
+input [4:0] ISEL;
+input EN;
+input QOUTSel;
+input VREF;
+output Qout1;
+output TV1;
+output Qout2;
+inout vss, vdd;
+parameter real fs = 10G;  // sampling frequency
+
+endmodule

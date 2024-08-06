@@ -1,0 +1,42 @@
+************************************************************************
+* auCdl Netlist:
+* 
+* Library Name:  ETROC0A_Analog
+* Top Cell Name: PreAmpBias
+* View Name:     schematic
+* Netlisted on:  Apr 21 22:07:49 2022
+************************************************************************
+
+*.INCLUDE  /asic/cad/Library/tsmc/TSMC65_CERN_2017_DL20/V1.7A_1/1p9m6x1z1u/tsmcN65/../PVS_QRC/lvs/source.added
+*.EQUATION
+*.SCALE METER
+*.MEGA
+.PARAM
+
+
+
+************************************************************************
+* Library Name: ETROC0A_Analog
+* Cell Name:    PreAmpBias
+* View Name:    schematic
+************************************************************************
+
+.SUBCKT PreAmpBias In1 Ip1 vdd vss
+*.PININFO In1:O Ip1:O vdd:B vss:B
+MM8 vss a1 vss vss nch_dnw l=300n w=2u m=1
+MM7 vss a1 vss vss nch_dnw l=300n w=2u m=1
+MM6 b1 b1 a1 vss nch_dnw l=120.0n w=2u m=8
+MM5 In1 a1 vss vss nch_dnw l=300n w=2u m=4
+MM3 a1 a1 vss vss nch_dnw l=300n w=2u m=4
+MM0 b1 a1 bulk1 bulk1 nch_dnw l=300n w=2u m=8
+XR0 bulk1 vss rppolywo l=13.5u w=2.6u m=2
+DD0 vss vdd dnwpsub area=1.09005e-10 pj=0.0021803 m=1
+DD2 vss vdd pwdnw area=5.49614e-11 pj=0.0109923 m=1
+DD1 bulk1 vdd pwdnw area=2.57597e-11 pj=0.00515196 m=1
+MM10 vdd b1 vdd vdd pch l=300n w=2u m=1
+MM9 vdd b1 vdd vdd pch l=300n w=2u m=1
+MM4 Ip1 b1 vdd vdd pch l=300n w=2u m=4
+MM2 a1 b1 vdd vdd pch l=300n w=2u m=4
+MM1 b1 b1 vdd vdd pch l=300n w=2u m=4
+.ENDS
+

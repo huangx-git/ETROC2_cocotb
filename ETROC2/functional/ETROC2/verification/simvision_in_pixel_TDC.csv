@@ -1,0 +1,5 @@
+SimTime,ETROC2_tb.ETROC2_inst.PixelMatrix_HTree_inst.PixelCol_inst_1.Pixel_inst_2.PixelAnalog_inst.TDC_CAL[9:0],ETROC2_tb.ETROC2_inst.PixelMatrix_HTree_inst.PixelCol_inst_1.Pixel_inst_2.PixelAnalog_inst.TDC_TOA[9:0],ETROC2_tb.ETROC2_inst.PixelMatrix_HTree_inst.PixelCol_inst_1.Pixel_inst_2.PixelAnalog_inst.TDC_TOT[8:0],ETROC2_tb.ETROC2_inst.PixelMatrix_HTree_inst.PixelCol1_inst_14.Pixel1_inst_14.PixelAnalog1_inst.TDC_CAL[9:0],ETROC2_tb.ETROC2_inst.PixelMatrix_HTree_inst.PixelCol1_inst_14.Pixel1_inst_14.PixelAnalog1_inst.TDC_TOA[9:0],ETROC2_tb.ETROC2_inst.PixelMatrix_HTree_inst.PixelCol1_inst_14.Pixel1_inst_14.PixelAnalog1_inst.TDC_TOT[8:0],ETROC2_tb.ETROC2_inst.PixelMatrix_HTree_inst.PixelCol1_inst_15.Pixel1_inst_15.PixelAnalog1_inst.TDC_CAL[9:0],ETROC2_tb.ETROC2_inst.PixelMatrix_HTree_inst.PixelCol1_inst_15.Pixel1_inst_15.PixelAnalog1_inst.TDC_TOA[9:0],ETROC2_tb.ETROC2_inst.PixelMatrix_HTree_inst.PixelCol1_inst_15.Pixel1_inst_15.PixelAnalog1_inst.TDC_TOT[8:0]
+0,,,,,,,,,
+182878305000,0A0,1AA,036,0A0,1AA,036,0A0,1AA,036
+245727585000,0A0,1B4,041,0A0,1B5,042,0A0,1AA,036
+3420376830000,0A0,1B4,041,0A0,1B5,042,0A0,1AA,036

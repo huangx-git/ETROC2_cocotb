@@ -1,0 +1,137 @@
+//  Second order lowpass filter:  Vin=input, Vout=output,
+//  Wc=corner frequency in radians/sec, Dc=damping coefficient.
+
+// Bilinear transform
+// Vout = idt(Wp*(idt(Wp*(Vin-Vout))-2*Dp*Vout))
+// s^2*Vout = (Wp*((Wp*(Vin-Vout))-2*Dp*s*Vout))
+// s^2*Vout = Wp^2*Vin - Wp^2*Vout - Wp*2*Dp*s*Vout
+// s^2*Vout + Wp^2*Vout + Wp*2*Dp*s*Vout =  Wp^2*Vin
+// H(s) = Vout/Vin = Wp^2 / (Wp^2 + Wp*2*Dp*s + s^2 )
+//
+//        s = (g*(1-z^-1)/(1+z^-1))
+//
+// H(z) = Wp^2 / (Wp^2 + Wp*2*Dp*(g*(1-z^-1)/(1+z^-1))
+//        + (g*(1-z^-1)/(1+z^-1))^2 )
+//
+// H(z) = Wp^2*(1+z^-1)^2 / ( Wp^2*(1+z^-1)^2
+//        + Wp*2*Dp*g*(1-z^-1)*(1+z^-1)) + (g*(1-z^-1)^2 )
+//
+// H(z) = Wp^2 + 2*Wp^2*(z^-1) +Wp^2*(z^-2) /
+//        ( Wp^2 + 2*Wp^2*(z^-1) +Wp^2*(z^-2) + 2*Wp*Dp*g - 2*Wp*Dp*g(z^-2)
+//        + g^2 - 2*g^2*(z^-1) + g^2*(z^-2))
+//
+// H(z) = Wp^2 + 2*Wp^2*(z^-1) +Wp^2*(z^-2) /
+//        ( (Wp^2 + 2*Wp*Dp*g + g^2) + 2*(Wp^2 - g^2)*(z^-1)
+//        + (Wp^2 - 2*Wp*Dp*g + g^2)*(z^-2))
+//
+// subsitute
+//        Q = 1/(2*Dp)
+//
+// H(z) = Wp^2 + 2*Wp^2*(z^-1) +Wp^2*(z^-2) /
+//        ( (Wp^2 + Wp*g/Q + g^2) + 2*(Wp^2 - g^2)*(z^-1)
+//        + (Wp^2 - Wp*g/Q + g^2)*(z^-2))
+
+//`include "disciplines.vams"
+//`include "constants.vams"
+
+`timescale 10ps/1ps
+
+module PreAmp(in, CLSel, _IBSel, RfSel, IB, out, vss, vdd, ps1);
+
+input in;
+input [1:0] CLSel;
+input [2:0] _IBSel;
+input [1:0] RfSel;
+input IB;
+output out;
+input vss, vdd;
+output ps1;
+wreal in, out, IB, vss, vdd, ps1;
+
+
+parameter real fs = 1G;  // sampling frequency
+parameter real fc = 500M;  // cut off frequency
+   
+// max flat response, Q = 1/sqrt(2) = 0.7071
+parameter real Q = 1.0/sqrt(2.0);  // quality factor
+
+// local variables
+real timescale = 10p; // needs to match verilog timescale
+real ts;   // sampling period scaled to verilog timescale
+real wc;   // cutoff freq in rad/sec
+real g;    // bilinear transform constant
+real a0, a1, a2;  // numerator coefficients
+real b0, b1, b2;  // denominator coefficients
+real out_0, out_1, out_2;  // output and time delayed outputs
+real in_0, in_1, in_2;     // input and time delayed inputs
+
+real wc_sqrd, g_sqrd;    // squared values of wc and g (save some CPU)
+
+reg sclk;   // sample clock
+
+initial begin
+      wc = `M_TWO_PI*fc; 
+      out_0 = 0.0;
+      out_1 = 0.0;
+      out_2 = 0.0;
+      in_0 = 0.0;
+      in_1 = 0.0;
+      in_2 = 0.0;
+
+      // bilinear coefficient
+      g = 2.0*fs;    // no warping
+//      g = wc/(tan(`M_PI*fc/fs));   // warping
+
+    
+      // H(z) = Wp^2 + 2*Wp^2*(z^-1) +Wp^2*(z^-2) /
+      //        ( (Wp^2 + Wp*g/Q + g^2) + 2*(Wp^2 - g^2)*(z^-1)
+      //        + (Wp^2 - Wp*g/Q + g^2)*(z^-2))
+
+      // form
+      //         a0 + a1*(z^-1) + a2*(z^-2)
+      // H(z) = ----------------------------
+      //         b0 + b1*(z^-1) + b2*(z^-2)
+
+      wc_sqrd = wc**2;  
+      g_sqrd = g**2;
+
+      // numerator
+      a0 = wc_sqrd;
+      a1 = 2.0*wc_sqrd;
+      a2 = a0;
+
+      // denominator
+      b0 = wc_sqrd + wc*g/Q + g_sqrd;
+      b1 = 2.0*(wc_sqrd - g_sqrd);
+      b2 = wc_sqrd - wc*g/Q + g_sqrd;
+
+      // for filter clock
+      ts = 1.0 / (timescale * fs);
+
+      // define the filter clock
+      sclk = 0;  
+      forever #(ts/2.0) sclk = ~sclk;
+end
+
+// Signal flow graph implementation
+
+always @(posedge sclk) begin
+
+      // sample with most delay calculated first
+      in_2 = in_1;   // input delayed 2 time units
+      in_1 = in_0;   // input delayed 1 time unit
+      in_0 = in;    // current sample
+
+      out_2 = out_1; // output delayed 2 time units
+      out_1 = out_0; // output delayed 1 time unit
+   
+      // realizable form of H(z)
+      // (a0*vin + a1*(z^-1)*vin + a2*(z^-2)*vin -
+      //      (b1*(z^-1)*vout + b2*(z^-2)*vout)) = b0*vout
+
+      out_0 = (a0*in_0 + a1*in_1 + a2*in_2 - (b1*out_1 + b2*out_2))/b0;
+end
+
+assign out = 600*out_0 + 0.7;
+
+endmodule

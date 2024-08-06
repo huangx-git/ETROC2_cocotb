@@ -1,0 +1,18 @@
+
+
+`include "./etroc2readout/fastcommand/Arbiter.v"
+`include "./etroc2readout/fastcommand/DELWRAPPER.v"
+`include "./etroc2readout/fastcommand/WADecoder.v"
+`include "./etroc2readout/fastcommand/bitCLKAligner.v"
+`include "./etroc2readout/fastcommand/decoderHamming8to4.v"
+//`include "./etroc2readout/fastcommand/decoderCore.v"
+// `include "./etroc2readout/fastcommand/delayN.v"
+//`include "./etroc2readout/fastcommand/arbiterWordAlign.v"
+//`include "./etroc2readout/fastcommand/delayN_10bit.v"
+`include "./etroc2readout/fastcommand/fastCommandDecoderTop.v"
+`include "./etroc2readout/fastcommand/fastCommandDecoderTop_tb.v"
+`include "./etroc2readout/fastcommand/bitclkgen.v"
+`include "./etroc2readout/fastcommand/phaseAdjuster.v"
+`include "./etroc2readout/fastcommand/fastCommandGenerator.v"
+`include "./etroc2readout/fastcommand/clk320Generator.v"
+`include "./etroc2readout/PRBS31.v"

@@ -1,0 +1,1 @@
+strmout -library 'ETROC2_Core' -strmFile './CLKGen.gds.gz' -topCell 'CLKGen' -view 'layout' -logFile 'strmOut.log'

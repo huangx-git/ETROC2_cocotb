@@ -1,0 +1,39 @@
+//Verilog-AMS HDL for "testlib1", "ETROC2_TDC_Wrap" "verilogams"
+
+//`include "constants.vams"
+//`include "disciplines.vams"
+
+module ETROC2_TDC_Wrap ( CAL, TOA, TOT, hit, VDD_D, VSS_D, autoReset, clk40,
+clk320, enable, enableMon, level, polaritySel, pulse, resetn, selRawCode,
+testMode, timeStampMode );
+
+input testMode;
+input timeStampMode;
+input enable;
+input clk40;
+input selRawCode;
+input resetn;
+input polaritySel;
+input  [2:0] level;
+input enableMon;
+output hit;
+input pulse;
+input VDD_D;
+input autoReset;
+input VSS_D;
+output  [9:0] CAL;
+output  [8:0] TOT;
+input clk320;
+output  [9:0] TOA;
+
+TIEL TIEL_inst(.VDD(VDD_D), .VSS(VSS_D), .ZN(vlow1));
+
+ETROC2_TDC ETROC2_TDC_inst ( .CalCounterAMon(), .CalCounterBMon(), .CalRawDataMon(), .Cal_codeReg(CAL),
+.CalerrorFlagReg(), .DBF_QC(), .RO_DBF_QC(), .TOACounterAMon(), .TOACounterBMon(), .TOARawDataMon(),
+.TOA_codeReg(TOA), .TOAerrorFlagReg(), .TOTCounterAMon(), .TOTCounterBMon(), .TOTRawDataMon(),
+.TOT_codeReg(TOT), .TOTerrorFlagReg(), .hitFlag(hit), .vdd(VDD_D), .vss(VSS_D), .autoReset(autoReset), 
+.clk40(clk40), .clk320(clk320), .enable(enable), .enableMon(enableMon), .level(level), 
+.offset({7{vlow1}}), .polaritySel(polaritySel), .pulse(pulse), .resetn(resetn), .selRawCode(selRawCode), .testMode(testMode),
+.timeStampMode(timeStampMode) );
+
+endmodule

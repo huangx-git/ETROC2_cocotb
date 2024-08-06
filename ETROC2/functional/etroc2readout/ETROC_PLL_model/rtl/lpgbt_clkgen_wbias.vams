@@ -1,0 +1,158 @@
+//////////////////////////////////////////////////////////////////////////////////
+// Org:        	SMU & FNAL
+// Author:      Quan Sun
+// 
+// Create Date:    Jan 7 2022
+// Design Name:    ETROC2 
+// Module Name:    lpgbt_clkgen_wbias
+// Project Name: 
+// Description: behavioral model of lpgbt_clkgen_wbias
+//
+// Dependencies: 
+//
+//////////////////////////////////////////////////////////////////////////////////
+
+`include "constants.vams"
+`include "disciplines.vams"
+
+module lpgbt_clkgen_wbias ( clk2g56A, clk2g56B, clk2g56C, clk2g56In, clk2g56Ip,
+clk2g56Qn, clk2g56Qp, clk2g56S, clk2g56SN, clk5g12EOMn, clk5g12EOMp, clk5g12S,
+clk5g12SN, AVDD, AVSS, VDD, VSS, clk5g12extn, clk5g12extp, clk5g12vcon, clk5g12vcop,
+clkTreeADisableA, clkTreeADisableB, clkTreeADisableC, clkTreeBDisableA, clkTreeBDisableB,
+clkTreeBDisableC, clkTreeCDisableA, clkTreeCDisableB, clkTreeCDisableC, disCLKA,
+disCLKB, disCLKC, disDESA, disDESB, disDESC, disEOMA, disEOMB, disEOMC, disEXTA,
+disEXTB, disEXTC, disSERA, disSERB, disSERC, disVCOA, disVCOB, disVCOC, ibiaspn60uCLK,
+ibiaspn60uDES, ibiaspn60uEOM, ibiaspn60uEXT, ibiaspn60uSER, ibiaspn60uVCO );
+
+  input ibiaspn60uCLK;
+  output clk2g56B;
+  input ibiaspn60uDES;
+  input disEOMB;
+  output clk2g56A;
+  input disEXTC;
+  output clk5g12S;
+  input disDESC;
+  inout AVDD;
+  input disSERB;
+  inout VDD;
+  input clk5g12vcon;
+  output clk2g56Ip;
+  output clk2g56SN;
+  input clkTreeADisableB;
+  input disVCOC;
+  input disSERC;
+  input clk5g12extp;
+  input ibiaspn60uVCO;
+  input disCLKC;
+  input disCLKB;
+  input clkTreeCDisableA;
+  input clkTreeBDisableB;
+  output clk2g56In;
+  input disEOMC;
+  output clk2g56Qp;
+  input clkTreeCDisableC;
+  output clk2g56C;
+  input disEXTB;
+  input clkTreeBDisableC;
+  input clkTreeBDisableA;
+  output clk5g12EOMn;
+  input clk5g12extn;
+  input disDESA;
+  input clkTreeADisableC;
+  input disSERA;
+  input ibiaspn60uEOM;
+  input ibiaspn60uSER;
+  input disEOMA;
+  output clk2g56S;
+  output clk5g12EOMp;
+  output clk5g12SN;
+  input disCLKA;
+  input clkTreeADisableA;
+  input ibiaspn60uEXT;
+  input disDESB;
+  input disVCOB;
+  inout AVSS;
+  inout VSS;
+  input disVCOA;
+  input disEXTA;
+  input clkTreeCDisableB;
+  output clk2g56Qn;
+  input clk5g12vcop;
+
+parameter tdel = 5p;
+parameter trise = 10p;
+parameter tfall = 10p;
+
+reg cntA = 0;
+electrical clk5g12vcop, clk5g12vcon;
+electrical clk2g56S, clk2g56SN;
+electrical clk5g12S, clk5g12SN;
+electrical clk2g56Ip, clk2g56In;
+electrical clk2g56Qp, clk2g56Qn;
+electrical clk5g12EOMp, clk5g12EOMn;
+real cntReal = 0.5;
+
+always@(cross(V(clk5g12vcop)-V(clk5g12vcon),1)) begin
+	cntA <= cntA + 1;
+	if(cntReal == 0.5)
+		cntReal = cntReal + 0.7;
+	else
+		cntReal = cntReal - 0.7;
+end
+
+assign clk2g56A = (clkTreeADisableA==1'b1 && clkTreeADisableB==1'b1 && clkTreeADisableC==1'b1)?1:cntA;
+assign clk2g56B = (clkTreeBDisableA==1'b1 && clkTreeBDisableB==1'b1 && clkTreeBDisableC==1'b1)?1:cntA;
+assign clk2g56C = (clkTreeCDisableA==1'b1 && clkTreeCDisableB==1'b1 && clkTreeCDisableC==1'b1)?1:cntA;
+
+analog begin
+if(disVCOA == 1'b0 && disVCOA == 1'b0 && disVCOA == 1'b0 && disCLKA == 1'b0 && disCLKB == 1'b0 && disCLKC == 1'b0) begin
+	if(disSERA==1'b0 && disSERB==1'b0 && disSERC==1'b0) begin
+		V(clk2g56S) <+ transition(cntReal, tdel, trise, tfall);
+		V(clk2g56SN) <+ transition(1.7-cntReal, tdel, trise, tfall);
+		V(clk5g12S) <+ transition(V(clk5g12vcop), tdel, trise, tfall);
+		V(clk5g12SN) <+ transition(V(clk5g12vcon), tdel, trise, tfall);
+	end
+	else begin
+		V(clk2g56S) <+ 0;
+		V(clk2g56SN) <+ 0;
+		V(clk5g12S) <+ 1.2;
+		V(clk5g12SN) <+ 1.2;
+	end
+
+	if(disDESA==1'b0 && disDESB==1'b0 && disDESC==1'b0) begin
+		V(clk2g56Ip) <+ transition(cntReal, tdel, trise, tfall);
+		V(clk2g56In) <+ transition(1.7-cntReal, tdel, trise, tfall);
+		V(clk2g56Qp) <+ transition(cntReal, tdel, trise, tfall);
+		V(clk2g56Qn) <+ transition(1.7-cntReal, tdel, trise, tfall);
+	end
+	else begin
+		V(clk2g56Ip) <+ 1.2;
+		V(clk2g56In) <+ 1.2;
+		V(clk2g56Qp) <+ 1.2;
+		V(clk2g56Qn) <+ 1.2;
+	end
+
+	if(disEOMA==1'b0 && disEOMB==1'b0 && disEOMC==1'b0) begin
+		V(clk5g12EOMp) <+ transition(V(clk5g12vcop), tdel, trise, tfall);
+		V(clk5g12EOMn) <+ transition(V(clk5g12vcon), tdel, trise, tfall);
+	end
+	else begin
+		V(clk5g12EOMp) <+ 1.2;
+		V(clk5g12EOMn) <+ 1.2;
+	end
+end   //end if
+else begin
+		V(clk2g56S) <+ 0;
+		V(clk2g56SN) <+ 0;
+		V(clk5g12S) <+ 1.2;
+		V(clk5g12SN) <+ 1.2;
+		V(clk2g56Ip) <+ 1.2;
+		V(clk2g56In) <+ 1.2;
+		V(clk2g56Qp) <+ 1.2;
+		V(clk2g56Qn) <+ 1.2;
+		V(clk5g12EOMp) <+ 1.2;
+		V(clk5g12EOMn) <+ 1.2;
+end
+end		// end analog
+
+endmodule

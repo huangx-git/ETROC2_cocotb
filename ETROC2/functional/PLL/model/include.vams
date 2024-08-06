@@ -1,0 +1,5 @@
+`include "pll_tb.vams"
+`include "vco.vams"
+`include "lpf.vams"
+`include "pfdcp.vams"
+`include "divider.vams"

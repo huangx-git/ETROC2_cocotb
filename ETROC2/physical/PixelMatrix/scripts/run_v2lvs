@@ -1,0 +1,6 @@
+v2lvs \
+-l ./functional/PLL/model/ETROC1_HsLib.v -s ./physical/PixelAnalog/spice_netlist/ETROC1_HsLibs.src.net \
+-l ./physical/PixelCol/workdir/PixelCol_lvs.vams -s ./physical/PixelCol/workdir/PixelCol.src.spi \
+-l ./physical/PixelCol1/workdir/PixelCol1_lvs.vams -s ./physical/PixelCol1/workdir/PixelCol1.src.spi \
+-l ./functional/ETROC2_HTree/model/ETROC2_HTree.v -s ./CDLDir/ETROC2_HTree.unique.src.cdl \
+-v PixelMatrix_lvs.vams -o PixelMatrix.src.spi -a "<"

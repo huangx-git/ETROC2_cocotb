@@ -1,0 +1,181 @@
+# clean up
+rm -rf CDLDir 
+mkdir CDLDir
+
+# # si.env generation for PixelMatrix_HTree
+# rm .running
+# rm -f si.env
+# sed 's/UserLibName/ETROC2_Core/g' scripts/si.env > ./si_0.env
+# sed 's/UserCellName/PixelMatrix_HTree/g' ./si_0.env > ./si_1.env
+# sed 's/UserNetlistName/PixelMatrix_HTree.src.cdl/g' ./si_1.env > ./si.env
+# rm -rf si_*.env
+# si -batch -command netlist
+
+# # uniquify
+# rm -f uniquify.lst
+# grep ".SUBCKT *" PixelMatrix_HTree.src.cdl | cut -d " " -f 2 > uniquify.lst
+# sed -i "/PixelMatrix_HTree/d" uniquify.lst
+# sed -i "s/.*/s\/&\/&_tile_PixelMatrix_HTree\/g/g" uniquify.lst
+# sed -f uniquify.lst PixelMatrix_HTree.src.cdl > PixelMatrix_HTree.unique.src.cdl
+
+
+# si.env generation for CLKGen
+rm .running
+rm -f si.env
+sed 's/UserLibName/ETROC2_Core/g' scripts/si.env > ./si_0.env
+sed 's/UserCellName/CLKGen/g' ./si_0.env > ./si_1.env
+sed 's/UserNetlistName/CLKGen.src.cdl/g' ./si_1.env > ./si.env
+rm -rf si_*.env
+si -batch -command netlist
+
+# uniquify CLKGen
+rm -f uniquify.lst
+grep ".SUBCKT *" CLKGen.src.cdl | cut -d " " -f 2 > uniquify.lst
+sed -i "/CLKGen/d" uniquify.lst
+sed -i "s/.*/s\/&\/&_tile_CLKGen\/g/g" uniquify.lst
+sed -f uniquify.lst CLKGen.src.cdl > CLKGen.unique.src.cdl
+
+
+# si.env generation for WS_CLKBuffer
+rm .running
+rm -f si.env
+sed 's/UserLibName/ETROC2_Core/g' scripts/si.env > ./si_0.env
+sed 's/UserCellName/WS_CLKBuffer/g' ./si_0.env > ./si_1.env
+sed 's/UserNetlistName/WS_CLKBuffer.src.cdl/g' ./si_1.env > ./si.env
+rm -rf si_*.env
+si -batch -command netlist
+
+
+# si.env generation for ETROC2_IO_v7
+rm .running
+rm -f si.env
+sed 's/UserLibName/ETROC2_IO/g' scripts/si.env > ./si_0.env
+sed 's/UserCellName/ETROC2_IO_v7/g' ./si_0.env > ./si_1.env
+sed 's/UserNetlistName/ETROC2_IO_v7.src.cdl/g' ./si_1.env > ./si.env
+rm -rf si_*.env
+si -batch -command netlist
+
+
+# si.env generation for OutputDriver
+rm .running
+rm -f si.env
+sed 's/UserLibName/ETROC2_Core/g' scripts/si.env > ./si_0.env
+sed 's/UserCellName/OutputDriver/g' ./si_0.env > ./si_1.env
+sed 's/UserNetlistName/OutputDriver.src.cdl/g' ./si_1.env > ./si.env
+rm -rf si_*.env
+si -batch -command netlist
+
+
+# si.env generation for GRO
+rm .running
+rm -f si.env
+sed 's/UserLibName/ETROC2_GlobalAnalog/g' scripts/si.env > ./si_0.env
+sed 's/UserCellName/GRO/g' ./si_0.env > ./si_1.env
+sed 's/UserNetlistName/GRO.src.cdl/g' ./si_1.env > ./si.env
+rm -rf si_*.env
+si -batch -command netlist
+
+
+# si.env generation for ETROC_TS
+rm .running
+rm -f si.env
+sed 's/UserLibName/ETROC2_GlobalAnalog/g' scripts/si.env > ./si_0.env
+sed 's/UserCellName/ETROC_TS/g' ./si_0.env > ./si_1.env
+sed 's/UserNetlistName/ETROC_TS.src.cdl/g' ./si_1.env > ./si.env
+rm -rf si_*.env
+si -batch -command netlist
+
+# uniquify ETROC_TS
+rm -f uniquify.lst
+grep ".SUBCKT *" ETROC_TS.src.cdl | cut -d " " -f 2 > uniquify.lst
+sed -i "/ETROC_TS/d" uniquify.lst
+sed -i "s/.*/s\/&\/&_tile_ETROC_TS\/g/g" uniquify.lst
+sed -f uniquify.lst ETROC_TS.src.cdl > ETROC_TS.unique.src.cdl
+
+
+# si.env generation for EFuse
+rm .running
+rm -f si.env
+sed 's/UserLibName/ETROC2_Core/g' scripts/si.env > ./si_0.env
+sed 's/UserCellName/EFuse/g' ./si_0.env > ./si_1.env
+sed 's/UserNetlistName/EFuse.src.cdl/g' ./si_1.env > ./si.env
+rm -rf si_*.env
+si -batch -command netlist
+
+
+# si.env generation for powerOnResetLong_LongerRst
+rm .running
+rm -f si.env
+sed 's/UserLibName/ETROC2_powerOnReset/g' scripts/si.env > ./si_0.env
+sed 's/UserCellName/powerOnResetLong_LongerRst/g' ./si_0.env > ./si_1.env
+sed 's/UserNetlistName/powerOnResetLong_LongerRst.src.cdl/g' ./si_1.env > ./si.env
+rm -rf si_*.env
+si -batch -command netlist
+
+
+# si.env generation for VRefGen
+rm .running
+rm -f si.env
+sed 's/UserLibName/ETROC2_GlobalAnalog/g' scripts/si.env > ./si_0.env
+sed 's/UserCellName/VRefGen/g' ./si_0.env > ./si_1.env
+sed 's/UserNetlistName/VRefGen.src.cdl/g' ./si_1.env > ./si.env
+rm -rf si_*.env
+si -batch -command netlist
+
+# uniquify VRefGen
+rm -f uniquify.lst
+grep ".SUBCKT *" VRefGen.src.cdl | cut -d " " -f 2 > uniquify.lst
+sed -i "/VRefGen/d" uniquify.lst
+sed -i "s/.*/s\/&\/&_tile_VRefGen\/g/g" uniquify.lst
+sed -f uniquify.lst VRefGen.src.cdl > VRefGen.unique.src.cdl
+
+
+
+# si.env generation for globalDigitalTMR
+rm .running
+rm -f si.env
+sed 's/UserLibName/globalDigitalTMR_GC_impl/g' scripts/si.env > ./si_0.env
+sed 's/UserCellName/globalDigitalTMR/g' ./si_0.env > ./si_1.env
+sed 's/UserNetlistName/globalDigitalTMR.src.cdl/g' ./si_1.env > ./si.env
+rm -rf si_*.env
+si -batch -command netlist
+
+# uniquify
+rm -f uniquify.lst
+grep ".SUBCKT *" globalDigitalTMR.src.cdl | cut -d " " -f 2 > uniquify.lst
+sed -i "/globalDigitalTMR/d" uniquify.lst
+sed -i "s/.*/s\/&\/&_tile_globalDigitalTMR\/g/g" uniquify.lst
+sed -f uniquify.lst globalDigitalTMR.src.cdl > globalDigitalTMR.unique.src.cdl
+
+
+# si.env generation for peripheryTMR
+rm .running
+rm -f si.env
+sed 's/UserLibName/ETROC2_I2C_Periphery/g' scripts/si.env > ./si_0.env
+sed 's/UserCellName/peripheryTMR/g' ./si_0.env > ./si_1.env
+sed 's/UserNetlistName/peripheryTMR.src.cdl/g' ./si_1.env > ./si.env
+rm -rf si_*.env
+si -batch -command netlist
+
+# si.env generation for I2Caddr_PulldownRes
+rm .running
+rm -f si.env
+sed 's/UserLibName/ETROC2_Core/g' scripts/si.env > ./si_0.env
+sed 's/UserCellName/I2Caddr_PulldownRes/g' ./si_0.env > ./si_1.env
+sed 's/UserNetlistName/I2Caddr_PulldownRes.src.cdl/g' ./si_1.env > ./si.env
+rm -rf si_*.env
+si -batch -command netlist
+
+# si.env generation for ETROC2_Peripheral_Caps
+rm .running
+rm -f si.env
+sed 's/UserLibName/ETROC2_Core/g' scripts/si.env > ./si_0.env
+sed 's/UserCellName/ETROC2_Peripheral_Caps/g' ./si_0.env > ./si_1.env
+sed 's/UserNetlistName/ETROC2_Peripheral_Caps.src.cdl/g' ./si_1.env > ./si.env
+rm -rf si_*.env
+si -batch -command netlist
+
+
+mv *.cdl ./CDLDir
+
+

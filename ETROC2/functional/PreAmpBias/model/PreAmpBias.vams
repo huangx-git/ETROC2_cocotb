@@ -1,0 +1,12 @@
+//`include "discipline.ams"
+//`include "constants.ams"
+
+`timescale 1ns/1ps
+
+module PreAmpBias(In1, Ip1, vdd, vss);
+output In1, Ip1;
+input vdd, vss;
+wreal In1, Ip1, vdd, vss;
+
+endmodule
+

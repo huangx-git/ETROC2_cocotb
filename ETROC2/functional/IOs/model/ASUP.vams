@@ -1,0 +1,7 @@
+
+module ASUP(vss_IO, vss, vdd);
+inout vss_IO, vss, vdd;
+wreal vss_IO, vss, vdd;
+
+
+endmodule

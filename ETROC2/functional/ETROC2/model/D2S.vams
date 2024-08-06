@@ -1,0 +1,15 @@
+`include "constants.vams"
+`include "disciplines.vams"
+
+`timescale 1ps/1ps
+module D2S(DInP, DInN, SOut);
+input DInP, DInN;
+output SOut;
+
+wire SOut;
+wreal DInP, DInN;
+// real DOutP_int, DOutN_int;
+
+assign SOut = ((DInP-DInN)>0)?1'b1:1'b0;
+
+endmodule

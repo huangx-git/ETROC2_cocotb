@@ -1,0 +1,6 @@
+v2lvs \
+-l ./functional/PLL/model/ETROC1_HsLib.v -s ./physical/PixelAnalog/spice_netlist/ETROC1_HsLibs.src.net \
+-l ./functional/pixelReadoutWithSWCell/model/pixelReadoutWithSWCell.v -s ./CDLDir/pixelReadoutWithSWCell.unique.src.cdl \
+-l ./physical/PixelAnalog1/workdir/PixelAnalog1_lvs.vams -s ./physical/PixelAnalog1/workdir/PixelAnalog1.src.spi \
+-l ./functional/Pixel1/model/PixelCaps1.v -s ./CDLDir/PixelCaps1.src.cdl \
+-v Pixel1_lvs.vams -o Pixel1.src.spi -a "<"

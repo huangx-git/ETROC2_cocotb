@@ -1,0 +1,86 @@
+//////////////////////////////////////////////////////////////////////////////////
+// Org:        	FNAL
+// Author:      Quan Sun
+// 
+// Create Date:    April. 14th, 2022
+// Description: VCO wreal model for ETROC PLL
+//
+// Revision: 
+//
+//
+//////////////////////////////////////////////////////////////////////////////////
+
+`include "disciplines.vams"
+`timescale 100fs / 100fs
+      
+module vco(capSel, vin, clkp, clkn);
+
+input [8:0] capSel;
+input vin; 
+wreal vin;
+output clkp, clkn;
+wreal clkp, clkn;
+
+parameter real HighVoltage  = 1.2;      //voltage
+parameter real LowVoltage   = 0.6;        //voltage
+
+real timescale = 100f;    // match with timescale
+reg clk;
+real   freq, clk_delay;
+real   max_freq = 5G;  // freq in Hz
+real   vco_gain = 0.2G;     // freq gain in Hz
+   
+initial begin
+	clk = 0;
+	clk_delay = 1000;
+end
+
+always@(capSel) begin
+	case(capSel)
+		9'b000000000: max_freq = 5.4G;
+		9'b000000001: max_freq = 5.39G;
+		9'b000000010: max_freq = 5.38G;
+		9'b000000011: max_freq = 5.37G;
+		9'b000000100: max_freq = 5.36G;
+		9'b000000101: max_freq = 5.35G;
+		9'b000000110: max_freq = 5.34G;
+		9'b000000111: max_freq = 5.33G;
+		9'b000001000: max_freq = 5.32G;
+		9'b000001001: max_freq = 5.31G;
+		9'b000001010: max_freq = 5.30G;
+		9'b000001011: max_freq = 5.29G;
+		9'b000001100: max_freq = 5.28G;
+		9'b000001101: max_freq = 5.27G;
+		9'b000001110: max_freq = 5.26G;
+		9'b000001111: max_freq = 5.25G;
+		9'b000011000: max_freq = 5.24G;
+		9'b000011001: max_freq = 5.23G;
+		9'b000011010: max_freq = 5.22G;
+		9'b000011011: max_freq = 5.21G;
+		9'b000011100: max_freq = 5.20G;
+		9'b000011101: max_freq = 5.19G;
+		9'b000011110: max_freq = 5.18G;
+		9'b000011111: max_freq = 5.17G;
+		9'b000111000: max_freq = 5.16G;
+		9'b000111001: max_freq = 5.15G;
+		9'b000111010: max_freq = 5.14G;
+		9'b000111011: max_freq = 5.13G;
+		9'b000111100: max_freq = 5.12G;
+		9'b000111101: max_freq = 5.11G;
+		9'b000111110: max_freq = 5.10G;
+		9'b000111111: max_freq = 5.09G;
+		default: max_freq = 5.0G;
+	endcase
+end
+  
+always @(vin, max_freq) begin
+	freq = max_freq - vco_gain*vin;
+	if(freq > max_freq) freq = max_freq;
+	if(freq < (max_freq-0.2G)) freq = max_freq-0.2G;
+	clk_delay = 1.0/(2*freq*timescale);
+end
+ 
+always #clk_delay  clk = ~clk;
+assign clkp = clk?HighVoltage:LowVoltage;
+assign clkn = ~clk?HighVoltage:LowVoltage;
+endmodule

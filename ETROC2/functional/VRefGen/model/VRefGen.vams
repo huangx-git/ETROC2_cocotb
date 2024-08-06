@@ -1,0 +1,42 @@
+//Verilog-AMS HDL for "ETROC2_GlobalAnalog", "VRefGen" "verilogams"
+
+//`include "constants.vams"
+//`include "disciplines.vams"
+`timescale 1ns/1ps
+module VRefGen ( AMP_OUT, VBG_OUT, VDD, VSS, AMP_PD );
+
+inout VBG_OUT;
+input AMP_PD;
+inout VDD;
+inout VSS;
+output AMP_OUT;
+
+wreal VBG_OUT, AMP_OUT;
+
+parameter real fs = 10G;  // sampling frequency
+
+real ts;
+
+real timescale = 1n;    // match with timescale
+reg sclk;   // sample clock
+real vbg_int, vref_int;
+initial begin
+  vbg_int = 0.333;
+  // sampling period
+  ts = 1.0 / (timescale * fs);
+
+  // define the sampling clock
+  sclk = 0;  
+  forever #(ts/2.0) sclk = ~sclk;
+end
+
+// always@(*) begin
+always@(posedge sclk) begin
+  vref_int = AMP_PD?0:(3*vbg_int);
+end
+
+assign AMP_OUT = vref_int;
+assign VBG_OUT = vbg_int;
+
+endmodule
+

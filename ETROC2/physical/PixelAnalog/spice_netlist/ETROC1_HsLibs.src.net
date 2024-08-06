@@ -1,0 +1,123 @@
+************************************************************************
+* Library Name: ETROC1_HsLib
+* Cell Name:    TIEH_LVT_ELT
+* View Name:    schematic
+************************************************************************
+
+.SUBCKT TIEH_LVT_ELT VDD VSS ZN
+*.PININFO ZN:O VDD:B VSS:B
+MM0_ELT net5 net5 VSS VSS nch_lvt l=60n w=1.42u m=1
+MM1_ELT ZN net5 VDD VDD pch_lvt l=60n w=3.74u m=1
+.ENDS
+
+************************************************************************
+* Library Name: ETROC1_HsLib
+* Cell Name:    ND2D1_LVT_ELT
+* View Name:    schematic
+************************************************************************
+
+.SUBCKT ND2D1_LVT_ELT A1 A2 VDD VSS ZN
+*.PININFO A1:I A2:I ZN:O VDD:B VSS:B
+MM2_ELT ZN A1 net014 VSS nch_lvt l=60n w=1.42u m=1
+MM1_ELT net014 A2 VSS VSS nch_lvt l=60n w=1.42u m=1
+MM11_ELT ZN A2 VDD VDD pch_lvt l=60n w=3.74u m=1
+MM10_ELT ZN A1 VDD VDD pch_lvt l=60n w=3.74u m=1
+.ENDS
+
+************************************************************************
+* Library Name: ETROC1_HsLib
+* Cell Name:    INVD2_LVT_ELT
+* View Name:    schematic
+************************************************************************
+
+.SUBCKT INVD2_LVT_ELT I VDD VSS ZN
+*.PININFO I:I ZN:O VDD:B VSS:B
+MM0_ELT ZN I VSS VSS nch_lvt l=60n w=1.42u m=1
+MM3_ELT ZN I VSS VSS nch_lvt l=60n w=1.42u m=1
+MM2_ELT ZN I VDD VDD pch_lvt l=60n w=3.74u m=1
+MM1_ELT ZN I VDD VDD pch_lvt l=60n w=3.74u m=1
+.ENDS
+
+************************************************************************
+* Library Name: ETROC1_HsLib
+* Cell Name:    TIEL_LVT_ELT
+* View Name:    schematic
+************************************************************************
+
+.SUBCKT TIEL_LVT_ELT VDD VSS ZN
+*.PININFO ZN:O VDD:B VSS:B
+MM0_ELT ZN net5 VSS VSS nch_lvt l=60n w=1.42u m=1
+MM1_ELT net5 net5 VDD VDD pch_lvt l=60n w=3.74u m=1
+.ENDS
+
+************************************************************************
+* Library Name: ETROC1_HsLib
+* Cell Name:    DCAP25n_LVT_ELT
+* View Name:    schematic
+************************************************************************
+
+.SUBCKT DCAP25n_LVT_ELT VDD VSS
+*.PININFO VDD:B VSS:B
+MM4 VSS VDD VSS VSS nch_25 l=4.115u w=2.44u m=1
+.ENDS
+
+************************************************************************
+* Library Name: ETROC1_HsLib
+* Cell Name:    CKBD2_LVT_ELT
+* View Name:    schematic
+************************************************************************
+
+.SUBCKT CKBD2_LVT_ELT I VDD VSS Z
+*.PININFO I:I Z:O VDD:B VSS:B
+MM1_ELT Z net11 VSS VSS nch_lvt l=60n w=1.42u m=1
+MM15_ELT Z net11 VSS VSS nch_lvt l=60n w=1.42u m=1
+MM12_ELT net11 I VSS VSS nch_lvt l=60n w=1.42u m=1
+MM2_ELT Z net11 VDD VDD pch_lvt l=60n w=3.74u m=1
+MM14_ELT Z net11 VDD VDD pch_lvt l=60n w=3.74u m=1
+MM13_ELT net11 I VDD VDD pch_lvt l=60n w=3.74u m=1
+.ENDS
+
+************************************************************************
+* Library Name: ETROC1_HsLib
+* Cell Name:    DDFQD1_LVT_ELT
+* View Name:    schematic
+************************************************************************
+
+.SUBCKT DDFQD1_LVT_ELT CP D Q VDD VSS
+*.PININFO CP:I D:I Q:O VDD:B VSS:B
+MM5_ELT U CP net24 VSS nch_lvt l=60n w=1.42u m=1
+MM6_ELT Y CP net25 VSS nch_lvt l=60n w=1.42u m=1
+MM4_ELT Q U VSS VSS nch_lvt l=60n w=1.42u m=1
+MM3_ELT net24 Y VSS VSS nch_lvt l=60n w=1.42u m=1
+MM2_ELT net25 X VSS VSS nch_lvt l=60n w=1.42u m=1
+MM1_ELT X D VSS VSS nch_lvt l=60n w=1.42u m=1
+MM11_ELT net31 D VDD VDD pch_lvt l=60n w=1.42u m=1
+MM9_ELT Y CP VDD VDD pch_lvt l=60n w=1.42u m=1
+MM7_ELT Q U VDD VDD pch_lvt l=60n w=3.74u m=1
+MM10_ELT X CP net31 VDD pch_lvt l=60n w=1.42u m=1
+MM8_ELT U Y VDD VDD pch_lvt l=60n w=1.42u m=1
+.ENDS
+
+************************************************************************
+* Library Name: ETROC1_HsLib
+* Cell Name:    MUX2_LVT_ELT
+* View Name:    schematic
+************************************************************************
+
+.SUBCKT MUX2_LVT_ELT VDD VSS in0 in1 out s
+*.PININFO in0:I in1:I s:I out:O VDD:B VSS:B
+MM12_ELT out net13 VDD VDD pch_lvt l=60n w=3.74u m=1
+MM9_ELT net13 in1 net026 VDD pch_lvt l=60n w=3.74u m=1
+MM8_ELT net026 s0B VDD VDD pch_lvt l=60n w=3.74u m=1
+MM6_ELT s0 s0B VDD VDD pch_lvt l=60n w=3.74u m=1
+MM4_ELT s0B s VDD VDD pch_lvt l=60n w=3.74u m=1
+MM2_ELT net13 in0 net20 VDD pch_lvt l=60n w=3.74u m=1
+MM0_ELT net20 s0 VDD VDD pch_lvt l=60n w=3.74u m=1
+MM13_ELT out net13 VSS VSS nch_lvt l=60n w=1.42u m=1
+MM11_ELT net027 s0 VSS VSS nch_lvt l=60n w=1.42u m=1
+MM10_ELT net13 in1 net027 VSS nch_lvt l=60n w=1.42u m=1
+MM7_ELT s0 s0B VSS VSS nch_lvt l=60n w=1.42u m=1
+MM5_ELT s0B s VSS VSS nch_lvt l=60n w=1.42u m=1
+MM3_ELT net19 s0B VSS VSS nch_lvt l=60n w=1.42u m=1
+MM1_ELT net13 in0 net19 VSS nch_lvt l=60n w=1.42u m=1
+.ENDS

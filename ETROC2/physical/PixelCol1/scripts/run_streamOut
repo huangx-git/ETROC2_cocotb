@@ -1,0 +1,1 @@
+strmout -library 'ETROC2_Core' -strmFile './PixelCol1.gds.gz' -topCell 'PixelCol1' -view 'layout' -logFile 'strmOut.log'

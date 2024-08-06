@@ -1,0 +1,2 @@
+#!/bin/csh -f
+xrun -f arg_xrun.f

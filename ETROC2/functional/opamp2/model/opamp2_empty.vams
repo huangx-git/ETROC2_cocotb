@@ -1,0 +1,11 @@
+//`include "disciplines.vams"
+
+`timescale 1ns/1ps
+
+module opamp2(inp, inn, out, vdd, vss, pd);
+
+input inp, inn, vdd, vss, pd;
+output out;
+
+endmodule 
+

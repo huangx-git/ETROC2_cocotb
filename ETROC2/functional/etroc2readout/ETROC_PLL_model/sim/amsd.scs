@@ -1,0 +1,6 @@
+*
+amsd 	{
+		ie vsup=1.2	
+	}
+
+transient tran stop=1m

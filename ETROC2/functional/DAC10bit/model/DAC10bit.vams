@@ -1,0 +1,40 @@
+//////////////////////////////////////////////////////////////////////////////////
+// Org:        	FNAL
+// Author:      Quan Sun
+// 
+// Create Date:    April. 19th, 2022
+// Description: 10-bit DAC wreal model for ETROC
+//
+// Revision: 
+//
+//
+//////////////////////////////////////////////////////////////////////////////////
+
+`timescale 1ns/1ps
+`define Nbits 10
+//`include "constants.vams"
+//`include "disciplines.vams"
+module DAC10bit (a0, a1, a2, a3, a4, a5, a6, a7, a8, a9, out, IN, pd, vdd, vss);
+input a0, a1, a2, a3, a4, a5, a6, a7, a8, a9;  
+input 	   vdd, vss; 
+output 	      out;
+input pd;  
+input IN;
+wreal IN;
+wreal         out, vdd, vss;
+parameter 	      real Td=222n;
+real 	      VPerBit,Aval;
+real timescale = 1n;    // match with timescale
+integer DIN;
+wire DAC_ON;
+assign DAC_ON = (vdd>1) && pd == 0;
+always @(a0, a1, a2, a3, a4, a5, a6, a7, a8, a9) begin
+	DIN = a9*512 + a8*256 + a7*128 + a6*64 + a5*32 + a4*16 + a3*8 + a2*4 + a1*2 + a0*1;
+end
+always begin 	   // get dV per bit
+	VPerBit = (IN-6.0*(IN-vss)/10.0)/ ((1<<`Nbits)-1);
+	@(IN, vss);	   // update if supply changes
+end
+always @(IN, vss, DIN)  Aval = DAC_ON? (6.0*(IN-vss)/10.0 + VPerBit*DIN):0.2;
+assign  #(Td/1n) out = Aval;
+endmodule 

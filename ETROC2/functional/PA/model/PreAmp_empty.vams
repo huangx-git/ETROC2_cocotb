@@ -1,0 +1,52 @@
+//  Second order lowpass filter:  Vin=input, Vout=output,
+//  Wc=corner frequency in radians/sec, Dc=damping coefficient.
+
+// Bilinear transform
+// Vout = idt(Wp*(idt(Wp*(Vin-Vout))-2*Dp*Vout))
+// s^2*Vout = (Wp*((Wp*(Vin-Vout))-2*Dp*s*Vout))
+// s^2*Vout = Wp^2*Vin - Wp^2*Vout - Wp*2*Dp*s*Vout
+// s^2*Vout + Wp^2*Vout + Wp*2*Dp*s*Vout =  Wp^2*Vin
+// H(s) = Vout/Vin = Wp^2 / (Wp^2 + Wp*2*Dp*s + s^2 )
+//
+//        s = (g*(1-z^-1)/(1+z^-1))
+//
+// H(z) = Wp^2 / (Wp^2 + Wp*2*Dp*(g*(1-z^-1)/(1+z^-1))
+//        + (g*(1-z^-1)/(1+z^-1))^2 )
+//
+// H(z) = Wp^2*(1+z^-1)^2 / ( Wp^2*(1+z^-1)^2
+//        + Wp*2*Dp*g*(1-z^-1)*(1+z^-1)) + (g*(1-z^-1)^2 )
+//
+// H(z) = Wp^2 + 2*Wp^2*(z^-1) +Wp^2*(z^-2) /
+//        ( Wp^2 + 2*Wp^2*(z^-1) +Wp^2*(z^-2) + 2*Wp*Dp*g - 2*Wp*Dp*g(z^-2)
+//        + g^2 - 2*g^2*(z^-1) + g^2*(z^-2))
+//
+// H(z) = Wp^2 + 2*Wp^2*(z^-1) +Wp^2*(z^-2) /
+//        ( (Wp^2 + 2*Wp*Dp*g + g^2) + 2*(Wp^2 - g^2)*(z^-1)
+//        + (Wp^2 - 2*Wp*Dp*g + g^2)*(z^-2))
+//
+// subsitute
+//        Q = 1/(2*Dp)
+//
+// H(z) = Wp^2 + 2*Wp^2*(z^-1) +Wp^2*(z^-2) /
+//        ( (Wp^2 + Wp*g/Q + g^2) + 2*(Wp^2 - g^2)*(z^-1)
+//        + (Wp^2 - Wp*g/Q + g^2)*(z^-2))
+
+//`include "disciplines.vams"
+//`include "constants.vams"
+
+`timescale 10ps/1ps
+
+module PreAmp(in, CLSel, _IBSel, RfSel, IB, out, vss, vdd, ps1);
+
+input in;
+input [1:0] CLSel;
+input [2:0] _IBSel;
+input [1:0] RfSel;
+input IB;
+output out;
+input vss, vdd;
+output ps1;
+parameter real fs = 1G;  // sampling frequency
+parameter real fc = 500M;  // cut off frequency
+
+endmodule

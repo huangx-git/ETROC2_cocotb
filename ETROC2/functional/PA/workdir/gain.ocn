@@ -1,0 +1,4 @@
+; calculate filter gain
+openResults("./waves.shm" nil)
+selectResult(car(results()))
+dB20(ymax(v("top.out" ?result "tran-tran"))/ymax(v("top.in" ?result "tran-tran")))

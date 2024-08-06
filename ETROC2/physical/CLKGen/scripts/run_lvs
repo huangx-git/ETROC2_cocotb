@@ -1,0 +1,8 @@
+## layout versue schematic ##
+calibre -spice ./CLKGen.layout.spi -turbo 4 -lvs -hier -nowait ./_calibre_M9_ELT.lvs_
+
+## netlist versus netlist ##
+#calibre -turbo 4 -lvs -hier -nowait ./_calibre_M9_ELT.lvs_
+
+## netlist versus netlist flatten##
+#calibre -lvs -flatten -nowait ./_calibre_M9_ELT.lvs_

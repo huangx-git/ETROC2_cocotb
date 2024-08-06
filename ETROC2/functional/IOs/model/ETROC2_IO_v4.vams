@@ -1,0 +1,264 @@
+//Verilog-AMS HDL for "ETROC2_IO", "ETROC2_IO_v4" "verilogams"
+
+`include "constants.vams"
+`include "disciplines.vams"
+
+module ETROC2_IO_v4 ( CLK40_Int, CLK1280_Int, FC_Int, RSTNin, SCLin, SDAin,
+DOLn, DOLp, DORn, DORp, I2CAddr, I2CAddr_int, RSTN, SCL, SDA, VDD_CLK, VDD_D,
+VDD_Dis, VDD_EFUSE, VDD_IO2, VDD_PA, VDD_QInj, VDD_SL, VP, VREF, VSS_CLK, VSS_D,
+VSS_Dis, VSS_IO1, VSS_IO2, VSS_IO3, VSS_PA, VSS_QInj, VSS_S, VSS_SL, VTemp,
+CLK40_EnRx, CLK40_EnTer, CLK40_Equ, CLK40_InvData, CLK40_SetCM, CLK40n, CLK40p,
+CLK1280_EnRx, CLK1280_EnTer, CLK1280_Equ, CLK1280_InvData, CLK1280_SetCM, CLK1280n,
+CLK1280p, FC_EnRx, FC_EnTer, FC_Equ, FC_InvData, FC_SetCM, FCn, FCp, RSTNds,
+RSTNen, RSTNout, RSTNpe, RSTNud, SCLds, SCLen, SCLout, SCLpe, SCLud, SDAds,
+SDAen, SDAout, SDApe, SDAud );
+
+inout VSS_PA;
+input FC_EnRx;
+input  [1:0] CLK1280_Equ;
+input CLK40p;
+inout VSS_QInj;
+inout VDD_SL;
+output CLK1280_Int;
+inout VSS_D;
+inout DOLn;
+input CLK1280_EnRx;
+input  [1:0] CLK40_Equ;
+inout VSS_IO1;
+output RSTNin;
+input CLK40_EnRx;
+inout SCL;
+input CLK40n;
+inout VSS_CLK;
+inout VDD_Dis;
+inout VDD_EFUSE;
+inout  [4:0] I2CAddr;
+inout VDD_QInj;
+input SDAds;
+inout VSS_SL;
+inout VDD_IO2;
+input SCLpe;
+input FC_EnTer;
+inout VDD_D;
+inout VP;
+input CLK1280p;
+input CLK1280_EnTer;
+output SCLin;
+input SCLud;
+input RSTNout;
+input RSTNen;
+inout DORn;
+input FC_InvData;
+inout VSS_IO2;
+input CLK1280_InvData;
+input CLK40_SetCM;
+input FCp;
+input SCLds;
+inout DORp;
+inout VDD_CLK;
+input CLK1280_SetCM;
+input SDAout;
+input SCLout;
+input SDAud;
+input SCLen;
+input RSTNud;
+inout VSS_S;
+input FC_SetCM;
+inout VREF;
+input RSTNds;
+input  [1:0] FC_Equ;
+input RSTNpe;
+inout VTemp;
+output FC_Int;
+inout DOLp;
+inout VDD_PA;
+input FCn;
+inout VSS_IO3;
+output SDAin;
+inout  [4:0] I2CAddr_int;
+input SDApe;
+inout RSTN;
+output CLK40_Int;
+input CLK1280n;
+input SDAen;
+input CLK40_InvData;
+input CLK40_EnTer;
+inout VSS_Dis;
+inout SDA;
+
+
+
+
+////////////////      Begin Left PA Section    //////////////////////////
+AGND AGND_1_inst(.vss_IO(VSS_IO1), .vss(VSS_PA), .vdd(VDD_PA));
+AGND AGND_2_inst(.vss_IO(VSS_IO1), .vss(VSS_PA), .vdd(VDD_PA));
+AGND AGND_3_inst(.vss_IO(VSS_IO1), .vss(VSS_PA), .vdd(VDD_PA));
+AGND AGND_4_inst(.vss_IO(VSS_IO1), .vss(VSS_PA), .vdd(VDD_PA));
+AGND AGND_5_inst(.vss_IO(VSS_IO1), .vss(VSS_PA), .vdd(VDD_PA));
+AGNDIO AGNDIO_6_inst(.vss_IO(VSS_IO1), .vss(VSS_PA), .vdd(VDD_PA));
+AIO AIO_7_inst(.vss_IO(VSS_IO1), .vss(VSS_PA), .vdd(VDD_PA), .pad(VREF));
+ASUP ASUP_8_inst(.vss_IO(VSS_IO1), .vss(VSS_PA), .vdd(VDD_PA));
+ASUP ASUP_9_inst(.vss_IO(VSS_IO1), .vss(VSS_PA), .vdd(VDD_PA));
+ASUP ASUP_10_inst(.vss_IO(VSS_IO1), .vss(VSS_PA), .vdd(VDD_PA));
+ASUP ASUP_11_inst(.vss_IO(VSS_IO1), .vss(VSS_PA), .vdd(VDD_PA));
+ASUP ASUP_12_inst(.vss_IO(VSS_IO1), .vss(VSS_PA), .vdd(VDD_PA));
+////////////////      End Left PA Section    //////////////////////////
+
+////////////////      Begin Left QInj Section    //////////////////////////
+ASUP ASUP_13_inst(.vss_IO(VSS_IO1), .vss(VSS_QInj), .vdd(VDD_QInj));
+ASUP ASUP_14_inst(.vss_IO(VSS_IO1), .vss(VSS_QInj), .vdd(VDD_QInj));
+AGNDIO AGNDIO_15_inst(.vss_IO(VSS_IO1), .vss(VSS_QInj), .vdd(VDD_QInj));
+AGND AGND_16_inst(.vss_IO(VSS_IO1), .vss(VSS_QInj), .vdd(VDD_QInj));
+AGND AGND_17_inst(.vss_IO(VSS_IO1), .vss(VSS_QInj), .vdd(VDD_QInj));
+////////////////      End Left QInj Section    //////////////////////////
+
+////////////////      Begin Left Dis Section    //////////////////////////
+AGND AGND_18_inst(.vss_IO(VSS_IO1), .vss(VSS_Dis), .vdd(VDD_Dis));
+AGND AGND_19_inst(.vss_IO(VSS_IO1), .vss(VSS_Dis), .vdd(VDD_Dis));
+AGND AGND_20_inst(.vss_IO(VSS_IO1), .vss(VSS_Dis), .vdd(VDD_Dis));
+AGND AGND_21_inst(.vss_IO(VSS_IO1), .vss(VSS_Dis), .vdd(VDD_Dis));
+AGND AGND_22_inst(.vss_IO(VSS_IO1), .vss(VSS_Dis), .vdd(VDD_Dis));
+AGND AGND_23_inst(.vss_IO(VSS_IO1), .vss(VSS_Dis), .vdd(VDD_Dis));
+AGNDIO AGNDIO_24_inst(.vss_IO(VSS_IO1), .vss(VSS_Dis), .vdd(VDD_Dis));
+ASUP ASUP_25_inst(.vss_IO(VSS_IO1), .vss(VSS_Dis), .vdd(VDD_Dis));
+ASUP ASUP_26_inst(.vss_IO(VSS_IO1), .vss(VSS_Dis), .vdd(VDD_Dis));
+ASUP ASUP_27_inst(.vss_IO(VSS_IO1), .vss(VSS_Dis), .vdd(VDD_Dis));
+ASUP ASUP_28_inst(.vss_IO(VSS_IO1), .vss(VSS_Dis), .vdd(VDD_Dis));
+ASUP ASUP_29_inst(.vss_IO(VSS_IO1), .vss(VSS_Dis), .vdd(VDD_Dis));
+ASUP ASUP_30_inst(.vss_IO(VSS_IO1), .vss(VSS_Dis), .vdd(VDD_Dis));
+AIO AIO_31_inst(.vss_IO(VSS_IO1), .vss(VSS_Dis), .vdd(VDD_Dis), .pad(VSS_S));
+AIO AIO_32_inst(.vss_IO(VSS_IO1), .vss(VSS_Dis), .vdd(VDD_Dis), .pad(VSS_S));
+////////////////      End Left Dis Section    //////////////////////////
+
+////////////////      Begin Left Digital Section    //////////////////////////
+DGND DGND_33_inst(.vss_IO(VSS_IO2), .vdd_IO(VDD_IO2), .vss(VSS_D), .vdd(VDD_D));
+DGND DGND_34_inst(.vss_IO(VSS_IO2), .vdd_IO(VDD_IO2), .vss(VSS_D), .vdd(VDD_D));
+DGND DGND_35_inst(.vss_IO(VSS_IO2), .vdd_IO(VDD_IO2), .vss(VSS_D), .vdd(VDD_D));
+DGND DGND_36_inst(.vss_IO(VSS_IO2), .vdd_IO(VDD_IO2), .vss(VSS_D), .vdd(VDD_D));
+IOPWR IOPWR_37and38_inst(.vss_IO(VSS_IO2), .vdd_IO(VDD_IO2), .vss(VSS_D));
+DSUP DSUP_39_inst(.vss_IO(VSS_IO2), .vdd_IO(VDD_IO2), .vss(VSS_D), .vdd(VDD_D));
+DSUP DSUP_40_inst(.vss_IO(VSS_IO2), .vdd_IO(VDD_IO2), .vss(VSS_D), .vdd(VDD_D));
+DSUP DSUP_41_inst(.vss_IO(VSS_IO2), .vdd_IO(VDD_IO2), .vss(VSS_D), .vdd(VDD_D));
+DSUP DSUP_42_inst(.vss_IO(VSS_IO2), .vdd_IO(VDD_IO2), .vss(VSS_D), .vdd(VDD_D));
+DSUP DSUP_43_inst(.vss_IO(VSS_IO2), .vdd_IO(VDD_IO2), .vss(VSS_D), .vdd(VDD_D));
+DSUP DSUP_44_inst(.vss_IO(VSS_IO2), .vdd_IO(VDD_IO2), .vss(VSS_D), .vdd(VDD_D));
+DSUP DSUP_45_inst(.vss_IO(VSS_IO2), .vdd_IO(VDD_IO2), .vss(VSS_D), .vdd(VDD_D));
+DSUP DSUP_46_inst(.vss_IO(VSS_IO2), .vdd_IO(VDD_IO2), .vss(VSS_D), .vdd(VDD_D));
+IOPWR IOPWR_47and48_inst(.vss_IO(VSS_IO2), .vdd_IO(VDD_IO2), .vss(VSS_D));
+DGND DGND_49_inst(.vss_IO(VSS_IO2), .vdd_IO(VDD_IO2), .vss(VSS_D), .vdd(VDD_D));
+DGND DGND_50_inst(.vss_IO(VSS_IO2), .vdd_IO(VDD_IO2), .vss(VSS_D), .vdd(VDD_D));
+DGND DGND_51_inst(.vss_IO(VSS_IO2), .vdd_IO(VDD_IO2), .vss(VSS_D), .vdd(VDD_D));
+DGND DGND_52_inst(.vss_IO(VSS_IO2), .vdd_IO(VDD_IO2), .vss(VSS_D), .vdd(VDD_D));
+////////////////      End Left Digital Section    //////////////////////////
+
+////////////////      Begin Clock Section    //////////////////////////
+AGND AGND_53_inst(.vss_IO(VSS_IO2), .vss(VSS_CLK), .vdd(VDD_CLK));
+AGND AGND_54_inst(.vss_IO(VSS_IO2), .vss(VSS_CLK), .vdd(VDD_CLK));
+AGND AGND_55_inst(.vss_IO(VSS_IO2), .vss(VSS_CLK), .vdd(VDD_CLK));
+AIO AIO_56_inst(.vss_IO(VSS_IO2), .vss(VSS_CLK), .vdd(VDD_CLK), .pad(VP));
+AGNDIO AGNDIO_57_inst(.vss_IO(VSS_IO2), .vss(VSS_CLK), .vdd(VDD_CLK));
+ASUP ASUP_58_inst(.vss_IO(VSS_IO2), .vss(VSS_CLK), .vdd(VDD_CLK));
+ASUP ASUP_59_inst(.vss_IO(VSS_IO2), .vss(VSS_CLK), .vdd(VDD_CLK));
+ASUP ASUP_60_inst(.vss_IO(VSS_IO2), .vss(VSS_CLK), .vdd(VDD_CLK));
+////////////////      End Clock Section    //////////////////////////
+
+////////////////      Begin Serial Link Section    //////////////////////////
+eRxIO eRxIO_clk1280_inst( 
+        .dataOut(CLK1280_Int), .vdd(VDD_SL), .vss(VSS_SL), .vss_IO(VSS_IO2), .I_N(CLK1280n), .I_P(CLK1280p), .enableRx(CLK1280_EnRx), 
+        .enableTermination(CLK1280_EnTer), .equalizer(CLK1280_Equ), .invertData(CLK1280_InvData), .setCommonMode(CLK1280_SetCM) );
+eRxIO eRxIO_clk40_inst( 
+          .dataOut(CLK40_Int), .vdd(VDD_SL), .vss(VSS_SL), .vss_IO(VSS_IO2), .I_N(CLK40n), .I_P(CLK40p), .enableRx(CLK40_EnRx), 
+          .enableTermination(CLK40_EnTer), .equalizer(CLK40_Equ), .invertData(CLK40_InvData), .setCommonMode(CLK40_SetCM) );
+eRxIO eRxIO_FC_inst( 
+            .dataOut(FC_Int), .vdd(VDD_SL), .vss(VSS_SL), .vss_IO(VSS_IO2), .I_N(FCn), .I_P(FCp), .enableRx(FC_EnRx), 
+            .enableTermination(FC_EnTer), .equalizer(FC_Equ), .invertData(FC_InvData), .setCommonMode(FC_SetCM) );
+AGND AGND_62_inst(.vss_IO(VSS_IO2), .vss(VSS_SL), .vdd(VDD_SL));
+AGND AGND_64_inst(.vss_IO(VSS_IO2), .vss(VSS_SL), .vdd(VDD_SL));
+AGND AGND_66_inst(.vss_IO(VSS_IO2), .vss(VSS_SL), .vdd(VDD_SL));
+AGNDIO AGNDIO_68_inst(.vss_IO(VSS_IO2), .vss(VSS_SL), .vdd(VDD_SL));
+AGNDIO AGNDIO_76_inst(.vss_IO(VSS_IO2), .vss(VSS_SL), .vdd(VDD_SL));
+AGNDIO AGNDIO_78_inst(.vss_IO(VSS_IO2), .vss(VSS_SL), .vdd(VDD_SL));
+ASUP ASUP_70_inst(.vss_IO(VSS_IO2), .vss(VSS_SL), .vdd(VDD_SL));
+ASUP ASUP_72_inst(.vss_IO(VSS_IO2), .vss(VSS_SL), .vdd(VDD_SL));
+ASUP ASUP_74_inst(.vss_IO(VSS_IO2), .vss(VSS_SL), .vdd(VDD_SL));
+AIO AIO_73_inst(.vss_IO(VSS_IO2), .vss(VSS_SL), .vdd(VDD_SL), .pad(DOLp));
+AIO AIO_75_inst(.vss_IO(VSS_IO2), .vss(VSS_SL), .vdd(VDD_SL), .pad(DOLn));
+AIO AIO_77_inst(.vss_IO(VSS_IO2), .vss(VSS_SL), .vdd(VDD_SL), .pad(DORp));
+AIO AIO_79_inst(.vss_IO(VSS_IO2), .vss(VSS_SL), .vdd(VDD_SL), .pad(DORn));
+////////////////      End Serial Link Section //////////////////////////
+
+
+////////////////      Begin Right Digital Section    ////////////////////////
+DSUP DSUP_80_inst(.vss_IO(VSS_IO2), .vdd_IO(VDD_IO2), .vss(VSS_D), .vdd(VDD_D));
+DSUP DSUP_81_inst(.vss_IO(VSS_IO2), .vdd_IO(VDD_IO2), .vss(VSS_D), .vdd(VDD_D));
+DSUP DSUP_82_inst(.vss_IO(VSS_IO2), .vdd_IO(VDD_IO2), .vss(VSS_D), .vdd(VDD_D));
+DSUP DSUP_83_inst(.vss_IO(VSS_IO2), .vdd_IO(VDD_IO2), .vss(VSS_D), .vdd(VDD_D));
+DSUP DSUP_84_inst(.vss_IO(VSS_IO2), .vdd_IO(VDD_IO2), .vss(VSS_D), .vdd(VDD_D));
+DSUP DSUP_85_inst(.vss_IO(VSS_IO2), .vdd_IO(VDD_IO2), .vss(VSS_D), .vdd(VDD_D));
+DSUP DSUP_86_inst(.vss_IO(VSS_IO2), .vdd_IO(VDD_IO2), .vss(VSS_D), .vdd(VDD_D));
+IOPWR IOPWR_87and88_inst(.vss_IO(VSS_IO2), .vdd_IO(VDD_IO2), .vss(VSS_D));
+IOPWR IOPWR_97and98_inst(.vss_IO(VSS_IO2), .vdd_IO(VDD_IO2), .vss(VSS_D));
+DGND DGND_89_inst(.vss_IO(VSS_IO2), .vdd_IO(VDD_IO2), .vss(VSS_D), .vdd(VDD_D));
+DGND DGND_90_inst(.vss_IO(VSS_IO2), .vdd_IO(VDD_IO2), .vss(VSS_D), .vdd(VDD_D));
+DGND DGND_91_inst(.vss_IO(VSS_IO2), .vdd_IO(VDD_IO2), .vss(VSS_D), .vdd(VDD_D));
+DGND DGND_92_inst(.vss_IO(VSS_IO2), .vdd_IO(VDD_IO2), .vss(VSS_D), .vdd(VDD_D));
+DGND DGND_103_inst(.vss_IO(VSS_IO2), .vdd_IO(VDD_IO2), .vss(VSS_D), .vdd(VDD_D));
+DGND DGND_104_inst(.vss_IO(VSS_IO2), .vdd_IO(VDD_IO2), .vss(VSS_D), .vdd(VDD_D));
+DGND DGND_105_inst(.vss_IO(VSS_IO2), .vdd_IO(VDD_IO2), .vss(VSS_D), .vdd(VDD_D));
+DIO DIO_93_inst(.vss_IO(VSS_IO2), .vdd_IO(VDD_IO2), .internal(I2CADDR_int[0]), .pad(I2CAddr[0]));
+DIO DIO_94_inst(.vss_IO(VSS_IO2), .vdd_IO(VDD_IO2), .internal(I2CADDR_int[1]), .pad(I2CAddr[1]));
+DIO DIO_95_inst(.vss_IO(VSS_IO2), .vdd_IO(VDD_IO2), .internal(I2CADDR_int[2]), .pad(I2CAddr[2]));
+DIO DIO_101_inst(.vss_IO(VSS_IO2), .vdd_IO(VDD_IO2), .internal(I2CADDR_int[3]), .pad(I2CAddr[3]));
+DIO DIO_102_inst(.vss_IO(VSS_IO2), .vdd_IO(VDD_IO2), .internal(I2CADDR_int[4]), .pad(I2CAddr[4]));
+GPDIO GPDIO_RSTn_96_inst(.padOut(RSTNin), .pad(RSTN), .vdd(VDD_D), .vdd_IO(VDD_IO2), .vss(VSS_D), .vss_IO(VSS_IO2), 
+        .ds(RSTNds), .en(RSTNen), .padIn(RSTNout), .pe(RSTNpe), .ud(RSTNud));
+GPDIO GPDIO_SCL_99_inst(.padOut(SCLin), .pad(SCL), .vdd(VDD_D), .vdd_IO(VDD_IO2), .vss(VSS_D), .vss_IO(VSS_IO2), 
+        .ds(SCLds), .en(SCLen), .padIn(SCLout), .pe(SCLpe), .ud(SCLud));
+GPDIO GPDIO_SDA_100_inst(.padOut(SDAin), .pad(SDA), .vdd(VDD_D), .vdd_IO(VDD_IO2), .vss(VSS_D), .vss_IO(VSS_IO2), 
+        .ds(SDAds), .en(SDAen), .padIn(SDAout), .pe(SDApe), .ud(SDAud));
+EFUSE_PAD EFUSE_PAD_106_inst(.VSS(VSS_D), .VDD_EFUSE(VDD_EFUSE));
+////////////////      End Right Digital Section    //////////////////////////
+
+////////////////      Begin Right Dis Section    //////////////////////////
+AIO AIO_107_inst(.vss_IO(VSS_IO3), .vss(VSS_Dis), .vdd(VDD_Dis), .pad(VSS_S));
+AIO AIO_108_inst(.vss_IO(VSS_IO3), .vss(VSS_Dis), .vdd(VDD_Dis), .pad(VSS_S));
+AGND AGND_109_inst(.vss_IO(VSS_IO3), .vss(VSS_Dis), .vdd(VDD_Dis));
+AGND AGND_110_inst(.vss_IO(VSS_IO3), .vss(VSS_Dis), .vdd(VDD_Dis));
+AGND AGND_111_inst(.vss_IO(VSS_IO3), .vss(VSS_Dis), .vdd(VDD_Dis));
+AGND AGND_112_inst(.vss_IO(VSS_IO3), .vss(VSS_Dis), .vdd(VDD_Dis));
+AGND AGND_113_inst(.vss_IO(VSS_IO3), .vss(VSS_Dis), .vdd(VDD_Dis));
+AGND AGND_114_inst(.vss_IO(VSS_IO3), .vss(VSS_Dis), .vdd(VDD_Dis));
+AGNDIO AGNDIO_115_inst(.vss_IO(VSS_IO3), .vss(VSS_Dis), .vdd(VDD_Dis));
+AGNDIO AGNDIO_122_inst(.vss_IO(VSS_IO3), .vss(VSS_Dis), .vdd(VDD_Dis));
+ASUP ASUP_116_inst(.vss_IO(VSS_IO3), .vss(VSS_Dis), .vdd(VDD_Dis));
+ASUP ASUP_117_inst(.vss_IO(VSS_IO3), .vss(VSS_Dis), .vdd(VDD_Dis));
+ASUP ASUP_118_inst(.vss_IO(VSS_IO3), .vss(VSS_Dis), .vdd(VDD_Dis));
+ASUP ASUP_119_inst(.vss_IO(VSS_IO3), .vss(VSS_Dis), .vdd(VDD_Dis));
+ASUP ASUP_120_inst(.vss_IO(VSS_IO3), .vss(VSS_Dis), .vdd(VDD_Dis));
+ASUP ASUP_121_inst(.vss_IO(VSS_IO3), .vss(VSS_Dis), .vdd(VDD_Dis));
+////////////////      End Right Dis Section    //////////////////////////
+
+////////////////      Begin Right QInj Section    //////////////////////////
+AGND AGND_123_inst(.vss_IO(VSS_IO3), .vss(VSS_QInj), .vdd(VDD_QInj));
+AGND AGND_124_inst(.vss_IO(VSS_IO3), .vss(VSS_QInj), .vdd(VDD_QInj));
+AGNDIO AGNDIO_125_inst(.vss_IO(VSS_IO3), .vss(VSS_QInj), .vdd(VDD_QInj));
+ASUP ASUP_126_inst(.vss_IO(VSS_IO3), .vss(VSS_QInj), .vdd(VDD_QInj));
+ASUP ASUP_127_inst(.vss_IO(VSS_IO3), .vss(VSS_QInj), .vdd(VDD_QInj));
+////////////////      End Right QInj Section    //////////////////////////
+
+////////////////      Begin Right PA Section    //////////////////////////
+ASUP ASUP_128_inst(.vss_IO(VSS_IO3), .vss(VSS_PA), .vdd(VDD_PA));
+ASUP ASUP_129_inst(.vss_IO(VSS_IO3), .vss(VSS_PA), .vdd(VDD_PA));
+ASUP ASUP_130_inst(.vss_IO(VSS_IO3), .vss(VSS_PA), .vdd(VDD_PA));
+ASUP ASUP_131_inst(.vss_IO(VSS_IO3), .vss(VSS_PA), .vdd(VDD_PA));
+ASUP ASUP_132_inst(.vss_IO(VSS_IO3), .vss(VSS_PA), .vdd(VDD_PA));
+AGNDIO AGNDIO_133_inst(.vss_IO(VSS_IO3), .vss(VSS_PA), .vdd(VDD_PA));
+AIO AIO_134_inst(.vss_IO(VSS_IO3), .vss(VSS_PA), .vdd(VDD_PA), .pad(VTemp));
+AGND AGND_135_inst(.vss_IO(VSS_IO3), .vss(VSS_PA), .vdd(VDD_PA));
+AGND AGND_136_inst(.vss_IO(VSS_IO3), .vss(VSS_PA), .vdd(VDD_PA));
+AGND AGND_137_inst(.vss_IO(VSS_IO3), .vss(VSS_PA), .vdd(VDD_PA));
+AGND AGND_138_inst(.vss_IO(VSS_IO3), .vss(VSS_PA), .vdd(VDD_PA));
+AGND AGND_139_inst(.vss_IO(VSS_IO3), .vss(VSS_PA), .vdd(VDD_PA));
+////////////////      End Right PA Section    //////////////////////////
+endmodule
+

@@ -1,0 +1,17 @@
+v2lvs \
+-l ./functional/PLL/model/ETROC1_HsLib.v -s ./physical/PixelAnalog/spice_netlist/ETROC1_HsLibs.src.net \
+-l ./physical/PixelMatrix_HTree/workdir/PixelMatrix_HTree_lvs.vams -s ./physical/PixelMatrix_HTree/workdir/PixelMatrix_HTree.src.spi \
+-l ./functional/CLKGen/model/CLKGen.vams -s ./physical/CLKGen/workdir/CLKGen.src.spi \
+-l ./functional/WS_CLKBuffer/model/WS_CLKBuffer.vams -s ./CDLDir/WS_CLKBuffer.src.cdl \
+-l ./functional/IOs/model/ETROC2_IO_v7.vams -s ./CDLDir/ETROC2_IO_v7.src.cdl \
+-l ./functional/OutputDriver/model/OutputDriver.vams -s ./CDLDir/OutputDriver.src.cdl \
+-l ./functional/GRO/model/GRO.v -s ./CDLDir/GRO.src.cdl \
+-l ./functional/ETROC_TS/model/ETROC_TS.vams -s ./CDLDir/ETROC_TS.unique.src.cdl \
+-l ./functional/EFuse/model/EFuse.vams -s ./CDLDir/EFuse.src.cdl \
+-l ./functional/POR/model/powerOnResetLong_LongerRst.v -s ./CDLDir/powerOnResetLong_LongerRst.src.cdl \
+-l ./functional/VRefGen/model/VRefGen.vams -s ./CDLDir/VRefGen.unique.src.cdl \
+-l ./functional/etroc2readout/globalDigitalTMR/globalDigitalTMR_pwr.v -s ./CDLDir/globalDigitalTMR.unique.src.cdl \
+-l ./functional/peripheryTMR/model/peripheryTMR.v -s ./CDLDir/peripheryTMR.src.cdl \
+-l ./functional/I2Caddr_PulldownRes/model/I2Caddr_PulldownRes.v -s ./CDLDir/I2Caddr_PulldownRes.src.cdl \
+-l ./functional/ETROC2/model/ETROC2_Peripheral_Caps.v -s ./CDLDir/ETROC2_Peripheral_Caps.src.cdl \
+-v ETROC2_lvs.vams -o ETROC2.src.spi -a "<"

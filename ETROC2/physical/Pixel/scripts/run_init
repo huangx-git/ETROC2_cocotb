@@ -1,0 +1,1 @@
+sed 's/wreal/wire/g' functional/Pixel/model/Pixel.vams > ./Pixel_lvs.vams

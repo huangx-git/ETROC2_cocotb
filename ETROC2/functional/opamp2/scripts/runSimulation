@@ -1,0 +1,4 @@
+#!/bin/csh -f
+irun -f irunArgs 
+#ocean < gain.ocn
+

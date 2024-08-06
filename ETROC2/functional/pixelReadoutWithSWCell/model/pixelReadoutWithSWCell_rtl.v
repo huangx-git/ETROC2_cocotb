@@ -1,0 +1,1 @@
+../../etroc2readout/pixelReadoutWithSWCell_rtl.v

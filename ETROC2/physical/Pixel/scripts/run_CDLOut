@@ -1,0 +1,33 @@
+# clean up
+rm -rf CDLDir 
+mkdir CDLDir
+
+# si.env generation for pixelReadoutWithSWCell
+rm .running
+rm -f si.env
+sed 's/UserLibName/pixelReadoutWithSWCell_impl/g' scripts/si.env > ./si_0.env
+sed 's/UserCellName/pixelReadoutWithSWCell/g' ./si_0.env > ./si_1.env
+sed 's/UserNetlistName/pixelReadoutWithSWCell.src.cdl/g' ./si_1.env > ./si.env
+rm -rf si_*.env
+si -batch -command netlist
+
+# uniquify
+rm -f uniquify.lst
+grep ".SUBCKT *" pixelReadoutWithSWCell.src.cdl | cut -d " " -f 2 > uniquify.lst
+sed -i "/pixelReadoutWithSWCell/d" uniquify.lst
+sed -i "s/.*/s\/&\/&_tile_pixelReadoutWithSWCell\/g/g" uniquify.lst
+sed -f uniquify.lst pixelReadoutWithSWCell.src.cdl > pixelReadoutWithSWCell.unique.src.cdl
+
+
+# si.env generation for PixelCaps
+rm .running
+rm -f si.env
+sed 's/UserLibName/ETROC2_Core/g' scripts/si.env > ./si_0.env
+sed 's/UserCellName/PixelCaps/g' ./si_0.env > ./si_1.env
+sed 's/UserNetlistName/PixelCaps.src.cdl/g' ./si_1.env > ./si.env
+rm -rf si_*.env
+si -batch -command netlist
+
+mv *.cdl ./CDLDir
+
+

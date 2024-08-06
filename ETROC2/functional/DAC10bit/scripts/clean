@@ -1,0 +1,5 @@
+#!/bin/csh -f
+\rm -fr INCA_libs .ams_spice_in irun.key amscf.raw amscf.shm 
+\rm -fr portmap_files .simvision waves.shm irun.log amsspice.log
+#\rm -fr .cadence 
+#\rm -fr *.diag

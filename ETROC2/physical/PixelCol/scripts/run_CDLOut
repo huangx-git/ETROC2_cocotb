@@ -1,0 +1,23 @@
+# clean up
+rm -rf CDLDir 
+mkdir CDLDir
+
+# si.env generation for busColumnAdpaterTMR
+rm .running
+rm -f si.env
+sed 's/UserLibName/ETROC2_I2C_busColumnAdapterV1/g' scripts/si.env > ./si_0.env
+sed 's/UserCellName/busColumnAdapterTMR/g' ./si_0.env > ./si_1.env
+sed 's/UserNetlistName/busColumnAdapterTMR.src.cdl/g' ./si_1.env > ./si.env
+rm -rf si_*.env
+si -batch -command netlist
+
+# uniquify
+rm -f uniquify.lst
+grep ".SUBCKT *" busColumnAdapterTMR.src.cdl | cut -d " " -f 2 > uniquify.lst
+sed -i "/busColumnAdapterTMR/d" uniquify.lst
+sed -i "s/.*/s\/&\/&_tile_busColumnAdapterTMR\/g/g" uniquify.lst
+sed -f uniquify.lst busColumnAdapterTMR.src.cdl > busColumnAdapterTMR.unique.src.cdl
+
+mv *.cdl ./CDLDir
+
+

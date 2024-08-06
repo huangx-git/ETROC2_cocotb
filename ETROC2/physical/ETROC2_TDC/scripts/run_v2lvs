@@ -1,0 +1,3 @@
+v2lvs -s ../netlist/ETROC2_TDC.src.net -v ../netlist/ETROC2_TDC.v  -o ETROC2_TDC.src.spi -a "<"
+#v2lvs -s ../netlist/ETROC2_TDC.src.net -v ./functional/ETROC2_TDC/model/ETROC2_TDC.v  -o ETROC2_TDC.src.spi -a "<"
+

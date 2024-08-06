@@ -1,0 +1,5 @@
+`ifdef AnalogFrontEnd
+    `include "ETROC2/functional/PixelAnalog/model/PixelAnalog_include_full.vams"
+`else
+    `include "ETROC2/functional/PixelAnalog/model/PixelAnalog_include_empty.vams"
+`endif

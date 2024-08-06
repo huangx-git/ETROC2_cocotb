@@ -1,0 +1,2 @@
+`include "./model/ETROC_PLL_Core_tb.vams"
+`include "./model/ETROC_PLL_Model_include.vams"

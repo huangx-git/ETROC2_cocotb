@@ -1,0 +1,11 @@
+//`include "discipline.vams"
+//`include "constants.vams"
+
+`timescale 1ns/1ps
+
+module SF_1V2_OVT_NOB2B(IO, VSSPST);
+inout IO;
+input VSSPST;
+wreal IO, VSSPST;
+
+endmodule

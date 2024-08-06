@@ -1,0 +1,6 @@
+v2lvs \
+-l $TSMC_DIG_LIBS/Front_End/verilog/tcbn65lp_200a/tcbn65lp_pwr.v -s $TSMC_DIG_LIBS/Back_End/spice/tcbn65lp_200a/tcbn65lp_200a.spi \
+-l ./functional/PLL/model/ETROC1_HsLib.v -s ./physical/PixelAnalog/spice_netlist/ETROC1_HsLibs.src.net \
+-l ./functional/busColumnAdpaterTMR/model/busColumnAdapterTMR.v -s ./CDLDir/busColumnAdapterTMR.unique.src.cdl \
+-l ./physical/Pixel/workdir/Pixel_lvs.vams -s ./physical/Pixel/workdir/Pixel.src.spi \
+-v PixelCol_lvs.vams -o PixelCol.src.spi -a "<"

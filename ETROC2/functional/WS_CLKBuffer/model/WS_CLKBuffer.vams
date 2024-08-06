@@ -1,0 +1,15 @@
+//Verilog-AMS HDL for "ETROC2_Core", "WS_CLKBuffer" "verilogams"
+
+//`include "constants.vams"
+//`include "disciplines.vams"
+
+module WS_CLKBuffer ( en_clk, CLK_WS_Out, VDD, VSS, CLK_WS_Inn, CLK_WS_Inp
+);
+  input en_clk;
+  input CLK_WS_Inp;
+  output CLK_WS_Out;
+  input CLK_WS_Inn;
+  inout VDD;
+  inout VSS;
+endmodule
+

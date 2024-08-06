@@ -1,0 +1,296 @@
+************************************************************************
+* auCdl Netlist:
+* 
+* Library Name:  ETROC1_QInj
+* Top Cell Name: QInj
+* View Name:     schematic
+* Netlisted on:  Apr 21 22:04:43 2022
+************************************************************************
+
+*.INCLUDE  /asic/cad/Library/tsmc/TSMC65_CERN_2017_DL20/V1.7A_1/1p9m6x1z1u/tsmcN65/../PVS_QRC/lvs/source.added
+*.EQUATION
+*.SCALE METER
+*.MEGA
+.PARAM
+
+
+
+************************************************************************
+* Library Name: ETROC1_QInj
+* Cell Name:    ND2D1_LVT_ELT
+* View Name:    schematic
+************************************************************************
+
+.SUBCKT ND2D1_LVT_ELT A1 A2 VDD VSS ZN
+*.PININFO A1:I A2:I ZN:O VDD:B VSS:B
+MM2_ELT ZN A1 net014 VSS nch_lvt l=60n w=1.42u m=1
+MM1_ELT net014 A2 VSS VSS nch_lvt l=60n w=1.42u m=1
+MM11_ELT ZN A2 VDD VDD pch_lvt l=60n w=3.74u m=1
+MM10_ELT ZN A1 VDD VDD pch_lvt l=60n w=3.74u m=1
+.ENDS
+
+************************************************************************
+* Library Name: ETROC1_QInj
+* Cell Name:    QInjSwitch
+* View Name:    schematic
+************************************************************************
+
+.SUBCKT QInjSwitch ctrl n1 n2 vdd vss
+*.PININFO ctrl:I n1:B n2:B vdd:B vss:B
+MM3 n2 ctrl n1 vss nch l=60n w=1.5u m=1
+MM0 _ctrl ctrl vss vss nch l=60n w=200n m=1
+MM2 n2 _ctrl n1 vdd pch l=60n w=500n m=1
+MM1 _ctrl ctrl vdd vdd pch l=60n w=200n m=1
+.ENDS
+
+************************************************************************
+* Library Name: ETROC1_QInj
+* Cell Name:    QInj_momPMOSCap
+* View Name:    schematic
+************************************************************************
+
+.SUBCKT QInj_momPMOSCap vHigh vLow
+*.PININFO vHigh:B vLow:B
+MM1 vHigh vLow vHigh vHigh pch_25 l=500n w=510.0n m=32
+MM0 vHigh vLow vHigh vHigh pch_25 l=500n w=510.0n m=16
+.ENDS
+
+************************************************************************
+* Library Name: ETROC1_QInj
+* Cell Name:    INVD1_LVT_ELT
+* View Name:    schematic
+************************************************************************
+
+.SUBCKT INVD1_LVT_ELT I VDD VSS ZN
+*.PININFO I:I ZN:O VDD:B VSS:B
+MM0_ELT ZN I VSS VSS nch_lvt l=60n w=1.42u m=1
+MM1_ELT ZN I VDD VDD pch_lvt l=60n w=3.74u m=1
+.ENDS
+
+************************************************************************
+* Library Name: ETROC1_QInj
+* Cell Name:    QInjBias_Opamp
+* View Name:    schematic
+************************************************************************
+
+.SUBCKT QInjBias_Opamp inn inp out pd vdd vss
+*.PININFO inn:I inp:I pd:I out:O vdd:B vss:B
+MM43 vdd b1 vdd vdd pch l=300n w=2u m=1
+MM42 vdd b1 vdd vdd pch l=300n w=2u m=1
+MM20 net0161 b1 vdd vdd pch l=300n w=2u m=4
+MM31 a1 b1 vdd vdd pch l=300n w=2u m=4
+MM25 b1 b1 vdd vdd pch l=300n w=2u m=4
+MM44 net0163 net0163 vdd vdd pch l=6u w=2u m=1
+MM33 pdb _pd vdd vdd pch l=60n w=1u m=2
+MM30 _pd pd vdd vdd pch l=60n w=1u m=2
+MM28 net046 pdb net0161 vdd pch l=60n w=200n m=1
+MM24 net65 net65 vdd vdd pch l=1.5u w=8u m=4
+MM22 out net040 vdd vdd pch l=1u w=12.0u m=8
+MM3 net0109 net0109 vdd vdd pch l=1u w=12.0u m=1
+MM2 net60 net0109 vdd vdd pch l=1u w=12.0u m=1
+MM18 net30 net040 net60 vdd pch l=1u w=12.0u m=1
+MM40 net040 net15 net24 vdd pch l=1u w=12.0u m=4
+MM41 net27 net15 net24 vdd pch l=1u w=12.0u m=4
+MM36 net24 net65 vdd vdd pch l=1.5u w=8u m=8
+MM37 net082 net65 vdd vdd pch l=1.5u w=8u m=8
+MM6 net62 net15 net082 vdd pch l=1u w=12.0u m=8
+MM5 net15 net15 vdd vdd pch l=1u w=2u m=1
+MM38 net12 net65 vdd vdd pch l=1.5u w=8u m=4
+MM39 net8 net65 vdd vdd pch l=1.5u w=8u m=8
+MM32 pdb _pd vss vss nch l=60n w=1u m=1
+MM29 _pd pd vss vss nch l=60n w=1u m=1
+MM27 net0161 _pd net046 vss nch l=60n w=1u m=4
+MM26 net046 net046 vss vss nch l=1.5u w=8u m=2
+MM34 net65 net046 vss vss nch l=1.5u w=8u m=2
+MM23 out net27 vss vss nch l=1u w=4u m=8
+MM21 net0109 net27 vss vss nch l=1u w=4u m=1
+MM17 net30 net30 vss vss nch l=12.0u w=2u m=1
+MM16 net21 net62 vss vss nch l=1.5u w=8u m=4
+MM15 net27 net30 net21 vss nch l=1u w=8u m=2
+MM14 net040 net12 net21 vss nch l=1u w=8u m=2
+MM35 net15 net046 vss vss nch l=1.5u w=8u m=2
+MM8 net40 net62 vss vss nch l=1.5u w=8u m=4
+MM7 net62 net12 net40 vss nch l=1u w=8u m=4
+MM4 net12 net12 vss vss nch l=12.0u w=2u m=2
+MM1 net21 inp net8 net8 pch_lvt l=2u w=12.0u m=8
+MM0 net40 inn net8 net8 pch_lvt l=2u w=12.0u m=8
+DD0 vss vdd dnwpsub area=1.4618e-10 pj=8.109e-05 m=1
+XR1 bulk vss rppolywo l=67.5u w=1.1u m=1
+XR2 net0114 out rppolywo l=7.11u w=2u m=1
+MM19 b1 net0163 a1 vss nch_dnw l=120.0n w=2u m=8
+MM13 a1 a1 vss vss nch_dnw l=300n w=2u m=4
+MM12 b1 a1 bulk bulk nch_dnw l=300n w=2u m=8
+MM11 net0163 a1 vss vss nch_dnw l=300n w=2u m=4
+MM10 vss a1 vss vss nch_dnw l=300n w=2u m=1
+MM9 vss a1 vss vss nch_dnw l=300n w=2u m=1
+DD2 vss vdd pwdnw area=5.7015e-11 pj=3.029e-05 m=1
+DD1 bulk vdd pwdnw area=3.995e-11 pj=2.799e-05 m=1
+XC0 net040 net0114 vdd crtmom_rf nv=34 nh=36 w=105.00n s=105.00n stm=1 spm=4 
++ m=7
+XC2 net0114 net27 vdd crtmom_rf nv=34 nh=36 w=105.00n s=105.00n stm=1 spm=4 m=7
+.ENDS
+
+************************************************************************
+* Library Name: ETROC1_QInj
+* Cell Name:    QInjBias_Vref
+* View Name:    schematic
+************************************************************************
+
+.SUBCKT QInjBias_Vref VB vref vss
+*.PININFO VB:B vref:B vss:B
+XR15 vss vss rppolywo l=6u w=2u m=1
+XR14 vss vss rppolywo l=6u w=2u m=1
+XR13 net20 net13 rppolywo l=6u w=2u m=1
+XR12 vss net20 rppolywo l=6u w=2u m=1
+XR10 net8 VB rppolywo l=6u w=2u m=1
+XR9 net8 VB rppolywo l=6u w=2u m=1
+XR8 net15 net14 rppolywo l=6u w=2u m=1
+XR7 vref net15 rppolywo l=6u w=2u m=1
+XR6 net14 net12 rppolywo l=6u w=2u m=1
+XR5 net16 net17 rppolywo l=6u w=2u m=1
+XR4 net7 net16 rppolywo l=6u w=2u m=1
+XR2 net7 net19 rppolywo l=6u w=2u m=1
+XR3 net17 net12 rppolywo l=6u w=2u m=1
+XR1 net19 net18 rppolywo l=6u w=2u m=1
+XR0 net18 net8 rppolywo l=6u w=2u m=1
+XR11 net13 vref rppolywo l=6u w=2u m=1
+.ENDS
+
+************************************************************************
+* Library Name: ETROC1_QInj
+* Cell Name:    QInjBias
+* View Name:    schematic
+************************************************************************
+
+.SUBCKT QInjBias IOUT VB pd vdd vss
+*.PININFO IOUT:O VB:B pd:B vdd:B vss:B
+XI5 pd a n vdd vss / QInjSwitch
+MM25 _pd pd vss vss nch l=60n w=200n m=1
+MM24 e vss vss vss nch l=60n w=2u m=1
+MM23 c vss vss vss nch l=60n w=2u m=1
+MM22 j vss vss vss nch l=60n w=2u m=1
+MM21 d vss vss vss nch l=60n w=2u m=1
+MM3 e c j vss nch l=60n w=2u m=8
+MM2 c c d vss nch l=60n w=2u m=16
+MM1 j d vss vss nch l=60n w=2u m=8
+MM0 d d vss vss nch l=60n w=2u m=16
+MM8 n g vo vss nch l=300n w=2u m=8
+XI0 vo vref g _pd vdd vss / QInjBias_Opamp
+MM20 h vdd vdd vdd pch_lvt l=1u w=4u m=1
+MM19 b vdd vdd vdd pch_lvt l=1u w=4u m=1
+MM18 c vdd vdd vdd pch_lvt l=1u w=4u m=1
+MM7 IOUT e k vdd pch_lvt l=1u w=5u m=2
+MM5 k f vdd vdd pch_lvt l=1u w=5u m=2
+MM4 f f vdd vdd pch_lvt l=1u w=5u m=4
+MM13 e vdd vdd vdd pch_lvt l=1u w=5u m=1
+MM14 IOUT vdd vdd vdd pch_lvt l=1u w=5u m=1
+MM15 f vdd vdd vdd pch_lvt l=1u w=5u m=1
+MM16 k vdd vdd vdd pch_lvt l=1u w=5u m=1
+MM17 a vdd vdd vdd pch_lvt l=1u w=4u m=1
+MM12 h b vdd vdd pch_lvt l=1u w=4u m=4
+MM11 b b vdd vdd pch_lvt l=1u w=4u m=8
+MM10 c a h vdd pch_lvt l=1u w=4u m=4
+MM9 a a b vdd pch_lvt l=1u w=4u m=8
+MM6 e e f vdd pch_lvt l=1u w=5u m=4
+XR7 vss vss rppolywo l=15.3u w=2.5u m=1
+XR6 vss vss rppolywo l=15.3u w=2.5u m=1
+XR1 vo vss rppolywo l=107.1u w=2.5u m=1
+MM26 _pd pd vdd vdd pch l=60n w=200n m=1
+XI1 VB vref vss / QInjBias_Vref
+.ENDS
+
+************************************************************************
+* Library Name: ETROC1_QInj
+* Cell Name:    QInjIDAC
+* View Name:    schematic
+************************************************************************
+
+.SUBCKT QInjIDAC ISEL<4> ISEL<3> ISEL<2> ISEL<1> ISEL<0> ib iout1 vdd vss
+*.PININFO iout1:O ISEL<4>:B ISEL<3>:B ISEL<2>:B ISEL<1>:B ISEL<0>:B ib:B vdd:B 
+*.PININFO vss:B
+MM8 vss vss vss vss nch l=300n w=2u m=1
+MM6 vss vss vss vss nch l=300n w=2u m=1
+MM5 vss vss vss vss nch l=300n w=2u m=1
+MM3 vss vss vss vss nch l=300n w=2u m=1
+MM12 net274 ib vss vss nch l=300n w=2u m=32
+MM10 net275 ib vss vss nch l=300n w=2u m=16
+MM7 net276 ib vss vss nch l=300n w=2u m=8
+MM4 net277 ib vss vss nch l=300n w=2u m=4
+MM2 net278 ib vss vss nch l=300n w=2u m=2
+MM1 id1 ib vss vss nch l=300n w=2u m=2
+MM0 ib ib vss vss nch l=300n w=2u m=2
+MM41 iout1 vdd vdd vdd pch_lvt l=200n w=2u m=1
+MM40 id1 vdd vdd vdd pch_lvt l=200n w=2u m=1
+MM39 net061 vdd vdd vdd pch_lvt l=200n w=2u m=1
+MM38 net69 vdd vdd vdd pch_lvt l=200n w=2u m=1
+MM17 net061 net69 vdd vdd pch_lvt l=200n w=2u m=16
+MM15 net69 net69 vdd vdd pch_lvt l=200n w=2u m=16
+MM27 iout1 id1 net061 vdd pch_lvt l=200n w=2u m=16
+MM26 id1 id1 net69 vdd pch_lvt l=200n w=2u m=16
+XI34 ISEL<0> id1 net278 vdd vss / QInjSwitch
+XI35 ISEL<1> id1 net277 vdd vss / QInjSwitch
+XI36 ISEL<2> id1 net276 vdd vss / QInjSwitch
+XI37 ISEL<3> id1 net275 vdd vss / QInjSwitch
+XI38 ISEL<4> id1 net274 vdd vss / QInjSwitch
+.ENDS
+
+************************************************************************
+* Library Name: ETROC1_QInj
+* Cell Name:    QInjBuf
+* View Name:    schematic
+************************************************************************
+
+.SUBCKT QInjBuf I VDD VSS Z
+*.PININFO I:I Z:O VDD:B VSS:B
+MMI2-M_u2 net5 I VSS VSS nch l=60n w=195.00n m=1
+MMI1-M_u2 Z net5 VSS VSS nch l=60n w=195.00n m=1
+MMI2-M_u3 net5 I VDD VDD pch l=60n w=260.0n m=1
+MMI1-M_u3 Z net5 VDD VDD pch l=60n w=260.0n m=1
+.ENDS
+
+************************************************************************
+* Library Name: ETROC1_QInj
+* Cell Name:    QInj
+* View Name:    schematic
+************************************************************************
+
+.SUBCKT QInj CIS EN ISEL<4> ISEL<3> ISEL<2> ISEL<1> ISEL<0> QOUTSel Qout1 
++ Qout2 TV1 VREF vdd vss
+*.PININFO CIS:I EN:I QOUTSel:I ISEL<4>:B ISEL<3>:B ISEL<2>:B ISEL<1>:B 
+*.PININFO ISEL<0>:B Qout1:B Qout2:B TV1:B VREF:B vdd:B vss:B
+XR7<1> vss vss rppolywo l=9.935u w=2.5u m=1
+XR7<0> vss vss rppolywo l=9.935u w=2.5u m=1
+XR3 TV1 vss rppolywo l=59.61u w=2.5u m=1
+MM2 net09 EN vdd vdd pch l=60n w=500n m=1
+XI35 net027 EN vdd vss net029 / ND2D1_LVT_ELT
+XI74 QOUTSel EN vdd vss net028 / ND2D1_LVT_ELT
+MM9 TV1 CIS1 vss vss nch l=60n w=4u m=12
+XI81 EN CIS net09 vdd vss / QInjSwitch
+XI76 QOUTSel2 Qout2 Qoutb vdd vss / QInjSwitch
+XI5 QOUTSel1 Qout1 Qoutb vdd vss / QInjSwitch
+XI79<9> vdd vss / QInj_momPMOSCap
+XI79<8> vdd vss / QInj_momPMOSCap
+XI79<7> vdd vss / QInj_momPMOSCap
+XI79<6> vdd vss / QInj_momPMOSCap
+XI79<5> vdd vss / QInj_momPMOSCap
+XI79<4> vdd vss / QInj_momPMOSCap
+XI79<3> vdd vss / QInj_momPMOSCap
+XI79<2> vdd vss / QInj_momPMOSCap
+XI79<1> vdd vss / QInj_momPMOSCap
+XI79<0> vdd vss / QInj_momPMOSCap
+XI68<5> vdd TV1 / QInj_momPMOSCap
+XI68<4> vdd TV1 / QInj_momPMOSCap
+XI68<3> vdd TV1 / QInj_momPMOSCap
+XI68<2> vdd TV1 / QInj_momPMOSCap
+XI68<1> vdd TV1 / QInj_momPMOSCap
+XI68<0> vdd TV1 / QInj_momPMOSCap
+XI72 QOUTSel vdd vss net027 / INVD1_LVT_ELT
+XI36 net029 vdd vss QOUTSel2 / INVD1_LVT_ELT
+XI75 net028 vdd vss QOUTSel1 / INVD1_LVT_ELT
+XC1 TV1 Qoutb vdd crtmom_rf nv=26 nh=34 w=140.0n s=150.0n stm=2 spm=4 m=1
+XI0 ib VREF EN vdd vss / QInjBias
+XI1 ISEL<4> ISEL<3> ISEL<2> ISEL<1> ISEL<0> ib TV1 vdd vss / QInjIDAC
+XI77 net09 vdd vss CIS0 / QInjBuf
+XI78 CIS0 vdd vss CIS1 / QInjBuf
+.ENDS
+

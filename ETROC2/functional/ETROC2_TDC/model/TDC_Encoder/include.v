@@ -1,0 +1,8 @@
+`include "ETROC2/functional/ETROC2_TDC/model/TDC_Encoder/TDC_Encoder.v"
+`include "ETROC2/functional/ETROC2_TDC/model/TDC_Encoder/encode8b3b.v"
+`include "ETROC2/functional/ETROC2_TDC/model/TDC_Encoder/TOA_fineEncoder.v"
+`include "ETROC2/functional/ETROC2_TDC/model/TDC_Encoder/TOT_fineEncoder.v"
+`include "ETROC2/functional/ETROC2_TDC/model/TDC_Encoder/TOA_Encoder.v"
+`include "ETROC2/functional/ETROC2_TDC/model/TDC_Encoder/TOT_Encoder.v"
+`include "ETROC2/functional/ETROC2_TDC/model/TDC_Encoder/TOA_fineEncoder_core.v"
+`include "ETROC2/functional/ETROC2_TDC/model/TDC_Encoder/TOT_fineEncoder_core.v"

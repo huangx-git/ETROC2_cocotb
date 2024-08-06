@@ -1,0 +1,1 @@
+sed 's/wreal/wire/g' functional/PixelCol1/model/PixelCol1_nogen.vams > ./PixelCol1_lvs.vams

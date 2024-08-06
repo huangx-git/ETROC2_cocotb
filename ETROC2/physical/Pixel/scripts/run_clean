@@ -1,0 +1,6 @@
+rm *.spi
+rm *.vams
+rm erc.*
+rm lvs*
+rm *.log
+rm *gds.gz

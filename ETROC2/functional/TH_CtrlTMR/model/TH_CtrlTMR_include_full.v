@@ -1,0 +1,5 @@
+`include "ETROC2/functional/TH_CtrlTMR/model/bl_scanTMR.v"
+`include "ETROC2/functional/TH_CtrlTMR/model/DEL4WRAPPERTMR.v"
+`include "ETROC2/functional/TH_CtrlTMR/model/glitchFilterTMR.v"
+`include "ETROC2/functional/TH_CtrlTMR/model/TH_CtrlTMR.v"
+`include "ETROC2/functional/POR/model/powerOnResetLong.v"

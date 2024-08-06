@@ -1,0 +1,5 @@
+ln -s ../../../../../ETROC2_Libs
+ln -s ../../../../../cds.lib
+ln -s ../../../../../project.lib
+ln -s ../../../../../project_combine.lib
+ln -s ../../../../../.cdsinit

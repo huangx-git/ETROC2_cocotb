@@ -1,0 +1,138 @@
+//////////////////////////////////////////////////////////////////////////////////
+// Org:        	FNAL
+// Author:      Quan Sun
+// 
+// Create Date:    April. 16th, 2022
+// Description: testbench of ETROC PLL wreal model
+//
+// Revision: 
+//
+//
+//////////////////////////////////////////////////////////////////////////////////
+`include "disciplines.vams"
+`timescale 1ns / 1ps
+module ETROC_PLL_Core_tb();
+
+reg CLK40REF, clkTreeDisable, toAFC_Mode, toAFC_OverrideCtrl, toAFC_RST, toAFC_Start, toclkgen_disCLK, toclkgen_disDES,
+	toclkgen_disEOM, toclkgen_disSER, toclkgen_disVCO, tofbDiv_skip, topll_ENABLEPLL, topll_overrideVc, topll_vcoRailMode;
+reg [5:0] toAFC_OverrideCtrl_val1;
+reg [3:0] topll_BIASGEN_CONFIG;
+reg [3:0] topll_CONFIG_I_PLL, topll_CONFIG_P_PLL, topll_PLL_R_CONFIG, topll_vcoDAC;
+
+
+//// initialize AFC than PLL ////
+initial begin
+CLK40REF = 0;
+clkTreeDisable = 0;
+toAFC_Mode = 0;
+toAFC_OverrideCtrl = 1;
+toAFC_OverrideCtrl_val1 = 6'b111100;
+toAFC_RST = 1;
+toAFC_Start = 0;
+toclkgen_disCLK = 0;
+toclkgen_disDES = 0;
+toclkgen_disEOM = 0;
+toclkgen_disSER = 0;
+toclkgen_disVCO = 0;
+tofbDiv_skip = 0;
+topll_BIASGEN_CONFIG = 4'b1000;
+topll_CONFIG_P_PLL = 4'b1001;
+topll_CONFIG_I_PLL = 4'b1001;
+topll_ENABLEPLL = 0;
+topll_PLL_R_CONFIG = 4'b0010;
+topll_overrideVc = 1'b1;
+topll_vcoDAC = 4'b1000;
+topll_vcoRailMode = 1'b0;
+#100
+toAFC_RST = 0; 
+#123 
+toAFC_Start = 1;
+#123 
+toAFC_Start = 0;
+#400000
+$finish;
+end
+
+
+
+//// start PLL without AFC  ///
+/*
+initial begin
+CLK40REF = 0;
+clkTreeDisable = 0;
+toAFC_Mode = 1;
+toAFC_OverrideCtrl = 1'b1;
+toAFC_OverrideCtrl_val1 = 6'b010001;
+toAFC_RST = 1;
+toAFC_Start = 0;
+toclkgen_disCLK = 0;
+toclkgen_disDES = 0;
+toclkgen_disEOM = 0;
+toclkgen_disSER = 0;
+toclkgen_disVCO = 0;
+tofbDiv_skip = 0;
+topll_BIASGEN_CONFIG = 4'b1000;
+topll_CONFIG_P_PLL = 4'b1001;
+topll_CONFIG_I_PLL = 4'b1001;
+topll_ENABLEPLL = 0;
+topll_PLL_R_CONFIG = 4'b0010;
+topll_overrideVc = 1'b0;
+topll_vcoDAC = 4'b1000;
+topll_vcoRailMode = 1'b0;
+#100000
+toAFC_RST = 0; 
+end
+*/
+
+
+always #12.5 CLK40REF = ~CLK40REF;
+
+wire INSTLOCK_PLL, clk1G28A, clk1G28B, clk1G28C, clk40MA, clk40MB, clk40MC, clk320MA, clk320MB, clk320MC,
+	toI2C_AFCbusy;
+wire [5:0] toI2C_AFCcalCap;
+
+wreal clk5g12vcop, clk5g12vcon;
+wreal clk2g56S, clk2g56SN;
+wreal clk5g12S, clk5g12SN;
+wreal clk2g56Ip, clk2g56In;
+wreal clk2g56Qp, clk2g56Qn;
+wreal clk5g12EOMp, clk5g12EOMn;
+
+ETROC_PLL_Core ETROC_PLL_Core_INST( 
+	.INSTLOCK_PLL(INSTLOCK_PLL), 
+	.clk1G28A(clk1G28A), .clk1G28B(clk1G28B), .clk1G28C(clk1G28C), 
+	.clk2g56In(clk2g56In), .clk2g56Ip(clk2g56Ip), 
+	.clk2g56Qn(clk2g56Qn), .clk2g56Qp(clk2g56Qp), 
+	.clk2g56S(clk2g56S), .clk2g56SN(clk2g56SN), 
+	.clk5g12EOMn(clk5g12EOMn), .clk5g12EOMp(clk5g12EOMp),
+	.clk5g12S(clk5g12S), .clk5g12SN(clk5g12SN), 
+	.clk40MA(clk40MA), .clk40MB(clk40MB), .clk40MC(clk40MC), 
+	.clk320MA(clk320MA), .clk320MB(clk320MB), .clk320MC(clk320MC), 
+	.toI2C_AFCbusy(toI2C_AFCbusy), .toI2C_AFCcalCap(toI2C_AFCcalCap), 
+	.CLK40REFA(CLK40REF), .CLK40REFB(CLK40REF), .CLK40REFC(CLK40REF), 
+	//VDD, VDD_PLL, VP, VSS, VSS_PLL, 
+	.EXT40MCLK(CLK40REF), 
+	.clkTreeADisableA(clkTreeDisable), .clkTreeADisableB(clkTreeDisable), .clkTreeADisableC(clkTreeDisable),
+	.clkTreeBDisableA(clkTreeDisable), .clkTreeBDisableB(clkTreeDisable), .clkTreeBDisableC(clkTreeDisable), 
+	.clkTreeCDisableA(clkTreeDisable), .clkTreeCDisableB(clkTreeDisable), .clkTreeCDisableC(clkTreeDisable), 
+	.toAFC_ModeA(toAFC_Mode), .toAFC_ModeB(toAFC_Mode), .toAFC_ModeC(toAFC_Mode), 
+	.toAFC_OverrideCtrlA(toAFC_OverrideCtrl), .toAFC_OverrideCtrlB(toAFC_OverrideCtrl), .toAFC_OverrideCtrlC(toAFC_OverrideCtrl),
+	.toAFC_OverrideCtrl_val1(toAFC_OverrideCtrl_val1), 
+	.toAFC_RSTA(toAFC_RST), .toAFC_RSTB(toAFC_RST), .toAFC_RSTC(toAFC_RST), 
+	.toAFC_StartA(toAFC_Start), .toAFC_StartB(toAFC_Start), .toAFC_StartC(toAFC_Start), 
+	.toclkgen_disCLKA(toclkgen_disCLK), .toclkgen_disCLKB(toclkgen_disCLK), .toclkgen_disCLKC(toclkgen_disCLK), 
+	.toclkgen_disDESA(toclkgen_disDES), .toclkgen_disDESB(toclkgen_disDES), .toclkgen_disDESC(toclkgen_disDES),
+	.toclkgen_disEOMA(toclkgen_disEOM), .toclkgen_disEOMB(toclkgen_disEOM), .toclkgen_disEOMC(toclkgen_disEOM), 
+	.toclkgen_disSERA(toclkgen_disSER), .toclkgen_disSERB(toclkgen_disSER), .toclkgen_disSERC(toclkgen_disSER), 
+	.toclkgen_disVCOA(toclkgen_disVCO), .toclkgen_disVCOB(toclkgen_disVCO), .toclkgen_disVCOC(toclkgen_disVCO), 
+	.tofbDiv_skipA(tofbDiv_skip), .tofbDiv_skipB(tofbDiv_skip), .tofbDiv_skipC(tofbDiv_skip), 
+	.topll_BIASGEN_CONFIG(topll_BIASGEN_CONFIG), 
+	.topll_CONFIG_I_PLL(topll_CONFIG_I_PLL), .topll_CONFIG_P_PLL(topll_CONFIG_P_PLL),
+	.topll_ENABLEPLL(topll_ENABLEPLL), 
+	.topll_PLL_R_CONFIG(topll_PLL_R_CONFIG), 
+	.topll_overrideVcA(topll_overrideVc), .topll_overrideVcB(topll_overrideVc), .topll_overrideVcC(topll_overrideVc),
+	.topll_vcoDAC(topll_vcoDAC), 
+	.topll_vcoRailMode(topll_vcoRailMode) 
+);
+
+endmodule

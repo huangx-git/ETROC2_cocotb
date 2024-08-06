@@ -1,0 +1,47 @@
+[tmrg]
+# output direcotry
+tmr_dir     = ./globalDigitalTMR
+# directory where script should work for files
+#rtl_dir     = /users/qsun/workarea/tsmc65nm/ETROC_PLL/digital_work/git1/etroc2/rtl
+
+#number of spaces to be insterted for indentation
+spaces      = 5
+
+# variables below do NOT have any effect yet
+#tmr_order   = 3
+#tmr_suffix  = TMR
+#tmr_signals = ("%{name}sA","%{name}sB","%{name}sC")
+
+overwrite_files   = True
+
+# Defines whether common definitions (as majorirtyVoter, fanout) should be 
+# added to the output verilog file. If yes, the definitions are added to the 
+# file which contains top level cell. One has to define voter_definition and
+# fanout_definition
+add_common_definitions = True
+# path to the file which contains majorityVoter module declaration
+# (relative to tmrg.py script or absolut path)
+#voter_definition  = /Users/dataogong/Documents/Gitlab/ETROCI2C/etroc2_swreadout/rtl/ETROC2Readout/majorityVoterGlobal.v
+voter_definition  = ../common/voter.v
+# path to the file which contains fanout module declaration
+# (relative to tmrg.py script or absolut path)
+#fanout_definition = /Users/dataogong/Documents/Gitlab/ETROCI2C/etroc2_swreadout/rtl/ETROC2Readout/fanoutGlobal.v
+fanout_definition = ../common/fanout.v
+
+# should SDC file for DC be generated? [true/false]
+sdc_generate = true
+# should headers of SDC file be added ? [true/false]
+sdc_headers = true
+# file name of sdc file (if empty, SDC file will have the same name as top module)
+#sdc_file_name = ./TMRG/tmrg.sdc
+
+# file list to be processed (space separated)
+#files = latchedBasedRAM.v gateClockCell.v tmrg_null/CKLNQD1.v
+files = globalDigital.v columnConnecter.v gateClockCell.v globalController.v digitalPhaseshifter.v dataSourceSwitcher.v fastcommand/fastCommandDecoderTop.v fastcommand/bitCLKAligner.v fastcommand/bitclkgen.v fastcommand/Arbiter.v fastcommand/phaseAdjuster.v fastcommand/DELWRAPPER.v fastcommand/WADecoder.v fastcommand/decoderHamming8to4.v chargeInjectionPulseGen.v globalReadout.v globalReadoutController.v frameBuilder.v TestL1Generator.v Scrambler.v PRBS31.v L1BufferAddr.v FIFOWRCtrler.v FIFOWRCtrlerDDR.v CircularBufferAddr.v CRC8.v BCIDCounter.v BCIDBuffer.v  streamBuffer.v memBlock/streambuf_mem_rtl.v memBlock/BCID_mem_rtl.v Serializer.v serializerBlock.v memBlock/cb_data_mem_decoder.v PRBS7.v latchedBasedRAM.v SWCell.v triggerProcessor.v latchedBasedRAM.v globalReadoutController.v lockDetector/ljCDRlockFilterDetector.v
+# libs list to be processed (space separated)
+libs = digitallib/simplified_std_cell_lib.v
+#duplicated modules in pixelReadout
+#do_not_touch module, we reuse the one in pixelReadout
+#gateClockCell.v latchedBasedRAM.v SWCell.v
+#triplicated modules, we use different module name. We add "GB" postfix 
+#TestL1Generator.v PRBS31.v BCIDCounter.v 

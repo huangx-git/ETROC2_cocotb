@@ -1,0 +1,4 @@
+grep ".SUBCKT *" pixelReadoutWithSWCell.src.cdl | cut -d " " -f 2 > uniquify.lst
+sed -i "/pixelReadoutWithSWCell/d" uniquify.lst
+sed -i "s/.*/s\/&\/&_tile_pixelReadoutWithSWCell\/g/g" uniquify.lst
+sed -f uniquify.lst pixelReadoutWithSWCell.src.cdl > pixelReadoutWithSWCell.unique.src.cdl

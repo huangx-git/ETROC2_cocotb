@@ -1,0 +1,6 @@
+./run_clean
+./run_streamOut
+./run_init
+./run_CDLOut
+./run_v2lvs
+./run_lvs

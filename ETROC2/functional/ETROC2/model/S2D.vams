@@ -1,0 +1,17 @@
+`include "constants.vams"
+`include "disciplines.vams"
+
+`timescale 1ps/1ps
+module S2D(SIn, DOutP, DOutN);
+    input SIn;
+    output DOutP, DOutN;
+    parameter real HighVoltage  = 1.2; //voltage
+    parameter real LowVoltage   = 0.6; //voltage
+
+    wire SIn;
+    wreal DOutP, DOutN;
+
+    assign DOutP = SIn?HighVoltage:LowVoltage;
+    assign DOutN = SIn?LowVoltage:HighVoltage;
+
+endmodule

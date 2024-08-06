@@ -1,0 +1,17 @@
+// irunArgs
+model/QInj_tb.vams
+model/QInj.vams
+../../PA/model/PreAmp.vams
+amscf.scs
+-input probe.tcl
+-iereport
+-clean
+-timescale 10ps/1ps
+-access +rwc
+MyConnRules12.vams
+-amsconnrules My_ConnRules_12_full_fast
+-discipline logic
+// -linedebug
+-amsvivalog
+-spectre_path /usr/local/cds2008/SPECTRE191/tools/bin
+-gui 

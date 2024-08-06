@@ -1,0 +1,18 @@
+`include "./ModuleSwitch.v"
+`ifdef LocalTB
+    `include "./ETROC2_tb.vams"
+`else
+  //  `include "ETROC2/functional/ETROC2/model/ETROC2_tb_09262022.vams"
+  //  `include "ETROC2/functional/ETROC2/model/ETROC2_tb_Quan_pad2pad.vams"
+    `include "ETROC2/functional/ETROC2/model/ETROC2_tb_20230702.vams"
+`endif
+    `include "ETROC2/functional/ETROC2/model/S2D.vams"
+    `include "ETROC2/functional/ETROC2/model/D2S.vams"
+    `include "ETROC2/functional/ETROC2/model/ETROC2_include.vams"
+    `include "ETROC2/functional/ETROC2/verification/IO_1P2V_C4.v"
+
+    /////// fast command generator  ////////////////
+    `include "ETROC2/functional/etroc2readout/fastcommand/fastCommandGenerator.v"
+    `include "ETROC2/functional/etroc2readout/fastcommand/clk320Generator.v"
+    `include "ETROC2/functional/etroc2readout/PRBS31.v"
+

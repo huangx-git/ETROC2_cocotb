@@ -1,0 +1,23 @@
+# clean up
+rm -rf CDLDir 
+mkdir CDLDir
+
+# si.env generation for ETROC2_HTree
+rm .running
+rm -f si.env
+sed 's/UserLibName/ETROC2_HTree/g' scripts/si.env > ./si_0.env
+sed 's/UserCellName/ETROC2_HTree/g' ./si_0.env > ./si_1.env
+sed 's/UserNetlistName/ETROC2_HTree.src.cdl/g' ./si_1.env > ./si.env
+rm -rf si_*.env
+si -batch -command netlist
+
+# uniquify
+rm -f uniquify.lst
+grep ".SUBCKT *" ETROC2_HTree.src.cdl | cut -d " " -f 2 > uniquify.lst
+sed -i "/ETROC2_HTree/d" uniquify.lst
+sed -i "s/.*/s\/&\/&_tile_ETROC2_HTree\/g/g" uniquify.lst
+sed -f uniquify.lst ETROC2_HTree.src.cdl > ETROC2_HTree.unique.src.cdl
+
+mv *.cdl ./CDLDir
+
+

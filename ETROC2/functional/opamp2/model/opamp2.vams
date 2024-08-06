@@ -1,0 +1,32 @@
+//`include "disciplines.vams"
+
+`timescale 1ns/1ps
+
+module opamp2(inp, inn, out, vdd, vss, pd);
+
+input inp, inn, vdd, vss, pd;
+output out;
+wreal inp, inn, out, vdd, vss;
+//parameter real gain = 10000.0 from (1:inf);
+
+real timescale = 1n; // needs to match verilog timescale
+real out_int;
+real ts;
+
+initial begin
+ts = timescale * 1e9;
+out_int = 0.5;
+end
+
+always #ts begin
+out_int = pd?0.3333:inp;
+if(out_int > vdd) 
+	out_int = vdd;
+else if(out_int < vss)
+	out_int = vss;
+end
+
+assign #2 out = out_int;
+
+endmodule 
+

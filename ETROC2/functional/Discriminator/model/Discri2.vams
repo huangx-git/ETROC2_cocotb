@@ -1,0 +1,42 @@
+//////////////////////////////////////////////////////////////////////////////////
+// Org:        	FNAL
+// Author:      Quan Sun
+// 
+// Create Date:    April. 19th, 2022
+// Description: discriminator wreal model for ETROC
+//
+// Revision: 
+//
+//
+//////////////////////////////////////////////////////////////////////////////////
+
+`timescale 1ps/1ps
+//`include "constants.vams"
+//`include "disciplines.vams"
+
+module Discri2(inp, inn, HysSelB, pd, vss, vdd, ib, out);
+
+input inp, inn, pd, vss, vdd, ib;
+input [3:0] HysSelB;
+output out;
+wreal inp, inn, vss, vdd, ib;
+
+parameter 	      real Td=100p;
+
+real timescale = 1p;    // match with timescale
+real ts;
+reg out_int;
+
+initial begin
+	ts = timescale;
+end
+
+always #10 begin
+	if(inp > inn) out_int = (vdd>1.0 & pd == 0)?1:1'bx;
+	else out_int = (vdd>1.0 & pd == 0)?0:1'bx;
+end
+
+// assign #(Td/timescale) out = out_int;
+assign out = out_int;
+
+endmodule

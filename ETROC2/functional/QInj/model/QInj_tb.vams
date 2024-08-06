@@ -1,0 +1,22 @@
+// test the low pass filter
+`include "disciplines.vams"
+`include "constants.vams" 
+module QInj_tb (  ); 
+
+electrical gnd;
+ground gnd;
+
+// wreal qinj
+QInj  #(.fs(100G)) I_QInj (.CIS(in), .ISEL(5), .EN(1), .QOUTSel(1), .VREF(1.0), .Qout1(pa_in));
+
+// wreal filter
+PreAmp  #(.fc(500M), .fs(100G)) I_PreAmp (.out(pa_out), .in(pa_in));
+
+// input to qinj
+vsource #(.type("pwl"), .wave("[1.0n 0 1.5n 0 1.51n 1.2 15.0n 1.2 15.01n 0]"), .pwlperiod(50.0n)) V0 ( in, gnd  );
+
+
+// load for filter output
+resistor #(.r(10K)) Rload ( filter_out, gnd  );
+
+endmodule

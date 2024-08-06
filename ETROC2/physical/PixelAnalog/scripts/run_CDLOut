@@ -1,0 +1,34 @@
+# clean up
+rm -rf CDLDir 
+mkdir CDLDir
+
+# si.env generation for ETROC2_TDC
+rm .running
+rm -f si.env
+sed 's/UserLibName/ETROC2_TDCWrap/g' scripts/si.env > ./si_0.env
+sed 's/UserCellName/ETROC2_TDC/g' ./si_0.env > ./si_1.env
+sed 's/UserNetlistName/ETROC2_TDC.src.cdl/g' ./si_1.env > ./si.env
+rm -rf si_*.env
+si -batch -command netlist
+
+# si.env generation for TH_Ctrl
+rm .running
+rm -f si.env
+sed 's/UserLibName/ETROC2_TH_Ctrl/g' scripts/si.env > ./si_0.env
+sed 's/UserCellName/TH_CtrlTMR/g' ./si_0.env > ./si_1.env
+sed 's/UserNetlistName/TH_CtrlTMR.src.cdl/g' ./si_1.env > ./si.env
+rm -rf si_*.env
+si -batch -command netlist
+
+# si.env generation for pixelDigitalTMR
+rm .running
+rm -f si.env
+sed 's/UserLibName/ETROC2_I2C_pixelDigitalV1/g' scripts/si.env > ./si_0.env
+sed 's/UserCellName/pixelDigitalTMR/g' ./si_0.env > ./si_1.env
+sed 's/UserNetlistName/pixelDigitalTMR.src.cdl/g' ./si_1.env > ./si.env
+rm -rf si_*.env
+si -batch -command netlist
+
+
+mv *.cdl ./CDLDir
+

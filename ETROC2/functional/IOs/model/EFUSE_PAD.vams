@@ -1,0 +1,7 @@
+
+module EFUSE_PAD(VSS, VDD_EFUSE);
+inout VSS, VDD_EFUSE;
+wreal VDD_EFUSE;
+
+
+endmodule

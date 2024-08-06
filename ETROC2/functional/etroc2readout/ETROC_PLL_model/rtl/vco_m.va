@@ -1,0 +1,178 @@
+// VerilogA for PLLBehLib, vco, veriloga
+
+`include "constants.vams"
+`include "disciplines.vams"
+
+ 
+module vco_m (out, in, capSel8, capSel7, capSel6, capSel5, capSel4, capSel3, capSel2, capSel1, capSel0);
+input in, capSel8, capSel7, capSel6, capSel5, capSel4, capSel3, capSel2, capSel1, capSel0; output out; electrical out, in, capSel8, capSel7, capSel6, capSel5, capSel4, capSel3, capSel2, capSel1, capSel0;
+parameter real Vmin=0;
+parameter real Vmax=1.2 from (Vmin:inf);
+parameter real Fmin=5G from (0:inf);
+parameter real Fmax=5.2G from (Fmin:inf);
+parameter real Vlo=0, Vhi=1.2;
+parameter real tt=10p from (0:inf);
+parameter real jitter=0 from [0:0.25/Fmax); // period jitter
+parameter real ttol=10p from (0:1/Fmax);
+real freq, phase, dT;
+integer n, seed;
+
+
+analog begin
+@(initial_step) seed = -561;
+// compute the freq from the input voltage
+
+if (V(capSel8)<0.6 && V(capSel7)<0.6 && V(capSel6)<0.6 && V(capSel5)<0.6 && V(capSel4)<0.6 && V(capSel3)<0.6 && V(capSel2)<0.6 && V(capSel1)<0.6 && V(capSel0)<0.6) begin
+	freq = (V(in) - Vmin)*0.2G / (Vmax - Vmin) + 5.4G; 
+	if (freq > (5.4G + 0.2G)) freq = 5.4G + 0.2G;
+	if (freq < 5.4G) freq = 5.4G;
+end
+else if(V(capSel8)<0.6 && V(capSel7)<0.6 && V(capSel6)<0.6 && V(capSel5)<0.6 && V(capSel4)<0.6 && V(capSel3)<0.6 && V(capSel2)<0.6 && V(capSel1)<0.6 && V(capSel0)>0.6) begin
+	freq = (V(in) - Vmin)*0.2G / (Vmax - Vmin) + 5.39G;
+	if (freq > (5.39G + 0.2G)) freq = 5.39G + 0.2G;
+	if (freq < 5.39G) freq = 5.39G;
+end
+else if(V(capSel8)<0.6 && V(capSel7)<0.6 && V(capSel6)<0.6 && V(capSel5)<0.6 && V(capSel4)<0.6 && V(capSel3)<0.6 && V(capSel2)<0.6 && V(capSel1)>0.6 && V(capSel0)<0.6) begin
+	freq = (V(in) - Vmin)*0.2G / (Vmax - Vmin) + 5.38G;
+	if (freq > (5.38G + 0.2G)) freq = 5.38G + 0.2G;
+	if (freq < 5.38G) freq = 5.38G;
+end
+else if(V(capSel8)<0.6 && V(capSel7)<0.6 && V(capSel6)<0.6 && V(capSel5)<0.6 && V(capSel4)<0.6 && V(capSel3)<0.6 && V(capSel2)<0.6 && V(capSel1)>0.6 && V(capSel0)>0.6) begin
+	freq = (V(in) - Vmin)*0.2G / (Vmax - Vmin) + 5.37G;
+	if (freq > (5.37G + 0.2G)) freq = 5.37G + 0.2G;
+	if (freq < 5.37G) freq = 5.37G;
+end
+else if(V(capSel8)<0.6 && V(capSel7)<0.6 && V(capSel6)<0.6 && V(capSel5)<0.6 && V(capSel4)<0.6 && V(capSel3)<0.6 && V(capSel2)>0.6 && V(capSel1)<0.6 && V(capSel0)<0.6) begin
+	freq = (V(in) - Vmin)*0.2G / (Vmax - Vmin) + 5.36G;
+	if (freq > (5.36G + 0.2G)) freq = 5.36G + 0.2G;
+	if (freq < 5.36G) freq = 5.36G;
+end
+else if(V(capSel8)<0.6 && V(capSel7)<0.6 && V(capSel6)<0.6 && V(capSel5)<0.6 && V(capSel4)<0.6 && V(capSel3)<0.6 && V(capSel2)>0.6 && V(capSel1)<0.6 && V(capSel0)>0.6) begin
+	freq = (V(in) - Vmin)*0.2G / (Vmax - Vmin) + 5.35G;
+	if (freq > (5.35G + 0.2G)) freq = 5.35G + 0.2G;
+	if (freq < 5.35G) freq = 5.35G;
+end
+else if(V(capSel8)<0.6 && V(capSel7)<0.6 && V(capSel6)<0.6 && V(capSel5)<0.6 && V(capSel4)<0.6 && V(capSel3)<0.6 && V(capSel2)>0.6 && V(capSel1)>0.6 && V(capSel0)<0.6) begin
+	freq = (V(in) - Vmin)*0.2G / (Vmax - Vmin) + 5.34G;
+	if (freq > (5.34G + 0.2G)) freq = 5.34G + 0.2G;
+	if (freq < 5.34G) freq = 5.34G;
+end
+else if(V(capSel8)<0.6 && V(capSel7)<0.6 && V(capSel6)<0.6 && V(capSel5)<0.6 && V(capSel4)<0.6 && V(capSel3)<0.6 && V(capSel2)>0.6 && V(capSel1)>0.6 && V(capSel0)>0.6) begin
+	freq = (V(in) - Vmin)*0.2G / (Vmax - Vmin) + 5.33G;
+	if (freq > (5.33G + 0.2G)) freq = 5.33G + 0.2G;
+	if (freq < 5.33G) freq = 5.33G;
+end
+
+
+else if (V(capSel8)<0.6 && V(capSel7)<0.6 && V(capSel6)<0.6 && V(capSel5)<0.6 && V(capSel4)<0.6 && V(capSel3)>0.6 && V(capSel2)<0.6 && V(capSel1)<0.6 && V(capSel0)<0.6) begin //000001000
+	freq = (V(in) - Vmin)*0.2G / (Vmax - Vmin) + 5.32G;
+	if (freq > (5.32G + 0.2G)) freq = 5.32G + 0.2G;
+	if (freq < 5.32G) freq = 5.32G;
+end
+else if(V(capSel8)<0.6 && V(capSel7)<0.6 && V(capSel6)<0.6 && V(capSel5)<0.6 && V(capSel4)<0.6 && V(capSel3)>0.6 && V(capSel2)<0.6 && V(capSel1)<0.6 && V(capSel0)>0.6) begin //000001001
+	freq = (V(in) - Vmin)*0.2G / (Vmax - Vmin) + 5.31G;
+	if (freq > (5.31G + 0.2G)) freq = 5.31G + 0.2G;
+	if (freq < 5.31G) freq = 5.31G;
+end
+else if(V(capSel8)<0.6 && V(capSel7)<0.6 && V(capSel6)<0.6 && V(capSel5)<0.6 && V(capSel4)<0.6 && V(capSel3)>0.6 && V(capSel2)<0.6 && V(capSel1)>0.6 && V(capSel0)<0.6) begin //000001010
+	freq = (V(in) - Vmin)*0.2G / (Vmax - Vmin) + 5.30G;
+	if (freq > (5.30G + 0.2G)) freq = 5.30G + 0.2G;
+	if (freq < 5.30G) freq = 5.30G;
+end
+else if(V(capSel8)<0.6 && V(capSel7)<0.6 && V(capSel6)<0.6 && V(capSel5)<0.6 && V(capSel4)<0.6 && V(capSel3)>0.6 && V(capSel2)<0.6 && V(capSel1)>0.6 && V(capSel0)>0.6) begin //000001011
+	freq = (V(in) - Vmin)*0.2G / (Vmax - Vmin) + 5.29G;
+	if (freq > (5.29G + 0.2G)) freq = 5.29G + 0.2G;
+	if (freq < 5.29G) freq = 5.29G;
+end
+else if(V(capSel8)<0.6 && V(capSel7)<0.6 && V(capSel6)<0.6 && V(capSel5)<0.6 && V(capSel4)<0.6 && V(capSel3)>0.6 && V(capSel2)>0.6 && V(capSel1)<0.6 && V(capSel0)<0.6) begin  //000001100
+	freq = (V(in) - Vmin)*0.2G / (Vmax - Vmin) + 5.25G;
+	if (freq > (5.25G + 0.2G)) freq = 5.25G + 0.2G;
+	if (freq < 5.25G) freq = 5.25G;
+end
+else if(V(capSel8)<0.6 && V(capSel7)<0.6 && V(capSel6)<0.6 && V(capSel5)<0.6 && V(capSel4)<0.6 && V(capSel3)>0.6 && V(capSel2)>0.6 && V(capSel1)<0.6 && V(capSel0)>0.6) begin  //000001101
+	freq = (V(in) - Vmin)*0.2G / (Vmax - Vmin) + 5.20G;
+	if (freq > (5.20G + 0.2G)) freq = 5.20G + 0.2G;
+	if (freq < 5.20G) freq = 5.20G;
+end
+else if(V(capSel8)<0.6 && V(capSel7)<0.6 && V(capSel6)<0.6 && V(capSel5)<0.6 && V(capSel4)<0.6 && V(capSel3)>0.6 && V(capSel2)>0.6 && V(capSel1)>0.6 && V(capSel0)<0.6) begin //000001110
+	freq = (V(in) - Vmin)*0.2G / (Vmax - Vmin) + 5.15G;
+	if (freq > (5.15G + 0.2G)) freq = 5.15G + 0.2G;
+	if (freq < 5.15G) freq = 5.15G;
+end
+else if(V(capSel8)<0.6 && V(capSel7)<0.6 && V(capSel6)<0.6 && V(capSel5)<0.6 && V(capSel4)<0.6 && V(capSel3)>0.6 && V(capSel2)>0.6 && V(capSel1)>0.6 && V(capSel0)>0.6) begin //000001111
+	freq = (V(in) - Vmin)*0.2G / (Vmax - Vmin) + 5.10G;
+	if (freq > (5.10G + 0.2G)) freq = 5.10G + 0.2G;
+	if (freq < 5.10G) freq = 5.10G;
+end
+
+else if (V(capSel8)<0.6 && V(capSel7)<0.6 && V(capSel6)<0.6 && V(capSel5)<0.6 && V(capSel4)>0.6 && V(capSel3)>0.6 && V(capSel2)<0.6 && V(capSel1)<0.6 && V(capSel0)<0.6) begin //000011000
+	freq = (V(in) - Vmin)*0.2G / (Vmax - Vmin) + 5.08G;
+	if (freq > (5.08G + 0.2G)) freq = 5.08G + 0.2G;
+	if (freq < 5.08G) freq = 5.08G;
+end
+else if(V(capSel8)<0.6 && V(capSel7)<0.6 && V(capSel6)<0.6 && V(capSel5)<0.6 && V(capSel4)>0.6 && V(capSel3)>0.6 && V(capSel2)<0.6 && V(capSel1)<0.6 && V(capSel0)>0.6) begin //000011001
+	freq = (V(in) - Vmin)*0.2G / (Vmax - Vmin) + 5.06G;
+	if (freq > (5.06G + 0.2G)) freq = 5.06G + 0.2G;
+	if (freq < 5.06G) freq = 5.06G;
+end
+else if(V(capSel8)<0.6 && V(capSel7)<0.6 && V(capSel6)<0.6 && V(capSel5)<0.6 && V(capSel4)>0.6 && V(capSel3)>0.6 && V(capSel2)<0.6 && V(capSel1)>0.6 && V(capSel0)<0.6) begin //000011010
+	freq = (V(in) - Vmin)*0.2G / (Vmax - Vmin) + 5.04G;
+	if (freq > (5.04G + 0.2G)) freq = 5.04G + 0.2G;
+	if (freq < 5.04G) freq = 5.04G;
+end
+else if(V(capSel8)<0.6 && V(capSel7)<0.6 && V(capSel6)<0.6 && V(capSel5)<0.6 && V(capSel4)>0.6 && V(capSel3)>0.6 && V(capSel2)<0.6 && V(capSel1)>0.6 && V(capSel0)>0.6) begin //000011011
+	freq = (V(in) - Vmin)*0.2G / (Vmax - Vmin) + 5.02G;
+	if (freq > (5.02G + 0.2G)) freq = 5.02G + 0.2G;
+	if (freq < 5.02G) freq = 5.02G;
+end
+else if(V(capSel8)<0.6 && V(capSel7)<0.6 && V(capSel6)<0.6 && V(capSel5)<0.6 && V(capSel4)>0.6 && V(capSel3)>0.6 && V(capSel2)>0.6 && V(capSel1)<0.6 && V(capSel0)<0.6) begin  //000011100
+	freq = (V(in) - Vmin)*0.2G / (Vmax - Vmin) + 5.01G;
+	if (freq > (5.01G + 0.2G)) freq = 5.01G + 0.2G;
+	if (freq < 5.01G) freq = 5.01G;
+end
+else if(V(capSel8)<0.6 && V(capSel7)<0.6 && V(capSel6)<0.6 && V(capSel5)<0.6 && V(capSel4)>0.6 && V(capSel3)>0.6 && V(capSel2)>0.6 && V(capSel1)<0.6 && V(capSel0)>0.6) begin  //000011101
+	freq = (V(in) - Vmin)*0.2G / (Vmax - Vmin) + 5.00G;
+	if (freq > (5.00G + 0.2G)) freq = 5.00G + 0.2G;
+	if (freq < 5.00G) freq = 5.00G;
+end
+else if(V(capSel8)<0.6 && V(capSel7)<0.6 && V(capSel6)<0.6 && V(capSel5)<0.6 && V(capSel4)>0.6 && V(capSel3)>0.6 && V(capSel2)>0.6 && V(capSel1)>0.6 && V(capSel0)<0.6) begin //000011110
+	freq = (V(in) - Vmin)*0.2G / (Vmax - Vmin) + 4.99G;
+	if (freq > (4.99G + 0.2G)) freq = 4.99G + 0.2G;
+	if (freq < 4.99G) freq = 4.99G;
+end
+else if(V(capSel8)<0.6 && V(capSel7)<0.6 && V(capSel6)<0.6 && V(capSel5)<0.6 && V(capSel4)>0.6 && V(capSel3)>0.6 && V(capSel2)>0.6 && V(capSel1)>0.6 && V(capSel0)>0.6) begin //000011111
+	freq = (V(in) - Vmin)*0.2G / (Vmax - Vmin) + 4.98G;
+	if (freq > (4.98G + 0.2G)) freq = 4.98G + 0.2G;
+	if (freq < 4.98G) freq = 4.98G;
+end
+
+else if(V(capSel8)<0.6 && V(capSel7)<0.6 && V(capSel6)<0.6 && V(capSel5)>0.6 && V(capSel4)<0.6 && V(capSel3)<0.6 && V(capSel2)<0.6 && V(capSel1)<0.6 && V(capSel0)<0.6) begin //000100000
+	freq = (V(in) - Vmin)*0.2G / (Vmax - Vmin) + 4.96G;
+	if (freq > (4.96G + 0.2G)) freq = 4.96G + 0.2G;
+	if (freq < 4.96G) freq = 4.96G;
+end
+
+else begin
+	freq = (V(in) - Vmin)*0.2G / (Vmax - Vmin) + 4.8G;
+	if (freq > (4.8G + 0.2G)) freq = 4.8G + 0.2G;
+	if (freq < 4.8G) freq = 4.8G;
+end
+//freq = (V(in) - Vmin)*(Fmax - Fmin) / (Vmax - Vmin) + Fmin;
+// bound the frequency (this is optional)
+//if (freq > Fmax) freq = Fmax;
+//if (freq < Fmin) freq = Fmin;
+// add the phase noise
+freq = freq/(1 + dT*freq);
+// phase is the integral of the freq modulo 2p
+phase = 2*`M_PI*idtmod(freq, 0.0, 1.0, -0.5);
+// update jitter twice per period
+// 1.414=sqrt(K), K=2 jitter updates/period
+@(cross(phase + `M_PI/2, +1, ttol) or cross(phase - `M_PI/2, +1, ttol)) begin
+dT = 1.414*jitter*$rdist_normal(seed,0, 1);
+n = (phase >= -`M_PI/2) && (phase < `M_PI/2);
+end
+// generate the output
+V(out) <+ transition(n ? Vhi : Vlo, 0, tt);
+end
+endmodule
+

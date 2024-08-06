@@ -1,0 +1,15 @@
+v2lvs \
+-l ./functional/PLL/model/ETROC1_HsLib.v -s ../spice_netlist/ETROC1_HsLibs.src.net \
+-l ./functional/DAC10bit/model/DAC10bit.vams -s ./physical/PixelAnalog/spice_netlist/DAC10bit.src.net \
+-l ./functional/PA/model/PreAmp.vams -s ./physical/PixelAnalog/spice_netlist/PreAmp.src.net \
+-l ./functional/QInj/model/QInj.vams -s ./physical/PixelAnalog/spice_netlist/QInj.src.net \
+-l ./functional/opamp2/model/opamp2.vams -s ./physical/PixelAnalog/spice_netlist/opamp2.src.net \
+-l ./functional/Discriminator/model/Discri2.vams -s ./physical/PixelAnalog/spice_netlist/Discri2.src.net \
+-l ./functional/SF_1V2_OVT_NOB2B/model/SF_1V2_OVT_NOB2B.vams -s ./physical/PixelAnalog/spice_netlist/SF_1V2_OVT_NOB2B.src.net \
+-l ./functional/ETROC2_TDC/model/ETROC2_TDC.v -s ./CDLDir/ETROC2_TDC.src.cdl \
+-l ./functional/PreAmpBias/model/PreAmpBias.vams -s ./physical/PixelAnalog/spice_netlist/PreAmpBias.src.net \
+-l ./physical/TH_CtrlTMR/netlist/TH_CtrlTMR.v -s ./CDLDir/TH_CtrlTMR.src.cdl \
+-l ./functional/pixelDigitalTMR/model/pixelDigitalTMR.v -s ./CDLDir/pixelDigitalTMR.src.cdl \
+-v ./PixelAnalog_lvs.vams  \
+-o PixelAnalog.src.spi \
+-a "<"

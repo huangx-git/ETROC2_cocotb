@@ -1,0 +1,37 @@
+// test the low pass filter
+`include "disciplines.vams"
+`timescale 1ns/1ps
+module opamp2_tb(); 
+
+//electrical gnd;
+//ground gnd;
+
+wreal out;
+real in;
+reg pd;
+
+initial begin
+in = 0;
+pd = 1;
+# 20 pd = 0;
+# 10 in = 0.1;
+# 10 in = 0.2;
+# 10 in = 0.3;
+# 10 in = 0.4;
+#200
+$finish;
+end
+
+
+opamp2 opamp2_inst (.inp(in), .inn(out), .out(out), .vdd(1.2), .vss(0.0), .pd(pd));
+
+
+
+// input to qinj
+//vsource #(.type("pwl"), .wave("[1.0n 0 1.5n 0 1.51n 1.2 15.0n 1.2 15.01n 0]"), .pwlperiod(50.0n)) V0 ( in, gnd  );
+
+
+// load for filter output
+//resistor #(.r(10K)) Rload ( out, gnd  );
+
+endmodule

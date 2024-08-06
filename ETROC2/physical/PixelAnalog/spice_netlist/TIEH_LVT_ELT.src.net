@@ -1,0 +1,29 @@
+************************************************************************
+* auCdl Netlist:
+* 
+* Library Name:  ETROC1_HsLib
+* Top Cell Name: TIEH_LVT_ELT
+* View Name:     schematic
+* Netlisted on:  Jun 16 18:23:21 2022
+************************************************************************
+
+.INCLUDE  /usr/local/TSMCPDK/TSMC65/V1.7A_1/1p9m6x1z1u/tsmcN65/../PVS_QRC/lvs/source.added
+*.EQUATION
+*.SCALE METER
+*.MEGA
+.PARAM
+
+
+
+************************************************************************
+* Library Name: ETROC1_HsLib
+* Cell Name:    TIEH_LVT_ELT
+* View Name:    schematic
+************************************************************************
+
+.SUBCKT TIEH_LVT_ELT VDD VSS ZN
+*.PININFO ZN:O VDD:B VSS:B
+MM0_ELT net5 net5 VSS VSS nch_lvt l=60n w=1.42u m=1
+MM1_ELT ZN net5 VDD VDD pch_lvt l=60n w=3.74u m=1
+.ENDS
+

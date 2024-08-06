@@ -1,0 +1,168 @@
+//////////////////////////////////////////////////////////////////////////////////
+// Org:        	FNAL
+// Author:      Quan Sun
+// 
+// Create Date:    April. 15th, 2022
+// Description: loop filter model of wreal PLL
+//
+// Revision: 
+//
+//
+//////////////////////////////////////////////////////////////////////////////////
+
+`include "constants.vams"
+`include "disciplines.vams"
+`timescale 1ps / 1ps
+
+module lpf(IIn, VOut);
+
+output VOut;  // output from filter
+wreal VOut;
+   
+input  IIn;         // input to filter as discrete wreal current
+wreal IIn;
+   
+//-----------------------------------------------------------
+//PARAMETER DELCARATIONS
+//
+parameter real fs = 1G from (0:inf);  // sampling frequency in Hz
+parameter real Rzero=8000;   // Rzero 
+parameter real RCenter=100M;    // parasitic resistance
+parameter real C1 = 8p;
+parameter real C2 = 160p;  	
+   
+  
+// LOCAL VARIABLES
+// Variables for calculating coeficients for LPF
+//
+real 	timescale = 1p;    // match with timescale
+
+real      ts;
+real      b1, a1, a2, g;
+real      num0;
+real      num1;
+real      num2;
+real      den0;
+real      den1;
+real      den2;
+   
+real      Iinst, Iin;
+real      T1, T2, I1, I2;
+real      xn, xn1, xn2;
+real      yn, yn1, yn2;
+real      out_val;
+real      voutWreal;
+
+real VDD=1.2;
+real VSS=0;
+   
+initial begin
+	yn2 = 0;
+	yn1 = 0;
+	yn = 0;
+	xn2 = 0;
+	xn1 = 0;
+	xn = 0;
+end 
+   
+initial begin 
+// Filter intermediate variables and coefficients calculation
+//
+ts= 1.0/(fs*timescale); // in ps
+g = 2.0*fs; // 2/Ts in sec
+      
+// Z(s)= VOUT/Iin= RCenter * B1(s)/A2(s),
+//B1(s)= 1 + b1*s; b1=Rzero*C2;
+//A2(s)= 1 + a1*s + a2*s**2; 
+// a1=Rzero*C2 + C1*RCenter +C2*RCenter; 
+// a2= Rzero*RCenter*C1*C2;
+
+b1 = Rzero*C2;
+a1 = Rzero*C2 + C1*RCenter +C2*RCenter; 
+a2 = Rzero*RCenter*C1*C2;
+     
+
+//bilinear transform
+//s --> (2/Ts)*(1-z**(-1))/(1+z**(-1))
+// B1(s)/A2(s) --> num(z**(-1))/den(z**(-1)):
+
+// numerator
+
+num0 = RCenter * (1 + b1*g);
+num1 = RCenter * (2);	
+num2 = RCenter * (1 - b1*g);	
+
+// denominator
+
+den0 = 1 + a1*g + a2*g**2;
+den1 = 2*(1 - a2*g**2);	
+den2 = 1 - a1*g + a2*g**2;
+      
+end // initial end
+
+
+/*   
+   // Input signal averageing based on sampling time
+   real Tbegin, Iinteg;
+   real Tlast, Ilast;
+   always @(VIN) begin
+      if ((VIN === `wrealXState) || (VIN === `wrealZState)) begin
+	 Iin=0; // count x and z state as input 0.0
+	 // collecting the value*time integral
+	 Iinteg = Iinteg + Ilast*($abstime-Tlast);
+	 Tlast=$abstime;           // and save starting point for next two.
+	 Ilast=Iin;
+      end else begin
+	 Iin=VIN;
+      
+	 // collecting the value*time integral
+	 Iinteg = Iinteg + Ilast*($abstime-Tlast);
+	 Tlast=$abstime;           // and save starting point for next two.
+	 Ilast=Iin;
+      end
+   end
+
+*/
+   
+   
+//-----------------------------------------------------------
+// Main function
+//
+real Iavg;
+real Tbegin, Iinteg;
+real Tlast, Ilast;   
+
+always@(IIn) Iin = IIn;
+
+always #ts begin
+      
+Iinteg = Iinteg + Ilast*($abstime-Tlast);     
+Tlast=$abstime;           // and save starting point for next two.
+Ilast=Iin;
+Iavg = Iinteg/($abstime-Tbegin);
+Tbegin = $abstime;
+Iinteg = 0;
+      
+	
+// Signal flow graph intermediate values
+xn2 = xn1;
+xn1 = xn;
+xn = Iavg; // use the everage current over the last ts
+yn2 = yn1;
+yn1 = yn;
+// reset the averager
+      
+      
+yn = ((num0*xn) + (num1*xn1) + (num2*xn2) 
+	    - (den1*yn1 + den2*yn2)            )/den0 ;
+
+// Limit the outputs
+if (yn < VSS)
+	yn = VSS ;
+if (yn > VDD)
+	yn = VDD;
+end
+
+assign VOut  = yn; 
+  
+endmodule
