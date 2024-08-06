@@ -77,6 +77,9 @@ Step 4. Run VNC Viewer to configure the connection to the server (`sphy7asic01.s
 git clone https://github.com/huangx-git/ETROC2_cocotb.git
 ```
 
+A [personal access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-personal-access-token-classic) is needed to access GitHub resources on your behalf. 
+
+
 ## Python Environment
 
 We use a Python virtual environment for the _ETROC2 cocotb_ verification setup. More details are provided [here](https://docs.python.org/3.10/tutorial/venv.html). To setup the Python environment for the first time:
