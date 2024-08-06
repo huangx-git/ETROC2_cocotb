@@ -338,7 +338,7 @@ make show-coverage-results
 This [document](https://github.com/Fermilab-Microelectronics/ETROC2_RefManualNotes/blob/main/ETROC2_RefManualNotes.md) contains notes on the ETROC2 manual maintained on [Overleaf](https://www.overleaf.com/project/63d18c8068a93c554632fff0).
 
 
-# Using VNC through a Putty SSH tunnel
+</details># Using VNC through a Putty SSH tunnel</details>
 Step 1. Download the latest version of Putty [here](https://www.chiark.greenend.org.uk/%7Esgtatham/putty/).
 
 Step 2. Download the latest version of VNC Viewer [here](https://www.realvnc.com/en/connect/download/viewer/?lai_sr=5-9&lai_sl=l) and install it.
