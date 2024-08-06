@@ -1,0 +1,830 @@
+# SimVision Command Script (Thu May 02 09:38:32 AM CDT 2024)
+#
+# Version 21.09.s005
+#
+# You can restore this configuration with:
+#
+#      xrun -timescale 1ns/1ps -incdir /asic/projects/E/ETROC2_RO/gdg/ETROC2/ETROC2_cocotb/cocotb/.. -incdir /asic/projects/E/ETROC2_RO/gdg/ETROC2/ETROC2_cocotb/cocotb/../ETROC2/functional -incdir /asic/projects/E/ETROC2_RO/gdg/ETROC2/ETROC2_cocotb/cocotb/sv -debug -clean -neverwarn -access r -no_analogsolver -define SIM +define+COCOTB_SIM -l xrun_cocotb.log -licqueue -64 -xmlibdirpath sim_build -plinowarn -top ETROC2_tb -loadvpi /fasic_home/gdg/venvs/cocotb-env/lib64/python3.8/site-packages/cocotb/libs/libcocotbvpi_ius.so:vlog_startup_routines_bootstrap -access +rwc -createdebugdb /asic/projects/E/ETROC2_RO/gdg/ETROC2/ETROC2_cocotb/cocotb/../ETROC2/functional/PLL/model/ETROC1_HsLib.v /asic/cad/Library/tsmc/TSMC65_VCAD/Base_PDK/digital/Front_End/verilog/tcbn65lp_200a/tcbn65lp.v /asic/projects/E/ETROC2_RO/gdg/ETROC2/ETROC2_cocotb/cocotb/../ETROC2/functional/peripheryTMR/model/customDigitalLib.v /asic/projects/E/ETROC2_RO/gdg/ETROC2/ETROC2_cocotb/cocotb/../ETROC2/functional/ETROC2/model/ETROC2_tb_include.vams -input /asic/projects/E/ETROC2_RO/gdg/ETROC2/ETROC2_cocotb/cocotb/waveforms/restore_waveform_general.tcl
+#
+
+
+#
+# Preferences
+#
+preferences set toolbar-Standard-WatchWindow {
+  usual
+  shown 0
+}
+preferences set txe-locate-add-fibers 1
+preferences set signal-type-colors {assertion #FF0000 output #FFA500 group #0099FF inout #00FFFF input #FFFF00 fiber #00EEEE errorsignal #FF0000 unknown #FFFFFF overlay #0099FF internal #00FF00 reference #FFFFFF}
+preferences set txe-navigate-search-locate 0
+preferences set txe-view-hold 0
+preferences set plugin-enable-svdatabrowser-new 1
+preferences set toolbar-SimControl-WaveWindow {
+  usual
+  position -row 1 -pos 2 -anchor e
+}
+preferences set toolbar-CursorControl-WaveWindow {
+  usual
+  position -row 0 -pos 3
+}
+preferences set toolbar-Windows-WatchWindow {
+  usual
+  shown 0
+}
+preferences set verilog-colors {Su #ff0099 0 {} 1 {} HiZ #ff9900 We #00ffff Pu #9900ff Sm #00ff99 X #ff0000 StrX #ff0000 other #ffff00 Z #ff9900 Me #0000ff La #ff00ff St {}}
+preferences set toolbar-sendToIndago-WaveWindow {
+  usual
+  position -pos 1
+}
+preferences set sb-tab-size 10
+preferences set memviewer-font-size large
+preferences set txe-navigate-waveform-locate 1
+preferences set txe-view-hidden 0
+preferences set waveform-height 12
+preferences set toolbar-Standard-Console {
+  usual
+  position -pos 1
+}
+preferences set exportdlg-file simvision_sv_i2c_trace
+preferences set txe-search-show-linenumbers 1
+preferences set toolbar-Search-Console {
+  usual
+  position -pos 2
+}
+preferences set toolbar-NavSignalList-WaveWindow {
+  usual
+  position -row 2 -pos 1
+}
+preferences set toolbar-txe_waveform_toggle-WaveWindow {
+  usual
+  position -pos 3
+}
+preferences set plugin-enable-groupscope 0
+preferences set key-bindings {PageUp PageUp Edit>Undo Ctrl+z View>Zoom>Next {Alt+Right arrow} View>Zoom>In Alt+i PageDown PageDown ScrollDown {Down arrow} Edit>Copy Ctrl+c View>Zoom>FullY_widget y Edit>Create>Group Ctrl+g Simulation>NextInScope F7 Edit>Select>All Ctrl+a Format>Radix>Decimal Ctrl+Shift+D Edit>Ungroup Ctrl+Shift+G TopOfPage Home Edit>Create>Condition Ctrl+e {command -console SimVision {%w sidebar access designbrowser selectall}} Alt+a ScrollLeft {Left arrow} View>Zoom>FullX_widget = Edit>SelectAllText Alt+a Edit>TextSearchConsole Alt+s Windows>SendTo>Waveform Ctrl+w Simulation>Return Shift+F5 View>CallstackDown {Ctrl+Down arrow} Select>All Ctrl+a Edit>Delete Del Format>Radix>Octal Ctrl+Shift+O Edit>Cut Ctrl+x Simulation>Run F2 Edit>Create>Marker Ctrl+m View>Center Alt+c View>CallstackInWindow Ctrl+k Edit>SelectAll Ctrl+a File>OpenDatabase Ctrl+o Edit>Redo Ctrl+y Format>Radix>Binary Ctrl+Shift+B View>ExpandSequenceTime>AtCursor Alt+x ScrollUp {Up arrow} File>CloseWindow Ctrl+Shift+w ScrollRight {Right arrow} View>Zoom>FullX Alt+= Edit>Create>Bus Ctrl+b Explore>NextEdge Ctrl+\] View>Zoom>Cursor-Baseline Alt+z View>Zoom>OutX Alt+o Edit>GoToLine Ctrl+g View>Zoom>Fit Alt+= View>Zoom>OutX_widget o View>CallstackUp {Ctrl+Up arrow} View>Bookmarks>Add Ctrl+b Format>Radix>Hexadecimal Ctrl+Shift+H Edit>Search Ctrl+f Simulation>Next F6 View>ShowValues Ctrl+s View>Zoom>InX Alt+i Edit>Create>MarkerAtCursor Ctrl+Shift+M View>Zoom>Out Alt+o Edit>TextSearch Ctrl+f Format>Signed Ctrl+Shift+S Edit>Paste Ctrl+v View>Zoom>Previous {Alt+Left arrow} View>CollapseSequenceTime>AtCursor Alt+s Format>Radix>ASCII Ctrl+Shift+A View>Zoom>InX_widget i Explore>PreviousEdge {Ctrl+[} Simulation>Step F5 BottomOfPage End}
+preferences set plugin-enable-interleaveandcompare 0
+preferences set plugin-enable-waveformfrequencyplot 0
+preferences set toolbar-SimControl-WatchWindow {
+  usual
+  shown 0
+}
+preferences set txe-navigate-waveform-next-child 1
+preferences set toolbar-WaveZoom-WaveWindow {
+  usual
+  position -row 1 -pos 3 -anchor w
+}
+preferences set vhdl-colors {X #ff0000 0 {} L #00ffff H #00ffff U #9900ff 1 {} - {} Z #ff9900 W #ff0000}
+preferences set txe-locate-scroll-x 1
+preferences set txe-locate-scroll-y 1
+preferences set txe-locate-pop-waveform 1
+preferences set whats-new-dont-show-at-startup 1
+preferences set toolbar-TimeSearch-WatchWindow {
+  usual
+  shown 0
+}
+preferences set toolbar-WaveZoom-WaveWindow {
+  usual
+  position -row 1 -pos 1 -anchor w
+}
+preferences set toolbar-SimControl-WaveWindow {
+  usual
+  position -row 1 -pos 0
+}
+preferences set toolbar-txe_waveform_toggle-WaveWindow {
+  usual
+  position -pos 1
+}
+preferences set toolbar-Windows-WaveWindow {
+  usual
+  position -pos 2
+}
+preferences set toolbar-TimeSearch-WaveWindow {
+  usual
+  position -anchor e
+}
+preferences set cursorctl-dont-show-sync-warning 1
+preferences set toolbar-CursorControl-WaveWindow {
+  usual
+  position -row 0 -pos 2
+}
+preferences set atod-threshold1 0.5V
+preferences set atod-threshold2 0.7V
+preferences set waveform-height 15
+preferences set vhdl-colors {H #00ffff L #00ffff 0 {} X #ff0000 - {} 1 {} U #9900ff Z #ff9900 W #ff0000}
+preferences set toolbar-NavSignalList-WaveWindow {
+  usual
+  position -pos 2
+}
+preferences set key-bindings {Edit>Undo Ctrl+z PageUp PageUp View>Zoom>In Alt+i View>Zoom>Next {Alt+Right arrow} PageDown PageDown Edit>Copy Ctrl+c ScrollDown {Down arrow} Edit>Select>All Ctrl+a Simulation>NextInScope F7 Edit>Create>Group Ctrl+g View>Zoom>FullY_widget y Format>Radix>Decimal Ctrl+Shift+D Edit>Ungroup Ctrl+Shift+G TopOfPage Home Edit>Create>Condition Ctrl+e {command -console SimVision {%w sidebar access designbrowser selectall}} Alt+a ScrollLeft {Left arrow} View>Zoom>FullX_widget = Edit>SelectAllText Alt+a Edit>TextSearchConsole Alt+s Windows>SendTo>Waveform Ctrl+w Simulation>Return Shift+F5 View>CallstackDown {Ctrl+Down arrow} Select>All Ctrl+a Edit>Delete Del Format>Radix>Octal Ctrl+Shift+O Edit>Cut Ctrl+x Simulation>Run F2 Edit>Create>Marker Ctrl+m View>Center Alt+c View>CallstackInWindow Ctrl+k Edit>SelectAll Ctrl+a File>OpenDatabase Ctrl+o Edit>Redo Ctrl+y Format>Radix>Binary Ctrl+Shift+B View>ExpandSequenceTime>AtCursor Alt+x ScrollUp {Up arrow} File>CloseWindow Ctrl+Shift+w ScrollRight {Right arrow} View>Zoom>FullX Alt+= Edit>Create>Bus Ctrl+b Explore>NextEdge Ctrl+\] View>Zoom>Cursor-Baseline Alt+z View>Zoom>OutX Alt+o Edit>GoToLine Ctrl+g View>Zoom>Fit Alt+= View>Zoom>OutX_widget o View>CallstackUp {Ctrl+Up arrow} View>Bookmarks>Add Ctrl+b View>ShowValues Ctrl+s Simulation>Next F6 Edit>Search Ctrl+f Format>Radix>Hexadecimal Ctrl+Shift+H Edit>Create>MarkerAtCursor Ctrl+Shift+M View>Zoom>InX Alt+i View>Zoom>Out Alt+o Edit>TextSearch Ctrl+f View>Zoom>Previous {Alt+Left arrow} Edit>Paste Ctrl+v Format>Signed Ctrl+Shift+S View>CollapseSequenceTime>AtCursor Alt+s View>Zoom>InX_widget i Format>Radix>ASCII Ctrl+Shift+A BottomOfPage End Simulation>Step F5 Explore>PreviousEdge {Ctrl+[}}
+preferences set toolbar-sendToIndago-WaveWindow {
+  usual
+  position -pos 3
+}
+
+#
+# Simulator
+#
+database require simulator -hints {
+	simulator "xrun -timescale 1ns/1ps -incdir /asic/projects/E/ETROC2_RO/gdg/ETROC2/ETROC2_cocotb/cocotb/.. -incdir /asic/projects/E/ETROC2_RO/gdg/ETROC2/ETROC2_cocotb/cocotb/../ETROC2/functional -incdir /asic/projects/E/ETROC2_RO/gdg/ETROC2/ETROC2_cocotb/cocotb/sv -debug -clean -neverwarn -access r -no_analogsolver -define SIM +define+COCOTB_SIM -l xrun_cocotb.log -licqueue -64 -xmlibdirpath sim_build -plinowarn -gui -top ETROC2_tb -loadvpi /fasic_home/gdg/venvs/cocotb-env/lib64/python3.8/site-packages/cocotb/libs/libcocotbvpi_ius.so:vlog_startup_routines_bootstrap -access +rwc -createdebugdb /asic/projects/E/ETROC2_RO/gdg/ETROC2/ETROC2_cocotb/cocotb/../ETROC2/functional/PLL/model/ETROC1_HsLib.v /asic/cad/Library/tsmc/TSMC65_VCAD/Base_PDK/digital/Front_End/verilog/tcbn65lp_200a/tcbn65lp.v /asic/projects/E/ETROC2_RO/gdg/ETROC2/ETROC2_cocotb/cocotb/../ETROC2/functional/peripheryTMR/model/customDigitalLib.v /asic/projects/E/ETROC2_RO/gdg/ETROC2/ETROC2_cocotb/cocotb/../ETROC2/functional/ETROC2/model/ETROC2_tb_include.vams -input restore_waveform_general.tcl"
+}
+#
+# Groups
+#
+catch {group new -name {Group 1} -overlay 0}
+catch {group new -name sda_others -overlay 0}
+catch {group new -name scl_others -overlay 0}
+group using {Group 1}
+group set -overlay 0
+group set -comment {}
+group clear 0 end
+
+group insert \
+    {### cdivider}
+group using sda_others
+group set -overlay 0
+group set -comment {}
+group clear 0 end
+
+group using scl_others
+group set -overlay 0
+group set -comment {}
+group clear 0 end
+
+
+#
+# Markers
+#
+set time 27650ns
+if {[catch {marker new -name  {GENERAL: power-up seq. (BEGIN)} -time $time}] != ""} {
+    marker set -using {GENERAL: power-up seq. (BEGIN)} -time $time
+}
+set time 17095ns
+if {[catch {marker new -name  {I2C: descrambler} -time $time}] != ""} {
+    marker set -using {I2C: descrambler} -time $time
+}
+set time 159283ns
+if {[catch {marker new -name  {I2C: DAC config (2)} -time $time}] != ""} {
+    marker set -using {I2C: DAC config (2)} -time $time
+}
+set time 170874ns
+if {[catch {marker new -name  {I2C: QInjEn=1} -time $time}] != ""} {
+    marker set -using {I2C: QInjEn=1} -time $time
+}
+set time 148650ns
+if {[catch {marker new -name  {I2C: DAC config (1)} -time $time}] != ""} {
+    marker set -using {I2C: DAC config (1)} -time $time
+}
+set time 147650ns
+if {[catch {marker new -name  {GENERAL: power-up seq. (END)} -time $time}] != ""} {
+    marker set -using {GENERAL: power-up seq. (END)} -time $time
+}
+set time 182232.96ns
+if {[catch {marker new -name  {FC: ChargeInj (1)} -time $time}] != ""} {
+    marker set -using {FC: ChargeInj (1)} -time $time
+}
+set time 182757.12ns
+if {[catch {marker new -name  {FC: ChargeInj (2)} -time $time}] != ""} {
+    marker set -using {FC: ChargeInj (2)} -time $time
+}
+set time 230716ns
+if {[catch {marker new -name  {I2C: QInjEn=1 (pixel 125)} -time $time}] != ""} {
+    marker set -using {I2C: QInjEn=1 (pixel 125)} -time $time
+}
+set time 218974ns
+if {[catch {marker new -name  {I2C: QInjEn=1 (pixel 18)} -time $time}] != ""} {
+    marker set -using {I2C: QInjEn=1 (pixel 18)} -time $time
+}
+set time 196579ns
+if {[catch {marker new -name  {I2C: QInjEn=0} -time $time}] != ""} {
+    marker set -using {I2C: QInjEn=0} -time $time
+}
+set time 6448ns
+if {[catch {marker new -name  {I2C: phase shifter} -time $time}] != ""} {
+    marker set -using {I2C: phase shifter} -time $time
+}
+set time 208277ns
+if {[catch {marker new -name  {I2C: QInjEn=1 (pixel 255)} -time $time}] != ""} {
+    marker set -using {I2C: QInjEn=1 (pixel 255)} -time $time
+}
+set time 82093.441ns
+if {[catch {marker new -name  {GENERAL: power-up seq. (bump)} -time $time}] != ""} {
+    marker set -using {GENERAL: power-up seq. (bump)} -time $time
+}
+
+#
+# Mnemonic Maps
+#
+mmap new  -reuse -name {Boolean as Logic} -radix %b -contents {{%c=FALSE -edgepriority 1 -shape low}
+{%c=TRUE -edgepriority 1 -shape high}}
+mmap new  -reuse -name {Example Map} -radix %x -contents {{%b=11???? -bgcolor orange -label REG:%x -linecolor yellow -shape bus}
+{%x=1F -bgcolor red -label ERROR -linecolor white -shape EVENT}
+{%x=2C -bgcolor red -label ERROR -linecolor white -shape EVENT}
+{%x=* -label %x -linecolor gray -shape bus}}
+mmap new  -reuse -name FastCommand -radix %x -contents {{%x=F0 -bgstipple gray25 -font -*-courier-medium-r-normal--12-* -label IDLE -linecolor #00ff00 -shape bus}
+{%x=69 -label ChargeInj}
+{%x=96 -label L1A}
+{%x=5A -label BCR}
+{%x=xx -font -*-courier-medium-r-normal--12-* -label X -linecolor #ff0000 -shape bus}}
+mmap new  -reuse -name DataOutput -radix %x -contents {{%b=001111000101110010* -font -*-courier-medium-r-normal--12-* -label Filler -shape bus}
+{%b=001111000101110000????????* -font -*-courier-medium-r-normal--12-* -label {Header %x} -linecolor #9900ff -shape bus}
+{%b=1* -label {Data %x}}
+{%b=* -font -*-courier-medium-r-normal--12-* -label %x -linecolor #ff0000 -shape bus}}
+
+#
+# Design Browser windows
+#
+if {[catch {window new WatchList -name "Design Browser 1" -geometry 2560x977+-1+27}] != ""} {
+    window geometry "Design Browser 1" 2560x977+-1+27
+}
+window target "Design Browser 1" on
+browser using {Design Browser 1}
+browser set -scope  simulator::ETROC2_tb.ETROC2_inst 
+browser set \
+    -signalsort name
+browser yview see  simulator::ETROC2_tb.ETROC2_inst 
+browser timecontrol set -lock 0
+
+#
+# Waveform windows
+#
+if {[catch {window new WaveWindow -name "Waveform 3" -geometry 2560x977+-1+27}] != ""} {
+    window geometry "Waveform 3" 2560x977+-1+27
+}
+window target "Waveform 3" on
+waveform using {Waveform 3}
+waveform sidebar visibility partial
+waveform set \
+    -primarycursor TimeA \
+    -signalnames name \
+    -signalwidth 528 \
+    -units ns \
+    -valuewidth 179
+waveform baseline set -time 0
+
+set id [waveform add -signals  {
+	simulator::ETROC2_tb.CLK40REF
+	} ]
+set id [waveform add -signals  {
+	simulator::ETROC2_tb.CLK320
+	} ]
+set id [waveform add -signals  {
+	simulator::ETROC2_tb.CLK1280
+	} ]
+set id [waveform add -cdivider divider]
+set id [waveform add -signals  {
+	simulator::ETROC2_tb.done
+	} ]
+set id [waveform add -cdivider divider]
+set id [waveform add -label {FastCommand Generator} -comment {}]
+waveform format $id -namecolor #ffff00
+set id [waveform add -signals  {
+	simulator::ETROC2_tb.CLK1280
+	} ]
+waveform format $id -namecolor #00ffff
+set id [waveform add -signals  {
+	simulator::ETROC2_tb.FastComSerial
+	} ]
+waveform format $id -namecolor #00ffff
+set id [waveform add -signals  {
+	{simulator::ETROC2_tb.FastComParallel[7:0]}
+	} ]
+waveform format $id -radix FastCommand -namecolor #00ffff
+set id [waveform add -signals  {
+	{simulator::ETROC2_tb.cnt_fcDump[1]}
+	} ]
+waveform format $id -color #ff0099 -namecolor #ff0099
+set id [waveform add -signals  {
+	{simulator::ETROC2_tb.cnt_fcDump[4]}
+	} ]
+waveform format $id -color #0099ff -namecolor #0099ff
+set id [waveform add -signals  {
+	{simulator::ETROC2_tb.cnt_fcDump[4:0]}
+	} ]
+waveform format $id -radix %b -color #ff9900 -namecolor #00ffff
+set id [waveform add -signals  {
+	simulator::ETROC2_tb.CLK1280
+	} ]
+waveform format $id -namecolor #00ffff
+set id [waveform add -signals  {
+	{simulator::ETROC2_tb.cnt_dataDump[5:0]}
+	} ]
+waveform format $id -namecolor #00ffff
+set id [waveform add -signals  {
+	simulator::ETROC2_tb.DOR
+	} ]
+waveform format $id -namecolor #00ffff
+set id [waveform add -signals  {
+	{simulator::ETROC2_tb.DataCheck_inst.DataWord[39:0]}
+	} ]
+waveform format $id -radix DataOutput
+set id [waveform add -label I2C -comment {}]
+waveform format $id -namecolor #ffff00
+set id [waveform add -signals  {
+	simulator::ETROC2_tb.ETROC2_inst.SCL
+	} ]
+waveform format $id -namecolor #ff0000
+set id [waveform add -signals  {
+	simulator::ETROC2_tb.ETROC2_inst.SDA
+	} ]
+waveform format $id -namecolor #ff9900
+set id [waveform add -signals  {
+	simulator::ETROC2_tb.ETROC2_inst.RSTN
+	} ]
+set id [waveform add -signals  {
+	{simulator::ETROC2_tb.ETROC2_inst.I2CAddr[4:0]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::ETROC2_tb.i2cstate[5:0]}
+	} ]
+waveform format $id -color #ff9900 -namecolor #ff9900
+set id [waveform add -cdivider divider]
+set id [waveform add -label SDA_IO_PAD -comment {}]
+waveform format $id -namecolor #ffff00
+set id [waveform add -signals  {
+	simulator::ETROC2_tb.MS_SDAen
+	} ]
+set id [waveform add -signals  {
+	simulator::ETROC2_tb.MS_SDAout
+	} ]
+set id [waveform add -signals  {
+	{simulator::ETROC2_tb.i2cstate[5:0]}
+	} ]
+waveform format $id -color #ff9900 -namecolor #ff9900
+
+set groupId0 [waveform add -groups sda_others]
+set id [waveform add -cdivider divider]
+set id [waveform add -label SCL_IO_PAD -comment {}]
+waveform format $id -namecolor #ffff00
+set id [waveform add -signals  {
+	simulator::ETROC2_tb.MS_SCLen
+	} ]
+set id [waveform add -signals  {
+	simulator::ETROC2_tb.MS_SCLout
+	} ]
+set id [waveform add -signals  {
+	{simulator::ETROC2_tb.i2cstate[5:0]}
+	} ]
+waveform format $id -color #ff9900 -namecolor #ff9900
+
+set groupId0 [waveform add -groups scl_others]
+set id [waveform add -cdivider divider]
+set id [waveform add -signals  {
+	simulator::ETROC2_tb.ETROC2_inst.CLKGen_inst.ETROC_PLL_Core_inst.ETROC_PLL_Core_noAFC_INST.LJCDR_INST.Vctrl
+	} ]
+waveform format $id -trace analogSampleAndHold
+waveform axis range $id -for default -min 0 -max 1.0882211410526437 -scale linear
+set id [waveform add -signals  {
+	{simulator::ETROC2_tb.ETROC2_inst.globalDigitalTMR_inst.controllerStateA[3:0]}
+	} ]
+set id [waveform add -cdivider divider]
+set id [waveform add -label {Data check} -comment {}]
+waveform format $id -namecolor #ffff00
+set id [waveform add -signals  {
+	simulator::ETROC2_tb.CLK320
+	} ]
+set id [waveform add -signals  {
+	simulator::ETROC2_tb.CLK40REF
+	} ]
+set id [waveform add -signals  {
+	simulator::ETROC2_tb.DataCheck_inst.CLK1280
+	} ]
+set id [waveform add -signals  {
+	simulator::ETROC2_tb.DataCheck_inst.CLKBit
+	} ]
+set id [waveform add -signals  {
+	simulator::ETROC2_tb.DataCheck_inst.DataIn
+	} ]
+set id [waveform add -signals  {
+	{simulator::ETROC2_tb.DataCheck_inst.DataWord[39:0]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::ETROC2_tb.DataCheck_inst.AlignCounter[5:0]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::ETROC2_tb.DataCheck_inst.DataWordTemp[39:0]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::ETROC2_tb.DataCheck_inst.FD_CAL_CODE[9:0]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::ETROC2_tb.DataCheck_inst.FD_Col_ID[3:0]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::ETROC2_tb.DataCheck_inst.FD_EA[1:0]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::ETROC2_tb.DataCheck_inst.FD_Row_ID[3:0]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::ETROC2_tb.DataCheck_inst.FD_TOA_CODE[9:0]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::ETROC2_tb.DataCheck_inst.FD_TOT_CODE[8:0]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::ETROC2_tb.DataCheck_inst.FF_EBS[1:0]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::ETROC2_tb.DataCheck_inst.FF_RT_BCID[11:0]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::ETROC2_tb.DataCheck_inst.FF_RT_L1Counter[7:0]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::ETROC2_tb.DataCheck_inst.FH_BCID[11:0]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::ETROC2_tb.DataCheck_inst.FH_L1Counter[7:0]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::ETROC2_tb.DataCheck_inst.FH_TYPE[1:0]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::ETROC2_tb.DataCheck_inst.FT_CHIPID[16:0]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::ETROC2_tb.DataCheck_inst.FT_CRC[7:0]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::ETROC2_tb.DataCheck_inst.FT_HITS[7:0]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::ETROC2_tb.DataCheck_inst.FT_STATUS[5:0]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::ETROC2_tb.DataCheck_inst.FrameCount[23:0]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::ETROC2_tb.DataCheck_inst.ReAlignCount[15:0]}
+	} ]
+set id [waveform add -signals  {
+	simulator::ETROC2_tb.DataCheck_inst.WordIdentifier
+	} ]
+set id [waveform add -cdivider divider]
+set id [waveform add -signals  {
+	simulator::ETROC2_tb.ETROC2_inst.PixelMatrix_HTree_inst.QInj_HTreeIn
+	} ]
+set id [waveform add -signals  {
+	{simulator::ETROC2_tb.ETROC2_inst.PixelMatrix_HTree_inst.QInj[255:0]}
+	} ]
+set id [waveform add -signals  {
+	simulator::ETROC2_tb.ETROC2_inst.PixelMatrix_HTree_inst.CLK40MRO_HTreeIn
+	} ]
+set id [waveform add -signals  {
+	simulator::ETROC2_tb.ETROC2_inst.PixelMatrix_HTree_inst.CLK40MTDC_HTreeIn
+	} ]
+set id [waveform add -signals  {
+	{simulator::ETROC2_tb.ETROC2_inst.PixelMatrix_HTree_inst.ClkRO[255:0]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::ETROC2_tb.ETROC2_inst.PixelMatrix_HTree_inst.ClkTDC[255:0]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::ETROC2_tb.ETROC2_inst.PixelMatrix_HTree_inst.PixelCol1_inst_15.Pixel1_inst_15.PixelAnalog1_inst.pixelID[7:0]}
+	} ]
+set id [waveform add -signals  {
+	simulator::ETROC2_tb.ETROC2_inst.PixelMatrix_HTree_inst.PixelCol1_inst_15.Pixel1_inst_15.PixelAnalog1_inst.QInj
+	} ]
+set id [waveform add -signals  {
+	simulator::ETROC2_tb.ETROC2_inst.PixelMatrix_HTree_inst.PixelCol1_inst_15.Pixel1_inst_15.PixelAnalog1_inst.PAIn
+	} ]
+waveform format $id -trace analogLinear
+waveform axis range $id -for default -min -1 -max 1 -scale linear
+set id [waveform add -signals  {
+	simulator::ETROC2_tb.ETROC2_inst.PixelMatrix_HTree_inst.PixelCol1_inst_15.Pixel1_inst_15.PixelAnalog1_inst.PAOut
+	} ]
+waveform format $id -trace analogLinear
+waveform axis range $id -for default -min 0.63 -max 0.77000000000000002 -scale linear
+set id [waveform add -signals  {
+	simulator::ETROC2_tb.ETROC2_inst.PixelMatrix_HTree_inst.PixelCol1_inst_15.Pixel1_inst_15.PixelAnalog1_inst.VTH
+	} ]
+waveform format $id -trace analogLinear
+waveform axis range $id -for default -min 0 -max 0.59940000000000004 -scale linear
+set id [waveform add -signals  {
+	simulator::ETROC2_tb.ETROC2_inst.PixelMatrix_HTree_inst.PixelCol1_inst_15.Pixel1_inst_15.PixelAnalog1_inst.DiscriOut_int
+	} ]
+set id [waveform add -signals  {
+	{simulator::ETROC2_tb.ETROC2_inst.PixelMatrix_HTree_inst.PixelCol1_inst_15.Pixel1_inst_15.PixelAnalog1_inst.QInj_inst.ISEL[4:0]}
+	} ]
+set id [waveform add -signals  {
+	simulator::ETROC2_tb.ETROC2_inst.PixelMatrix_HTree_inst.PixelCol1_inst_15.Pixel1_inst_15.PixelAnalog1_inst.QInj_inst.EN
+	} ]
+set id [waveform add -signals  {
+	simulator::ETROC2_tb.ETROC2_inst.PixelMatrix_HTree_inst.PixelCol1_inst_15.Pixel1_inst_15.PixelAnalog1_inst.QInj_inst.CIS
+	} ]
+set id [waveform add -signals  {
+	{simulator::ETROC2_tb.ETROC2_inst.PixelMatrix_HTree_inst.PixelCol_inst_1.Pixel_inst_2.pixelID[7:0]}
+	} ]
+set id [waveform add -signals  {
+	simulator::ETROC2_tb.ETROC2_inst.PixelMatrix_HTree_inst.PixelCol_inst_1.Pixel_inst_2.PixelAnalog_inst.PAOut
+	} ]
+waveform format $id -trace analogLinear
+waveform axis range $id -for default -min 0.63 -max 0.77000000000000002 -scale linear
+set id [waveform add -signals  {
+	simulator::ETROC2_tb.ETROC2_inst.PixelMatrix_HTree_inst.PixelCol_inst_1.Pixel_inst_2.PixelAnalog_inst.QInj
+	} ]
+set id [waveform add -signals  {
+	{simulator::ETROC2_tb.ETROC2_inst.PixelMatrix_HTree_inst.PixelCol_inst_1.Pixel_inst_2.PixelAnalog_inst.TDC_CAL[9:0]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::ETROC2_tb.ETROC2_inst.PixelMatrix_HTree_inst.PixelCol_inst_1.Pixel_inst_2.PixelAnalog_inst.TDC_TOA[9:0]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::ETROC2_tb.ETROC2_inst.PixelMatrix_HTree_inst.PixelCol_inst_1.Pixel_inst_2.PixelAnalog_inst.TDC_TOT[8:0]}
+	} ]
+set id [waveform add -signals  {
+	simulator::ETROC2_tb.ETROC2_inst.PixelMatrix_HTree_inst.PixelCol_inst_1.Pixel_inst_2.PixelAnalog_inst.TDC_hit
+	} ]
+set id [waveform add -signals  {
+	simulator::ETROC2_tb.ETROC2_inst.PixelMatrix_HTree_inst.PixelCol_inst_1.Pixel_inst_2.PixelAnalog_inst.VTH
+	} ]
+waveform format $id -trace analogLinear
+waveform axis range $id -for default -min 0 -max 0.59940000000000004 -scale linear
+set id [waveform add -signals  {
+	simulator::ETROC2_tb.ETROC2_inst.PixelMatrix_HTree_inst.PixelCol_inst_1.Pixel_inst_2.PixelAnalog_inst.DiscriOut_int
+	} ]
+set id [waveform add -signals  {
+	simulator::ETROC2_tb.ETROC2_inst.PixelMatrix_HTree_inst.PixelCol_inst_1.Pixel_inst_2.PixelAnalog_inst.QInj_inst.EN
+	} ]
+set id [waveform add -signals  {
+	{simulator::ETROC2_tb.ETROC2_inst.PixelMatrix_HTree_inst.PixelCol_inst_1.Pixel_inst_2.PixelAnalog_inst.QInj_inst.ISEL[4:0]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::ETROC2_tb.ETROC2_inst.PixelMatrix_HTree_inst.PixelCol1_inst_14.Pixel1_inst_14.PixelAnalog1_inst.pixelID[7:0]}
+	} ]
+set id [waveform add -signals  {
+	simulator::ETROC2_tb.ETROC2_inst.PixelMatrix_HTree_inst.PixelCol1_inst_14.Pixel1_inst_14.PixelAnalog1_inst.PAOut
+	} ]
+waveform format $id -trace analogLinear
+waveform axis range $id -for default -min 0.63 -max 0.77000000000000002 -scale linear
+set id [waveform add -signals  {
+	simulator::ETROC2_tb.ETROC2_inst.PixelMatrix_HTree_inst.PixelCol1_inst_14.Pixel1_inst_14.PixelAnalog1_inst.QInj
+	} ]
+set id [waveform add -signals  {
+	{simulator::ETROC2_tb.ETROC2_inst.PixelMatrix_HTree_inst.PixelCol1_inst_14.Pixel1_inst_14.PixelAnalog1_inst.TDC_CAL[9:0]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::ETROC2_tb.ETROC2_inst.PixelMatrix_HTree_inst.PixelCol1_inst_14.Pixel1_inst_14.PixelAnalog1_inst.TDC_TOA[9:0]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::ETROC2_tb.ETROC2_inst.PixelMatrix_HTree_inst.PixelCol1_inst_14.Pixel1_inst_14.PixelAnalog1_inst.TDC_TOT[8:0]}
+	} ]
+set id [waveform add -signals  {
+	simulator::ETROC2_tb.ETROC2_inst.PixelMatrix_HTree_inst.PixelCol1_inst_14.Pixel1_inst_14.PixelAnalog1_inst.DiscriOut_int
+	} ]
+set id [waveform add -signals  {
+	simulator::ETROC2_tb.ETROC2_inst.PixelMatrix_HTree_inst.PixelCol1_inst_14.Pixel1_inst_14.PixelAnalog1_inst.TDC_hit
+	} ]
+set id [waveform add -signals  {
+	simulator::ETROC2_tb.ETROC2_inst.PixelMatrix_HTree_inst.PixelCol1_inst_14.Pixel1_inst_14.PixelAnalog1_inst.VTH
+	} ]
+waveform format $id -trace analogLinear
+waveform axis range $id -for default -min 0 -max 0.59940000000000004 -scale linear
+set id [waveform add -signals  {
+	simulator::ETROC2_tb.ETROC2_inst.PixelMatrix_HTree_inst.PixelCol1_inst_14.Pixel1_inst_14.PixelAnalog1_inst.QInj_inst.EN
+	} ]
+set id [waveform add -signals  {
+	{simulator::ETROC2_tb.ETROC2_inst.PixelMatrix_HTree_inst.PixelCol1_inst_14.Pixel1_inst_14.PixelAnalog1_inst.QInj_inst.ISEL[4:0]}
+	} ]
+set id [waveform add -signals  {
+	simulator::ETROC2_tb.ETROC2_inst.globalDigitalTMR_inst.soutLeft
+	} ]
+set id [waveform add -signals  {
+	simulator::ETROC2_tb.ETROC2_inst.globalDigitalTMR_inst.soutRight
+	} ]
+set id [waveform add -signals  {
+	simulator::ETROC2_tb.DOR
+	} ]
+set id [waveform add -signals  {
+	simulator::ETROC2_tb.DOL
+	} ]
+set id [waveform add -signals  {
+	{simulator::ETROC2_tb.ETROC2_inst.PixelMatrix_HTree_inst.PixelCol1_inst_15.Pixel1_inst_15.pixelReadoutWithSWCell_inst.lowerCal[9:0]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::ETROC2_tb.ETROC2_inst.PixelMatrix_HTree_inst.PixelCol1_inst_15.Pixel1_inst_15.pixelReadoutWithSWCell_inst.lowerCalTrig[9:0]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::ETROC2_tb.ETROC2_inst.PixelMatrix_HTree_inst.PixelCol1_inst_15.Pixel1_inst_15.pixelReadoutWithSWCell_inst.lowerTOA[9:0]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::ETROC2_tb.ETROC2_inst.PixelMatrix_HTree_inst.PixelCol1_inst_15.Pixel1_inst_15.pixelReadoutWithSWCell_inst.lowerTOATrig[9:0]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::ETROC2_tb.ETROC2_inst.PixelMatrix_HTree_inst.PixelCol1_inst_15.Pixel1_inst_15.pixelReadoutWithSWCell_inst.lowerTOT[8:0]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::ETROC2_tb.ETROC2_inst.PixelMatrix_HTree_inst.PixelCol1_inst_15.Pixel1_inst_15.pixelReadoutWithSWCell_inst.lowerTOTTrig[8:0]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::ETROC2_tb.ETROC2_inst.PixelMatrix_HTree_inst.PixelCol1_inst_15.Pixel1_inst_15.pixelReadoutWithSWCell_inst.upperCal[9:0]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::ETROC2_tb.ETROC2_inst.PixelMatrix_HTree_inst.PixelCol1_inst_15.Pixel1_inst_15.pixelReadoutWithSWCell_inst.upperCalTrig[9:0]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::ETROC2_tb.ETROC2_inst.PixelMatrix_HTree_inst.PixelCol1_inst_15.Pixel1_inst_15.pixelReadoutWithSWCell_inst.upperTOA[9:0]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::ETROC2_tb.ETROC2_inst.PixelMatrix_HTree_inst.PixelCol1_inst_15.Pixel1_inst_15.pixelReadoutWithSWCell_inst.upperTOATrig[9:0]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::ETROC2_tb.ETROC2_inst.PixelMatrix_HTree_inst.PixelCol1_inst_15.Pixel1_inst_15.pixelReadoutWithSWCell_inst.upperTOT[8:0]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::ETROC2_tb.ETROC2_inst.PixelMatrix_HTree_inst.PixelCol1_inst_15.Pixel1_inst_15.pixelReadoutWithSWCell_inst.upperTOTTrig[8:0]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::ETROC2_tb.ETROC2_inst.PixelMatrix_HTree_inst.PixelCol1_inst_15.Pixel1_inst_15.pixelReadoutWithSWCell_inst.L1ADelay[8:0]}
+	} ]
+waveform format $id -radix %d
+set id [waveform add -signals  {
+	simulator::ETROC2_tb.ETROC2_inst.CLK40n
+	} ]
+waveform format $id -trace analogLinear
+waveform axis range $id -for default -min 0.59999999999999998 -max 1.2 -scale linear
+set id [waveform add -signals  {
+	simulator::ETROC2_tb.ETROC2_inst.CLK40p
+	} ]
+waveform format $id -trace analogLinear
+waveform axis range $id -for default -min 0.59999999999999998 -max 1.2 -scale linear
+set id [waveform add -signals  {
+	simulator::ETROC2_tb.ETROC2_inst.CLK1280n
+	} ]
+waveform format $id -trace analogLinear
+waveform axis range $id -for default -min 0.59999999999999998 -max 1.2 -scale linear
+set id [waveform add -signals  {
+	simulator::ETROC2_tb.ETROC2_inst.CLK1280p
+	} ]
+waveform format $id -trace analogLinear
+waveform axis range $id -for default -min 0.59999999999999998 -max 1.2 -scale linear
+set id [waveform add -signals  {
+	simulator::ETROC2_tb.ETROC2_inst.CLK_WS
+	} ]
+set id [waveform add -signals  {
+	simulator::ETROC2_tb.ETROC2_inst.DOLn
+	} ]
+waveform format $id -trace analogLinear
+waveform axis range $id -for default -min 0.90000000000000002 -max 1.2 -scale linear
+set id [waveform add -signals  {
+	simulator::ETROC2_tb.ETROC2_inst.DOLp
+	} ]
+waveform format $id -trace analogLinear
+waveform axis range $id -for default -min 0.60000000000000009 -max 0.90000000000000002 -scale linear
+set id [waveform add -signals  {
+	simulator::ETROC2_tb.ETROC2_inst.DORn
+	} ]
+waveform format $id -trace analogLinear
+waveform axis range $id -for default -min 0.81000000000000005 -max 0.9900000000000001 -scale linear
+set id [waveform add -signals  {
+	simulator::ETROC2_tb.ETROC2_inst.DORp
+	} ]
+waveform format $id -trace analogLinear
+waveform axis range $id -for default -min 0.81000000000000005 -max 0.9900000000000001 -scale linear
+set id [waveform add -signals  {
+	simulator::ETROC2_tb.ETROC2_inst.FCn
+	} ]
+waveform format $id -trace analogLinear
+waveform axis range $id -for default -min 0 -max 1.2 -scale linear
+set id [waveform add -signals  {
+	simulator::ETROC2_tb.ETROC2_inst.FCp
+	} ]
+waveform format $id -trace analogLinear
+waveform axis range $id -for default -min 0 -max 1.2 -scale linear
+set id [waveform add -signals  {
+	simulator::ETROC2_tb.ETROC2_inst.GRO_Out
+	} ]
+set id [waveform add -signals  {
+	{simulator::ETROC2_tb.ETROC2_inst.PAIn[255:0]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::ETROC2_tb.ETROC2_inst.PAOut[255:0]}
+	} ]
+set id [waveform add -signals  {
+	simulator::ETROC2_tb.ETROC2_inst.VDD_CLK
+	} ]
+waveform format $id -trace analogLinear
+waveform axis range $id -for default -min 0 -max 1.2 -scale linear
+set id [waveform add -signals  {
+	simulator::ETROC2_tb.ETROC2_inst.VDD_D
+	} ]
+set id [waveform add -signals  {
+	simulator::ETROC2_tb.ETROC2_inst.VDD_Dis
+	} ]
+waveform format $id -trace analogLinear
+waveform axis range $id -for default -min 0 -max 1.2 -scale linear
+set id [waveform add -signals  {
+	simulator::ETROC2_tb.ETROC2_inst.VDD_EFUSE
+	} ]
+waveform format $id -trace analogLinear
+waveform axis range $id -for default -min -1 -max 1 -scale linear
+set id [waveform add -signals  {
+	simulator::ETROC2_tb.ETROC2_inst.VDD_IO2
+	} ]
+waveform format $id -trace analogLinear
+waveform axis range $id -for default -min 0 -max 1.2 -scale linear
+set id [waveform add -signals  {
+	simulator::ETROC2_tb.ETROC2_inst.VDD_PA
+	} ]
+waveform format $id -trace analogLinear
+waveform axis range $id -for default -min 0 -max 1.2 -scale linear
+set id [waveform add -signals  {
+	simulator::ETROC2_tb.ETROC2_inst.VDD_QInj
+	} ]
+waveform format $id -trace analogLinear
+waveform axis range $id -for default -min 0 -max 1.2 -scale linear
+set id [waveform add -signals  {
+	simulator::ETROC2_tb.ETROC2_inst.VDD_SL
+	} ]
+waveform format $id -trace analogLinear
+waveform axis range $id -for default -min 0 -max 1.2 -scale linear
+set id [waveform add -signals  {
+	simulator::ETROC2_tb.ETROC2_inst.VP
+	} ]
+waveform format $id -trace analogLinear
+waveform axis range $id -for default -min -1 -max 1 -scale linear
+set id [waveform add -signals  {
+	simulator::ETROC2_tb.ETROC2_inst.VREF
+	} ]
+waveform format $id -trace analogLinear
+waveform axis range $id -for default -min 0 -max 0.99900000000000011 -scale linear
+set id [waveform add -signals  {
+	simulator::ETROC2_tb.ETROC2_inst.VSS_CLK
+	} ]
+waveform format $id -trace analogLinear
+waveform axis range $id -for default -min -1 -max 1 -scale linear
+set id [waveform add -signals  {
+	simulator::ETROC2_tb.ETROC2_inst.VSS_D
+	} ]
+set id [waveform add -signals  {
+	simulator::ETROC2_tb.ETROC2_inst.VSS_Dis
+	} ]
+waveform format $id -trace analogLinear
+waveform axis range $id -for default -min -1 -max 1 -scale linear
+set id [waveform add -signals  {
+	simulator::ETROC2_tb.ETROC2_inst.VSS_IO1
+	} ]
+waveform format $id -trace analogLinear
+waveform axis range $id -for default -min -1 -max 1 -scale linear
+set id [waveform add -signals  {
+	simulator::ETROC2_tb.ETROC2_inst.VSS_IO2
+	} ]
+waveform format $id -trace analogLinear
+waveform axis range $id -for default -min -1 -max 1 -scale linear
+set id [waveform add -signals  {
+	simulator::ETROC2_tb.ETROC2_inst.VSS_IO3
+	} ]
+waveform format $id -trace analogLinear
+waveform axis range $id -for default -min -1 -max 1 -scale linear
+set id [waveform add -signals  {
+	simulator::ETROC2_tb.ETROC2_inst.VSS_PA
+	} ]
+waveform format $id -trace analogLinear
+waveform axis range $id -for default -min -1 -max 1 -scale linear
+set id [waveform add -signals  {
+	simulator::ETROC2_tb.ETROC2_inst.VSS_QInj
+	} ]
+waveform format $id -trace analogLinear
+waveform axis range $id -for default -min -1 -max 1 -scale linear
+set id [waveform add -signals  {
+	simulator::ETROC2_tb.ETROC2_inst.VSS_S
+	} ]
+waveform format $id -trace analogLinear
+waveform axis range $id -for default -min -1 -max 1 -scale linear
+set id [waveform add -signals  {
+	simulator::ETROC2_tb.ETROC2_inst.VSS_SL
+	} ]
+waveform format $id -trace analogLinear
+waveform axis range $id -for default -min -1 -max 1 -scale linear
+set id [waveform add -signals  {
+	simulator::ETROC2_tb.ETROC2_inst.VTemp
+	} ]
+waveform format $id -trace analogLinear
+waveform axis range $id -for default -min -1 -max 1 -scale linear
+set id [waveform add -signals  {
+	simulator::ETROC2_tb.ETROC2_inst.en_clk_WS
+	} ]
+set id [waveform add -signals  {
+	simulator::ETROC2_tb.ETROC2_inst.wsStart
+	} ]
+set id [waveform add -signals  {
+	simulator::ETROC2_tb.ETROC2_inst.wsStop
+	} ]
+
+waveform xview limits 0 6596.0001ns
+waveform delta load {-item baseline -value 0} {-item {baseline TimeA} -value 0}
+
+#
+# Waveform Window Links
+#
+
+#
+# Console windows
+#
+console set -windowname Console
+window geometry Console 2560x977+-1+27
+
+#
+# Layout selection
+#
+

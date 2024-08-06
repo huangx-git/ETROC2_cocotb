@@ -1,0 +1,11 @@
+IDLE,7300
+ChargeInj,1
+IDLE,20
+ChargeInj,1
+IDLE,2500
+BCR,1
+IDLE,16
+ChargeInj,1
+IDLE,480
+L1A,45
+IDLE,2000
