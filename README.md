@@ -336,3 +336,71 @@ make show-coverage-results
 ## Misc
 
 This [document](https://github.com/Fermilab-Microelectronics/ETROC2_RefManualNotes/blob/main/ETROC2_RefManualNotes.md) contains notes on the ETROC2 manual maintained on [Overleaf](https://www.overleaf.com/project/63d18c8068a93c554632fff0).
+
+
+# Using VNC through a Putty SSH tunnel
+Step 1. Download the latest version of Putty [here](https://www.chiark.greenend.org.uk/%7Esgtatham/putty/).
+
+Step 2. Download the latest version of VNC Viewer [here](https://www.realvnc.com/en/connect/download/viewer/?lai_sr=5-9&lai_sl=l) and install it.
+
+Step 3. Run Putty to configure the connection to the server (`sphy7asic01.smu.edu`) via VNC.
+
+  * `Host Name (or IP address): sphy7asic01.smu.edu`
+    
+  * `port: 22`
+    
+  * `Connection type: SSH`
+    
+  * `Saved Sections: sphy7asic01_vnc` <Could be any name you like>
+
+  * Click `Save`, next time you can `Load` your configuration.
+
+  <img src="doc/VNC configure0.png" alt="VNC_config0" width="400">
+    
+  * `Connection, -> SSH -> Tunnels` <The category on the left>
+
+  * `Source port: 5903` <the last digit could be set as an available number>
+
+  * `Destination: localhost:5903`
+
+  * Click `Add`, the `Forwarded Ports:` should be `L5903    localhost:5903`
+
+  <img src="doc/VNC configure1.png" alt="VNC_config1" width="400">
+
+  * `Connection, -> Data` <The category on the left>
+
+  * 'Auto-login username: xingh' <put your name here that you don't have to type your username whenever you login>
+
+  * Don't forget to `save` your configurations.
+
+Step 4. Run VNC Viewer to configure the connection to the server (`sphy7asic01.smu.edu`) via VNC.
+    
+  * `File -> New connection`
+
+  <img src="doc/VNC configure4.png" alt="VNC_config4" width="400">
+
+  * `VNC server: localhost:3`
+
+  * `Name: sphy7asic01` <Enter a name you like>, Then `OK`
+
+  <img src="doc/VNC configure5.png" alt="VNC_config5" width="400">
+
+ Step 5. Login to your account (`xingh`) through Putty to configure the port.
+
+  <img src="doc/VNC configure3.png" alt="VNC_config3" width="400">
+
+  * `vncserver -geometry 3840x1080 :3`, set the screen resolution and the port 3
+
+  <img src="doc/VNC configure6.png" alt="VNC_config7" width="400">
+
+  * If for some reason, you need to terminate the tasks on the VNC of port 3, use `vncserver -kill :3`, and then redo the last setup to initialize VNC. Please ensure that everyone uses the same one or two ports at most. If you don't need the port, please kill it to release it.
+
+  <img src="doc/VNC configure7.png" alt="VNC_config7" width="400">
+
+  Step 6. Run VNC Viewer, double click the server setup you saved to start the VNC to the server. You may need to input a password for your VNC, then you will get there.
+
+  <img src="doc/VNC configure8.png" alt="VNC_config8" width="400">
+
+  <img src="doc/VNC configure9.png" alt="VNC_config9" width="400">
+
+
