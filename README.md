@@ -14,7 +14,6 @@ We use a Python virtual environment for the _ETROC2 cocotb_ verification setup. 
 ```bash
 python3.12 -m venv $HOME/venvs/cocotb-env
 source $HOME/venvs/cocotb-env/bin/activate
-pip install cocotb pytest
 ```
 
 When the Python environment is active, you will notice the prefix `(cocotb-env)` on the command line.
@@ -22,7 +21,7 @@ When the Python environment is active, you will notice the prefix `(cocotb-env)`
 To add a new Python package:
 
 ```bash
-pip install NEW_PACKAGE_NAME
+pip install cocotb pytest
 ```
 
 To deactivate the environment:
