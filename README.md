@@ -51,15 +51,6 @@ Besides the Python virtual environment that provides cocotb and other Python lib
 source start.sh
 ```
 
-Please copy those scripts and adapt them to your needs.
-
-
-Follow these [instructions](SETUP.md) to clone the repository and set up the Python and CAD tool environments. After the initial setup, always remember to activate the Python environment:
-
-```bash
-source $HOME/venvs/cocotb-env/bin/activate
-```
-
 ## Test cases
 
 The top directory for the cocotb test cases is [cocotb](cocotb). The cocotb verification environment for ETROC2 (as for any cocotb project) uses Makefiles to define how to run the simulator, set up necessary environment variables, and configure the simulation parameters.
